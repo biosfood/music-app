@@ -2,12 +2,14 @@ package com.lukas.music
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import com.lukas.music.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var isOn = true;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,18 +17,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Example of a call to a native method
-        binding.sampleText.text = stringFromJNI()
+        binding.sampleText.text = "test"
+        startAudio()
     }
 
-    /**
-     * A native method that is implemented by the 'music' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    public fun toggleAudio(view: View) {
+        isOn = !isOn
+        if (isOn) {
+            unmuteAudio()
+        } else {
+            muteAudio()
+        }
+    }
+
+    private external fun startAudio()
+    private external fun muteAudio()
+    private external fun unmuteAudio()
 
     companion object {
-        // Used to load the 'music' library on application startup.
         init {
             System.loadLibrary("music")
         }

@@ -2,9 +2,8 @@ package com.lukas.music
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Switch
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.lukas.music.databinding.ActivityMainBinding
 import com.lukas.music.ui.tab.TabAdapter
 import com.lukas.music.ui.fragments.CreditsFragment
@@ -14,7 +13,8 @@ import com.lukas.music.ui.tab.TabListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val tabFragments = listOf<Fragment>(PlayFragment(), CreditsFragment())
+    private val playFragment = PlayFragment()
+    private val tabFragments = listOf(playFragment, CreditsFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +24,15 @@ class MainActivity : AppCompatActivity() {
         binding.tabPager.adapter = TabAdapter(supportFragmentManager, lifecycle, tabFragments)
         binding.tabPager.registerOnPageChangeCallback(PageListener(binding.tabLayout))
         binding.tabLayout.addOnTabSelectedListener(TabListener(binding.tabPager))
-        // startAudio()
+        startAudio()
+        // muteAudio()
     }
 
-    private external fun startAudio()
-    private external fun muteAudio()
-    private external fun unmuteAudio()
-
     companion object {
+        external fun startAudio()
+        external fun muteAudio()
+        external fun unmuteAudio()
+
         init {
             System.loadLibrary("music")
         }

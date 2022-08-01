@@ -9,17 +9,17 @@ static AudioEngine *audioEngine;
 extern "C" {
 
 JNIEXPORT void JNICALL
-Java_com_lukas_music_MainActivity_startAudio(JNIEnv *env, jobject activity) {
+Java_com_lukas_music_MainActivity_00024Companion_startAudio(JNIEnv *env, jobject activity) {
     audioEngine = new AudioEngine();
 }
 
 JNIEXPORT void JNICALL
-Java_com_lukas_music_MainActivity_muteAudio(JNIEnv *env, jobject activity, float volume) {
+Java_com_lukas_music_MainActivity_00024Companion_muteAudio(JNIEnv *env, jobject activity, float volume) {
     audioEngine->stop();
 }
 
 JNIEXPORT void JNICALL
-Java_com_lukas_music_MainActivity_unmuteAudio(JNIEnv *env, jobject activity, float volume) {
+Java_com_lukas_music_MainActivity_00024Companion_unmuteAudio(JNIEnv *env, jobject activity, float volume) {
     audioEngine->start();
 }
 }

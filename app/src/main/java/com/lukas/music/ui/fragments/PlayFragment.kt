@@ -26,13 +26,4 @@ class PlayFragment : Fragment() {
         }
         return binding.root
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            PlayFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

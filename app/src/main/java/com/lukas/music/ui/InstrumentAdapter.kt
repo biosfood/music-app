@@ -12,7 +12,11 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.InstrumentViewH
         RecyclerView.ViewHolder(binding.root)
 
     private val instruments =
-        mutableListOf<Instrument>(Instrument("First Instrument"), Instrument("second instrument"))
+        mutableListOf<Instrument>(
+            Instrument("A", 440.0),
+            Instrument("C#", 440 * 1.25),
+            Instrument("E", 440 * 1.5),
+        )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InstrumentViewHolder {
         val context = parent.context
@@ -23,7 +27,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.InstrumentViewH
 
     override fun onBindViewHolder(holder: InstrumentViewHolder, position: Int) {
         val instrument = instruments[position]
-        holder.binding.instrumentNameText.text = instrument.name
+        instrument.applyToView(holder.binding)
     }
 
     override fun getItemCount(): Int {

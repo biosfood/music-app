@@ -25,13 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding.tabPager.registerOnPageChangeCallback(PageListener(binding.tabLayout))
         binding.tabLayout.addOnTabSelectedListener(TabListener(binding.tabPager))
         startAudio()
-        // muteAudio()
     }
 
     companion object {
         external fun startAudio()
-        external fun muteAudio()
-        external fun unmuteAudio()
 
         init {
             System.loadLibrary("music")

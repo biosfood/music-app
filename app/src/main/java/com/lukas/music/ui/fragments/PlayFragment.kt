@@ -18,11 +18,6 @@ class PlayFragment : Fragment() {
     ): View? {
         binding = FragmentPlayBinding.inflate(inflater)
         binding.playSwitch.setOnCheckedChangeListener { _, isOn ->
-            if (isOn) {
-                MainActivity.unmuteAudio()
-            } else {
-                MainActivity.muteAudio()
-            }
         }
         return binding.root
     }

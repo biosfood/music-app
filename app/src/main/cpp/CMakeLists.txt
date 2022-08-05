@@ -8,8 +8,9 @@ add_library(
         SHARED
 
         SineWave.cpp
-        AndroidBridge.cpp
-        AudioEngine.cpp
+        JavaFunctions.cpp
+        AudioHost.cpp
+        Instrument.cpp
 )
 
 find_library(

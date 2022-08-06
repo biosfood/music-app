@@ -2,6 +2,7 @@
 
 Instrument::Instrument(AudioHost *host) {
     wave->initialize(host);
+    envelope->initialize(host);
 }
 
 float *multiply(float *target, float *modulation, uint32_t size) {

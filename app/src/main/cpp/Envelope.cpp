@@ -1,11 +1,21 @@
+#include <android/log.h>
+#include "Instrument.h"
 #include "Envelope.h"
 
+void Envelope::initialize(AudioHost *host) {
+    attackIncrement = 1 / attack / host->sampleRate;
+    delayIncrement = 1 / delay / host->sampleRate;
+    releaseIncrement = 1 / release / host->sampleRate;
+    __android_log_print(ANDROID_LOG_DEBUG, "Envelope", "increments: %f %f %f", attackIncrement,
+                        delayIncrement, releaseIncrement);
+}
+
 void Envelope::startNote() {
-    value = 1;
+    phase = ATTACK;
 }
 
 void Envelope::endNote() {
-    value = 0;
+    phase = RELEASE;
 }
 
 float *Envelope::render(uint32_t sampleCount) {
@@ -14,6 +24,29 @@ float *Envelope::render(uint32_t sampleCount) {
         buffer = new float[sampleCount];
     }
     for (int i = 0; i < sampleCount; ++i) {
+        switch (phase) {
+            case ATTACK:
+                value += attackIncrement;
+                if (value > 1) {
+                    value = 1;
+                    phase = DELAY;
+                }
+                break;
+            case DELAY:
+                value -= delayIncrement;
+                if (value < sustain) {
+                    value = sustain;
+                    phase = SUSTAIN;
+                }
+                break;
+            case RELEASE:
+                value -= releaseIncrement;
+                if (value < 0) {
+                    value = 0;
+                    phase = NONE;
+                }
+                break;
+        }
         buffer[i] = value;
     }
     return buffer;

@@ -1,17 +1,26 @@
 #ifndef MUSIC_ENVELOPE_H
 #define MUSIC_ENVELOPE_H
 
-#include <cstdint>
-
 class Envelope;
+
+#include <cstdint>
+#include "AudioHost.h"
+
+enum EnvelopePhase {
+    NONE, ATTACK, DELAY, SUSTAIN, RELEASE,
+};
 
 class Envelope {
 private:
     uint32_t bufferSize = 0;
     float *buffer;
-public:
-    float attack, delay, sustain, release;
+    EnvelopePhase phase;
+    float attackIncrement, delayIncrement, releaseIncrement;
     float value = 1;
+public:
+    float attack = 0.05, delay = 0.2, sustain = 0.75, release = 0.1;
+
+    void initialize(AudioHost *host);
 
     void startNote();
 

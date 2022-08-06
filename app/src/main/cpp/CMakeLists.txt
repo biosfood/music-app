@@ -11,6 +11,7 @@ add_library(
         JavaFunctions.cpp
         AudioHost.cpp
         Instrument.cpp
+        Envelope.cpp
 )
 
 find_library(

@@ -45,7 +45,25 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_Instrument_setInstrumentActive(JNIEnv *env, jobject thiz,
                                                                 jint id, jboolean active) {
-    Instrument *instrument = static_cast<Instrument*>(listGet(audioHost->instruments->begin(), id));
+    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
+                                                               id));
     instrument->wave->amplitude = active ? 0.3 : 0.0;
 }
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_Instrument_startNote(JNIEnv *env, jobject thiz,
+                                                      jint id, jdouble frequency) {
+    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
+                                                               id));
+    instrument->startNote(frequency);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_Instrument_endNote(JNIEnv *env, jobject thiz,
+                                                    jint id, jdouble frequency) {
+    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
+                                                               id));
+    instrument->endNote(frequency);
 }

@@ -4,25 +4,19 @@
 #include <mutex>
 
 const uint32_t bufferSize = 2;
-static uint32_t sampleCount;
-static float *buffer;
-
-void renderInstrument(Instrument * instrument) {
-    instrument->render(buffer, sampleCount);
-}
-
 aaudio_data_callback_result_t dataCallback(
         AAudioStream *stream,
         void *userData,
         void *audioData,
-        int32_t _sampleCount) {
-    sampleCount = _sampleCount;
-    buffer = static_cast<float*>(audioData);
-    for (uint32_t i = 0; i < _sampleCount; i++) {
+        int32_t sampleCount) {
+    float *buffer = static_cast<float *>(audioData);
+    for (uint32_t i = 0; i < sampleCount; i++) {
         buffer[i] = 0;
     }
     AudioHost *thiz = static_cast<AudioHost *>(userData);
-    std::for_each(thiz->instruments->begin(), thiz->instruments->end(), renderInstrument);
+    for (auto const &instrument: *thiz->instruments) {
+        instrument->render(buffer, sampleCount);
+    }
     return AAUDIO_CALLBACK_RESULT_CONTINUE;
 }
 

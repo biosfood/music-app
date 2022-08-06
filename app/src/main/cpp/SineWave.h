@@ -12,10 +12,10 @@ private:
     float frequency;
     AudioHost *host;
 public:
-    SineWave(AudioHost *host);
+    void initialize(AudioHost *host);
     float amplitude = 0.0f;
     void render(float *data, uint32_t frameCount);
     void setFrequency(float freq);
 };
 
-#endif //MUSIC_SINEWAVE_H
+#endif

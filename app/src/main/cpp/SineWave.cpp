@@ -1,8 +1,9 @@
+#include "AudioHost.h"
 #include "SineWave.h"
 #include <math.h>
 #include <android/log.h>
 
-SineWave::SineWave(AudioHost *host) {
+void SineWave::initialize(AudioHost *host) {
     this->host = host;
 }
 

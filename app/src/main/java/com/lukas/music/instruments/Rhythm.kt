@@ -1,5 +1,6 @@
 package com.lukas.music.instruments
 
+import com.lukas.music.song.Song
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -8,13 +9,7 @@ object Rhythm {
     fun start() {
         Timer().schedule(0, 500) {
             on = !on
-            Instrument.instruments.forEach {
-                if (on) {
-                    it.startNote(it.frequency)
-                } else {
-                    it.endNote(it.frequency)
-                }
-            }
+            Song.currentSong.step()
         }
     }
 }

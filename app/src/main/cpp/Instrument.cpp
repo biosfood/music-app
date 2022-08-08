@@ -23,6 +23,6 @@ void Instrument::startNote(float frequency) {
     envelope->startNote();
 }
 
-void Instrument::endNote(float frequency) {
+void Instrument::endNote() {
     envelope->endNote();
 }

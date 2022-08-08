@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lukas.music.R
 import com.lukas.music.databinding.FragmentInstrumentBinding
-import com.lukas.music.instruments.Instrument
 
-class InstrumentFragment() : Fragment(R.layout.fragment_instrument) {
+class InstrumentFragment : Fragment(R.layout.fragment_instrument) {
     private lateinit var binding: FragmentInstrumentBinding
 
     override fun onCreateView(

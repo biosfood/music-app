@@ -18,7 +18,7 @@ public:
 
     void startNote(float frequency);
 
-    void endNote(float frequency);
+    void endNote();
 };
 
 #endif

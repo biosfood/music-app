@@ -21,11 +21,8 @@ public:
     float attack = 0.05, delay = 0.2, sustain = 0.75, release = 0.1;
 
     void initialize(AudioHost *host);
-
     void startNote();
-
     void endNote();
-
     float *render(uint32_t sampleCount);
 };
 

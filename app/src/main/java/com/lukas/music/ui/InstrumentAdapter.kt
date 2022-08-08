@@ -19,8 +19,8 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.InstrumentViewH
     }
 
     override fun onBindViewHolder(holder: InstrumentViewHolder, position: Int) {
-        val instrument = Instrument.instruments[position]
-        instrument.applyToView(holder.binding)
+        val internalInstrument = Instrument.instruments[position]
+        internalInstrument.applyToView(holder.binding)
     }
 
     override fun getItemCount(): Int {

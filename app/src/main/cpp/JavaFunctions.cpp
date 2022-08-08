@@ -25,7 +25,7 @@ Java_com_lukas_music_MainActivity_00024Companion_startAudio(JNIEnv *env, jobject
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_lukas_music_instruments_Instrument_createInstrument(JNIEnv *env, jobject thiz) {
+Java_com_lukas_music_instruments_InternalInstrument_createInstrument(JNIEnv *env, jobject thiz) {
     uint32_t result = audioHost->instruments->size();
     Instrument *instrument = new Instrument(audioHost);
     audioHost->instruments->push_back(instrument);
@@ -34,17 +34,8 @@ Java_com_lukas_music_instruments_Instrument_createInstrument(JNIEnv *env, jobjec
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lukas_music_instruments_Instrument_setInstrumentFrequency(JNIEnv *env, jobject thiz,
-                                                                   jint id, jdouble frequency) {
-    Instrument *instrument = static_cast<Instrument*>(listGet(audioHost->instruments->begin(), id));
-    instrument->wave->setFrequency(frequency);
-}
-
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_lukas_music_instruments_Instrument_setInstrumentActive(JNIEnv *env, jobject thiz,
-                                                                jint id, jboolean active) {
+Java_com_lukas_music_instruments_InternalInstrument_setInstrumentActive(JNIEnv *env, jobject thiz,
+                                                                        jint id, jboolean active) {
     Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
                                                                id));
     instrument->wave->amplitude = active ? 0.3 : 0.0;
@@ -52,8 +43,8 @@ Java_com_lukas_music_instruments_Instrument_setInstrumentActive(JNIEnv *env, job
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lukas_music_instruments_Instrument_startNote(JNIEnv *env, jobject thiz,
-                                                      jint id, jdouble frequency) {
+Java_com_lukas_music_instruments_InternalInstrument_startNote(JNIEnv *env, jobject thiz,
+                                                              jint id, jdouble frequency) {
     Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
                                                                id));
     instrument->startNote(frequency);
@@ -61,9 +52,9 @@ Java_com_lukas_music_instruments_Instrument_startNote(JNIEnv *env, jobject thiz,
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lukas_music_instruments_Instrument_endNote(JNIEnv *env, jobject thiz,
-                                                    jint id, jdouble frequency) {
+Java_com_lukas_music_instruments_InternalInstrument_endNote(JNIEnv *env, jobject thiz,
+                                                            jint id) {
     Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
                                                                id));
-    instrument->endNote(frequency);
+    instrument->endNote();
 }

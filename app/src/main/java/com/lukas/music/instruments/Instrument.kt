@@ -1,6 +1,7 @@
 package com.lukas.music.instruments
 
 import com.lukas.music.databinding.FragmentInstrumentBinding
+import com.lukas.music.song.note.Note
 
 abstract class Instrument(private var name: String) {
     private var active = false
@@ -17,7 +18,7 @@ abstract class Instrument(private var name: String) {
         binding.activeSwitch.isChecked = active
     }
 
-    abstract fun startNote(frequency: Double)
+    abstract fun startNote(note: Note)
     abstract fun changeActive(newActive: Boolean)
 
     companion object {

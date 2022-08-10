@@ -5,11 +5,19 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 object Rhythm {
-    var on = false
+    var on: Boolean = false
+        set(on) {
+            field = on
+            for (instrument in Instrument.instruments) {
+                instrument.stop()
+            }
+        }
+
     fun start() {
         Timer().schedule(0, 500) {
-            on = !on
-            Song.currentSong.step()
+            if (on) {
+                Song.currentSong.step()
+            }
         }
     }
 }

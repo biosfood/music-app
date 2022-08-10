@@ -2,7 +2,7 @@ package com.lukas.music.song.note
 
 import kotlin.math.pow
 
-const val A4 = 440.0
+const val A4 = 261.63
 
 enum class NoteName(val index: Int, val asString: String) {
     C(0, "C"),

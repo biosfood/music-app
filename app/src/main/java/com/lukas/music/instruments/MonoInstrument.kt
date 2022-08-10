@@ -12,4 +12,8 @@ class MonoInstrument(name: String) : Instrument(name) {
     override fun changeActive(newActive: Boolean) {
         internalInstrument.active = newActive
     }
+
+    override fun stop() {
+        internalInstrument.endNote()
+    }
 }

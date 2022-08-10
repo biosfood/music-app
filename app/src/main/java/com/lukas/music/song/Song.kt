@@ -8,10 +8,20 @@ class Song(
     private val root: Note,
     private val chordProgression: ChordProgression,
 ) {
+    private var beat = 0
+    private var chord: Chord = chordProgression.step()
+
     fun step() {
-        val chord = chordProgression.step()
-        for (instrument in Instrument.instruments) {
-            instrument.startNote(root + chord.note)
+        val chordNotes = chord.getNotes(root)
+        for (voice in Instrument.voice) {
+            if (beat in voice.steps) {
+                voice.step(root, chordNotes)
+            }
+        }
+        beat++
+        if (beat > 4) {
+            beat -= 4
+            chord = chordProgression.step()
         }
     }
 
@@ -20,10 +30,10 @@ class Song(
             Note.of(NoteName.F, 4),
             ChordProgression(
                 listOf(
-                    Chord(1, ChordType.Major),
-                    Chord(6, ChordType.Major),
+                    Chord(0, ChordType.Major),
+                    Chord(5, ChordType.Major),
                     Chord(2, ChordType.Minor),
-                    Chord(8, ChordType.Major),
+                    Chord(7, ChordType.Major),
                 )
             )
         )

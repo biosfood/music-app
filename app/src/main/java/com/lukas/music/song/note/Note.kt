@@ -3,12 +3,12 @@ package com.lukas.music.song.note
 import kotlin.math.pow
 
 class Note(val id: Int) {
-    val noteName = NoteName.VALUES[id % NoteName.VALUES.size]
+    private val noteName = NoteName.VALUES[id % NoteName.VALUES.size]
     val octave = id / NoteName.VALUES.size - 1
     val frequency = noteName.baseFrequency * 2.0.pow(id / NoteName.VALUES.size - 5)
 
     operator fun plus(other: Int): Note {
-        if (other < 0 || other > 127) {
+        if (id + other < 0 || id + other > 127) {
             throw IllegalArgumentException("cannot add $other to note with id $id")
         }
         return NOTES[id + other]

@@ -18,7 +18,7 @@ private:
     float attackIncrement, delayIncrement, releaseIncrement;
     float value = 1;
 public:
-    float attack = 0.05, delay = 0.2, sustain = 0.75, release = 0.1;
+    float attack = 0.05, delay = 0.2, sustain = 0.75, release = 0.05;
 
     void initialize(AudioHost *host);
     void startNote();

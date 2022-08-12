@@ -16,8 +16,11 @@ class PlayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPlayBinding.inflate(inflater)
-        binding.playSwitch.setOnCheckedChangeListener { _, isOn ->
-            Rhythm.on = isOn
+        binding.playButton.setOnClickListener {
+            Rhythm.on = !Rhythm.on
+            binding.playButton.setImageResource(
+                if (Rhythm.on) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
+            )
         }
         return binding.root
     }

@@ -17,6 +17,9 @@ aaudio_data_callback_result_t dataCallback(
     for (auto const &instrument: *thiz->instruments) {
         instrument->render(buffer, sampleCount);
     }
+    for (uint32_t i = 0; i < sampleCount; i++) {
+        buffer[i] *= thiz->masterVolume;
+    }
     return AAUDIO_CALLBACK_RESULT_CONTINUE;
 }
 

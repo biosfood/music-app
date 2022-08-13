@@ -58,3 +58,9 @@ Java_com_lukas_music_instruments_InternalInstrument_endNote(JNIEnv *env, jobject
                                                                id));
     instrument->endNote();
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_lukas_music_ui_fragments_PlayFragment_setMasterVolume(JNIEnv *env, jobject thiz,
+                                                               jdouble volume) {
+    audioHost->masterVolume = volume;
+}

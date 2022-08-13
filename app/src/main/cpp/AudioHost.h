@@ -13,7 +13,8 @@ private:
     AAudioStream *stream;
 public:
     uint32_t sampleRate = 0;
-    std::list<Instrument*> *instruments = new std::list<Instrument*>();
+    double masterVolume = 1.0f;
+    std::list<Instrument *> *instruments = new std::list<Instrument *>();
     AudioHost();
 };
 

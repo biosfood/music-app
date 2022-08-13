@@ -3,4 +3,5 @@
     <string name="credits_tab">Credits</string>
     <string name="credits">this app was created by Lukas Eisenhauer</string>
     <string name="play_button_description">start or stop the song</string>
+    <string name="placeholder">placeholder text...</string>
 </resources>

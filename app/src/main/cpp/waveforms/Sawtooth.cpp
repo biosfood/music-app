@@ -5,7 +5,7 @@ void Sawtooth::initialize(AudioHost *host) {
 }
 
 void Sawtooth::setFrequency(float frequency) {
-    step = frequency / (double) host->sampleRate;
+    step = 2 * frequency / (double) host->sampleRate;
 }
 
 void Sawtooth::render(float *data, uint32_t frameCount) {
@@ -13,7 +13,7 @@ void Sawtooth::render(float *data, uint32_t frameCount) {
         data[i] += value * amplitude;
         value += step;
         if (value > 1) {
-            value = 0;
+            value = -1;
         }
     }
 }

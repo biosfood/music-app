@@ -2,7 +2,6 @@ package com.lukas.music.song
 
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
-import com.lukas.music.song.note.NoteName
 
 class Song(
     private val root: Note,
@@ -14,9 +13,7 @@ class Song(
     fun step() {
         val chordNotes = chord.getNotes(root)
         for (voice in Instrument.voice) {
-            if (beat in voice.steps) {
                 voice.step(root, chordNotes)
-            }
         }
         beat++
         if (beat > 4) {
@@ -27,7 +24,7 @@ class Song(
 
     companion object {
         var currentSong = Song(
-            Note.of(NoteName.F, 4),
+            Note.NOTES[69],
             ChordProgression(
                 listOf(
                     Chord(0, ChordType.Major),
@@ -37,9 +34,5 @@ class Song(
                 )
             )
         )
-
-        init {
-            println("root:  ${currentSong.root.frequency}")
-        }
     }
 }

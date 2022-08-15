@@ -1,20 +1,20 @@
-#ifndef MUSIC_SINEWAVE_H
-#define MUSIC_SINEWAVE_H
+#ifndef MUSIC_SINE_H
+#define MUSIC_SINE_H
 
-class SineWave;
+class Sine;
 
 #include <stdint.h>
-#include "AudioHost.h"
+#include "../AudioHost.h"
+#include "Waveform.h"
 
-class SineWave {
+class Sine : public Waveform {
 private:
     float phaseStep, phase = 0;
-    float frequency;
-    AudioHost *host;
 public:
     void initialize(AudioHost *host);
-    float amplitude = 0.0f;
+
     void render(float *data, uint32_t frameCount);
+
     void setFrequency(float freq);
 };
 

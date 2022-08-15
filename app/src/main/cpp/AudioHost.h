@@ -3,7 +3,7 @@
 
 class AudioHost;
 
-#include "SineWave.h"
+#include "waveforms/Sine.h"
 #include "Instrument.h"
 #include <aaudio/AAudio.h>
 #include <list>

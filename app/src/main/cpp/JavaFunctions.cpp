@@ -64,3 +64,11 @@ Java_com_lukas_music_ui_fragments_PlayFragment_setMasterVolume(JNIEnv *env, jobj
                                                                jdouble volume) {
     audioHost->masterVolume = volume;
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_InternalInstrument_setInstrumentWaveform(JNIEnv *env, jobject thiz,
+                                                                          jint id, jint waveform) {
+    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
+                                                               id));
+    instrument->setWaveform(static_cast<WaveformType>(waveform));
+}

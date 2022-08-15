@@ -6,8 +6,6 @@ void Envelope::initialize(AudioHost *host) {
     attackIncrement = 1 / attack / host->sampleRate;
     delayIncrement = 1 / delay / host->sampleRate;
     releaseIncrement = 1 / release / host->sampleRate;
-    __android_log_print(ANDROID_LOG_DEBUG, "Envelope", "increments: %f %f %f", attackIncrement,
-                        delayIncrement, releaseIncrement);
 }
 
 void Envelope::startNote() {

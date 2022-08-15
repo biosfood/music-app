@@ -3,22 +3,25 @@
 
 class Instrument;
 
-#include "SineWave.h"
 #include "AudioHost.h"
 #include "Envelope.h"
 
 class Instrument {
+private:
+    AudioHost *host;
 public:
     Instrument(AudioHost *host);
 
     Envelope *const envelope = new Envelope();
-    SineWave *const wave = new SineWave();
+    Waveform *wave = new Sine();
 
     void render(float *buffer, uint32_t count);
 
     void startNote(float frequency);
 
     void endNote();
+
+    void setWaveform(WaveformType waveform);
 };
 
 #endif

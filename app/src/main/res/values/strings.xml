@@ -4,4 +4,11 @@
     <string name="credits">this app was created by Lukas Eisenhauer</string>
     <string name="play_button_description">start or stop the song</string>
     <string name="placeholder">placeholder text...</string>
+    <string name="instrument_active">active</string>
+    <string name="instrument_type_description">select the instrument waveform</string>
+    <string name="edit_instrument_description">edit this instrument\'s properties</string>
+    <string-array name="waveforms">
+        <item>Sine</item>
+        <item>Sawtooth</item>
+    </string-array>
 </resources>

@@ -7,7 +7,8 @@ add_library(
 
         SHARED
 
-        SineWave.cpp
+        waveforms/Sine.cpp
+        waveforms/Sawtooth.cpp
         JavaFunctions.cpp
         AudioHost.cpp
         Instrument.cpp

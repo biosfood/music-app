@@ -8,10 +8,11 @@ import com.lukas.music.song.voice.Voice
 
 abstract class Instrument(private var name: String) {
     private var active = false
+    abstract var waveform: Waveform
 
     fun applyToView(binding: FragmentInstrumentBinding) {
         binding.instrumentNameText.text = name
-        binding.floatingActionButton2.setOnClickListener {
+        binding.editInstrumentButton.setOnClickListener {
             println("click instrument $name")
         }
         binding.activeSwitch.setOnCheckedChangeListener { _, newActive ->

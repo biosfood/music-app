@@ -6,6 +6,14 @@ class PolyInstrument(name: String) : Instrument(name) {
     private val internalInstruments = Array(3) { InternalInstrument() }
     private val playing = Array(3) { false }
 
+    override var waveform: Waveform = Waveform.SINE
+        set(value) {
+            field = value
+            for (internalInstrument in internalInstruments) {
+                internalInstrument.waveform = value
+            }
+        }
+
     override fun startNote(note: Note) {
         for ((index, instrumentPlaying) in playing.withIndex()) {
             if (!instrumentPlaying) {

@@ -1,6 +1,8 @@
 #include "Instrument.h"
+#include "waveforms/Sawtooth.h"
 
 Instrument::Instrument(AudioHost *host) {
+    this->host = host;
     wave->initialize(host);
     envelope->initialize(host);
 }
@@ -15,7 +17,6 @@ float *multiply(float *target, float *modulation, uint32_t size) {
 void Instrument::render(float *buffer, uint32_t count) {
     float *modulation = envelope->render(count);
     wave->render(buffer, count);
-    multiply(buffer, modulation, count);
 }
 
 void Instrument::startNote(float frequency) {
@@ -25,4 +26,17 @@ void Instrument::startNote(float frequency) {
 
 void Instrument::endNote() {
     envelope->endNote();
+}
+
+void Instrument::setWaveform(WaveformType waveform) {
+    // delete &wave;
+    switch (waveform) {
+        case SINE:
+            wave = new Sine();
+            break;
+        case SAWTOOTH:
+            wave = new Sawtooth();
+            break;
+    }
+    wave->initialize(host);
 }

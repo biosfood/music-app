@@ -3,8 +3,9 @@
 
 class Instrument;
 
+#include "effects/Envelope.h"
+#include "waveforms/Waveform.h"
 #include "AudioHost.h"
-#include "Envelope.h"
 
 class Instrument {
 private:
@@ -13,14 +14,11 @@ public:
     Instrument(AudioHost *host);
 
     Envelope *const envelope = new Envelope();
-    Waveform *wave = new Sine();
+    Waveform *wave;
 
     void render(float *buffer, uint32_t count);
-
     void startNote(float frequency);
-
     void endNote();
-
     void setWaveform(WaveformType waveform);
 };
 

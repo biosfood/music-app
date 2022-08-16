@@ -4,26 +4,28 @@
 class Envelope;
 
 #include <cstdint>
-#include "AudioHost.h"
+#include "../AudioHost.h"
+#include "Processable.h"
 
 enum EnvelopePhase {
     NONE, ATTACK, DELAY, SUSTAIN, RELEASE,
 };
 
-class Envelope {
+class Envelope : public Processable {
 private:
-    uint32_t bufferSize = 0;
-    float *buffer;
     EnvelopePhase phase;
     float attackIncrement, delayIncrement, releaseIncrement;
-    float value = 1;
+    float value = 0;
 public:
     float attack = 0.05, delay = 0.2, sustain = 0.75, release = 1;
 
     void initialize(AudioHost *host);
+
     void startNote();
+
     void endNote();
-    float *render(uint32_t sampleCount);
+
+    void doRender(uint32_t sampleCount);
 };
 
 

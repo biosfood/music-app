@@ -12,7 +12,7 @@ class InternalInstrument {
         set(value) {
             field = value
             setInstrumentWaveform(id, value.id)
-            println("set instrument to $value")
+            active = active
         }
 
     fun startNote(frequency: Double) {

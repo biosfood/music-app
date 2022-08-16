@@ -7,8 +7,4 @@
     <string name="instrument_active">active</string>
     <string name="instrument_type_description">select the instrument waveform</string>
     <string name="edit_instrument_description">edit this instrument\'s properties</string>
-    <string-array name="waveforms">
-        <item>Sine</item>
-        <item>Sawtooth</item>
-    </string-array>
 </resources>

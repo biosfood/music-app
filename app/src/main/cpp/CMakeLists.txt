@@ -9,10 +9,12 @@ add_library(
 
         waveforms/Sine.cpp
         waveforms/Sawtooth.cpp
+        waveforms/Waveform.cpp
         JavaFunctions.cpp
         AudioHost.cpp
         Instrument.cpp
-        Envelope.cpp
+        effects/Envelope.cpp
+        effects/Processable.cpp
 )
 
 find_library(

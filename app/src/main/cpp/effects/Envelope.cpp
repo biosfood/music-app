@@ -1,5 +1,5 @@
 #include <android/log.h>
-#include "Instrument.h"
+#include "../Instrument.h"
 #include "Envelope.h"
 
 void Envelope::initialize(AudioHost *host) {
@@ -16,11 +16,7 @@ void Envelope::endNote() {
     phase = RELEASE;
 }
 
-float *Envelope::render(uint32_t sampleCount) {
-    if (sampleCount > bufferSize) {
-        bufferSize = sampleCount;
-        buffer = new float[sampleCount];
-    }
+void Envelope::doRender(uint32_t sampleCount) {
     for (int i = 0; i < sampleCount; ++i) {
         switch (phase) {
             case ATTACK:
@@ -47,5 +43,4 @@ float *Envelope::render(uint32_t sampleCount) {
         }
         buffer[i] = value;
     }
-    return buffer;
 }

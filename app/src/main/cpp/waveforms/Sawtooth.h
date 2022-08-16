@@ -10,9 +10,7 @@ class Sawtooth : public Waveform {
 private:
     float value = 0, step = 0;
 public:
-    void initialize(AudioHost *host);
-
-    void render(float *data, uint32_t frameCount);
+    void renderWaveform(uint32_t frameCount);
 
     void setFrequency(float freq);
 };

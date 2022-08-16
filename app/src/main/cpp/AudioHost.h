@@ -3,7 +3,6 @@
 
 class AudioHost;
 
-#include "waveforms/Sine.h"
 #include "Instrument.h"
 #include <aaudio/AAudio.h>
 #include <list>
@@ -19,4 +18,4 @@ public:
 };
 
 
-#endif //MUSIC_AUDIO_HOST_H
+#endif

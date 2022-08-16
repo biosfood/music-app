@@ -4,15 +4,17 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.RadioButton
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.song.chords.Chord
+import com.lukas.music.song.chords.ChordProgression
 import com.lukas.music.song.note.Note
 
 class Song(
     private val root: Note,
-    private val chordProgression: ChordProgression,
+    val chordProgression: ChordProgression,
     val beats: Int
 ) {
     private var beat = 0
-    private var chord: Chord = chordProgression.chords[0]
+    private var chord: Chord = chordProgression.step()
     val stepButtons = mutableListOf<RadioButton>()
 
     fun step() {
@@ -35,14 +37,7 @@ class Song(
     companion object {
         var currentSong = Song(
             Note.NOTES[69],
-            ChordProgression(
-                listOf(
-                    Chord(0, ChordType.Major),
-                    Chord(5, ChordType.Major),
-                    Chord(2, ChordType.Minor),
-                    Chord(7, ChordType.Major),
-                )
-            ),
+            ChordProgression(),
             4
         )
     }

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Music</string>
+    <string name="play_tab">Play</string>
+    <string name="song_tab">Song</string>
+    <string name="instrument_tab">Instruments</string>
     <string name="credits_tab">Credits</string>
     <string name="credits">this app was created by Lukas Eisenhauer</string>
     <string name="play_button_description">start or stop the song</string>

@@ -1,10 +1,10 @@
 package com.lukas.music.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.lukas.music.R
 
 class CreditsFragment : Fragment() {
@@ -13,14 +13,5 @@ class CreditsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_credits, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            CreditsFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
     }
 }

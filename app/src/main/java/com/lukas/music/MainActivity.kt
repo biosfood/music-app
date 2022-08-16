@@ -7,13 +7,19 @@ import com.lukas.music.instruments.Rhythm
 import com.lukas.music.ui.fragments.CreditsFragment
 import com.lukas.music.ui.fragments.InstrumentListFragment
 import com.lukas.music.ui.fragments.PlayFragment
+import com.lukas.music.ui.fragments.SongFragment
 import com.lukas.music.ui.tab.PageListener
 import com.lukas.music.ui.tab.TabAdapter
 import com.lukas.music.ui.tab.TabListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val tabFragments = listOf(PlayFragment(), InstrumentListFragment(), CreditsFragment())
+    private val tabFragments = listOf(
+        PlayFragment(),
+        SongFragment(),
+        InstrumentListFragment(),
+        CreditsFragment(),
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

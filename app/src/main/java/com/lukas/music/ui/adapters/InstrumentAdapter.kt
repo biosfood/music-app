@@ -1,4 +1,4 @@
-package com.lukas.music.ui
+package com.lukas.music.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

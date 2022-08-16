@@ -17,12 +17,17 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="play" />
+            android:text="@string/play_tab" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instruments" />
+            android:text="@string/song_tab" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instrument_tab" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

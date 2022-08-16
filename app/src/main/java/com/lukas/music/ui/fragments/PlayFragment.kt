@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.SeekBar
+import android.widget.Space
 import androidx.fragment.app.Fragment
 import com.lukas.music.databinding.FragmentPlayBinding
 import com.lukas.music.instruments.Rhythm
+import com.lukas.music.song.Song
 
 class PlayFragment : Fragment() {
     lateinit var binding: FragmentPlayBinding
@@ -42,6 +46,24 @@ class PlayFragment : Fragment() {
             }
         })
         binding.masterVolumeSlider.progress = 100
+        val layout = RadioGroup.LayoutParams(
+            RadioGroup.LayoutParams.WRAP_CONTENT,
+            RadioGroup.LayoutParams.MATCH_PARENT
+        )
+        layout.weight = 1.0f
+        val spacer = Space(binding.root.context)
+        spacer.layoutParams = layout
+        binding.beatIndicator.addView(spacer)
+        for (i in 0 until Song.currentSong.beats) {
+            val child = RadioButton(binding.root.context)
+            child.layoutParams = layout
+            child.isClickable = false
+            if (i == 0) {
+                child.isChecked = true
+            }
+            Song.currentSong.stepButtons += child
+            binding.beatIndicator.addView(child)
+        }
         return binding.root
     }
 

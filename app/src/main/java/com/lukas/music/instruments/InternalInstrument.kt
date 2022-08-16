@@ -12,6 +12,7 @@ class InternalInstrument {
         set(value) {
             field = value
             setInstrumentWaveform(id, value.id)
+            // this is to resend the setInstrumentActive for the new waveform in the internal c++ code
             active = active
         }
 

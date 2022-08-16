@@ -1,6 +1,6 @@
 package com.lukas.music.song
 
-class ChordProgression(private val chords: List<Chord>) {
+class ChordProgression(val chords: List<Chord>) {
     private var index = 0
 
     fun step(): Chord {

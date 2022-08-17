@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import com.lukas.music.databinding.FragmentSongBinding
 import com.lukas.music.song.Song
+import com.lukas.music.song.chords.Phrase
 import com.lukas.music.song.note.Note
 import com.lukas.music.song.note.NoteName
 
@@ -39,6 +37,10 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.keySelection.adapter = adapter
         binding.keySelection.onItemSelectedListener = this
         binding.keySelection.setSelection(Song.currentSong.root.noteName.index)
+        binding.addPhraseButton.setOnClickListener {
+            Song.currentSong.chordProgression.phrases += Phrase()
+            updateChords()
+        }
         updateChords()
         return binding.root
     }
@@ -57,6 +59,18 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 card.addView(text)
                 row.addView(card)
             }
+            val button = ImageButton(binding.root.context)
+            button.setOnClickListener {
+                Song.currentSong.chordProgression.phrases -= phrase
+                updateChords()
+            }
+            button.setImageResource(android.R.drawable.ic_delete)
+            val buttonLayout = TableRow.LayoutParams(
+                0,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            button.layoutParams = buttonLayout
+            row.addView(button)
             binding.chords.addView(row)
         }
     }

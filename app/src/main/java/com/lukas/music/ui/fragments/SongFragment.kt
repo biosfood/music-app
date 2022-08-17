@@ -65,10 +65,6 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 updateChords()
             }
             button.setImageResource(android.R.drawable.ic_delete)
-            val buttonLayout = TableRow.LayoutParams(
-                0,
-                TableRow.LayoutParams.WRAP_CONTENT
-            )
             button.layoutParams = buttonLayout
             row.addView(button)
             binding.chords.addView(row)
@@ -79,6 +75,10 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val layout = TableRow.LayoutParams(
             TableRow.LayoutParams.MATCH_PARENT,
             TableRow.LayoutParams.MATCH_PARENT
+        )
+        val buttonLayout = TableRow.LayoutParams(
+            0,
+            TableRow.LayoutParams.WRAP_CONTENT
         )
 
         init {

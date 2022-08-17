@@ -26,6 +26,10 @@ enum class NoteName(val index: Int, val asString: String) {
         return VALUES[resultPosition]
     }
 
+    override fun toString(): String {
+        return asString
+    }
+
     companion object {
         val VALUES = values()
     }

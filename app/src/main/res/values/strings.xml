@@ -10,4 +10,7 @@
     <string name="instrument_active">active</string>
     <string name="instrument_type_description">select the instrument waveform</string>
     <string name="edit_instrument_description">edit this instrument\'s properties</string>
+    <string name="new_phrase_description">Add a new phrase</string>
+    <string name="actual_chords">Actual chords</string>
+    <string name="key_selection_description">select the song\'s key</string>
 </resources>

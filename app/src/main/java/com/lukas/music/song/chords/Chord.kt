@@ -8,6 +8,17 @@ class Chord(val note: Int, private val chordType: ChordType) {
     }
 
     override fun toString(): String {
-        return "$note -> $chordType"
+        return "$note($chordType)"
+    }
+
+    fun toString(displayChordNames: Boolean, root: Note): String {
+        if (displayChordNames) {
+            val noteName = (root + note).noteName
+            if (chordType == ChordType.Major) {
+                return noteName.toString().uppercase()
+            }
+            return noteName.toString().lowercase()
+        }
+        return toString()
     }
 }

@@ -9,7 +9,7 @@ import com.lukas.music.song.chords.ChordProgression
 import com.lukas.music.song.note.Note
 
 class Song(
-    private val root: Note,
+    var root: Note,
     val chordProgression: ChordProgression,
     val beats: Int
 ) {

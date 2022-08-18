@@ -14,12 +14,15 @@ class Song(
     val chordProgression: ChordProgression,
     val beats: Int
 ) {
-    private var beat = 0
-    private var chord: Chord = chordProgression.step()
+    private var beat = beats - 1
+    private lateinit var chord: Chord
     val stepButtons = mutableListOf<RadioButton>()
     lateinit var chordDisplay: TextView
 
     fun step() {
+        if (chordProgression.phrases.isEmpty()) {
+            return
+        }
         Handler(Looper.getMainLooper()).post {
             stepButtons[beat].isChecked = false
             beat++

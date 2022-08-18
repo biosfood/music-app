@@ -3,7 +3,7 @@ package com.lukas.music.song.chords
 class ChordProgression {
     // TODO: special handler for increasing or decreasing measuresPerPhrase
     val measuresPerPhrase: Int = 4
-    val phrases = mutableListOf<Phrase>(Phrase(), Phrase())
+    val phrases = mutableListOf<Phrase>()
 
     private var position = 0
     fun step(): Chord {

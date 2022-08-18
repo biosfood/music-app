@@ -3,7 +3,6 @@ package com.lukas.music
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.lukas.music.databinding.ActivityMainBinding
-import com.lukas.music.instruments.Rhythm
 import com.lukas.music.ui.fragments.CreditsFragment
 import com.lukas.music.ui.fragments.InstrumentListFragment
 import com.lukas.music.ui.fragments.PlayFragment
@@ -30,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         binding.tabPager.registerOnPageChangeCallback(PageListener(binding.tabLayout))
         binding.tabLayout.addOnTabSelectedListener(TabListener(binding.tabPager))
         startAudio()
-        Rhythm.start()
         supportActionBar?.hide()
     }
 

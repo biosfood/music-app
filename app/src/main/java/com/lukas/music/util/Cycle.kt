@@ -44,12 +44,10 @@ open class MetaCycle<T : Cycle<out Any>> : Cycle<T>() {
         if (size == 0) {
             return null
         }
-        val callback: () -> Unit = {
+        this[index].step()
+        if (this[index].index == 0) {
             super.step()
         }
-        this[index].wraparoundListeners += callback
-        this[index].step()
-        this[index].wraparoundListeners -= callback
         for (callback in miniStepCallback) {
             callback()
         }

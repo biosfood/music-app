@@ -31,25 +31,14 @@ class PlayFragment : Fragment() {
                 if (Rhythm.on) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
             )
         }
-        binding.masterVolumeSlider.min = 0
-        binding.masterVolumeSlider.max = 100
-        binding.masterVolumeSlider.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seekBar: SeekBar,
-                progress: Int, fromUser: Boolean
-            ) {
-                setMasterVolume(progress.toDouble() / 100.0)
-                binding.masterVolumeText.text = "Master volume: $progress%"
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-            }
-        })
-        binding.masterVolumeSlider.progress = 100
+        setupSlider(binding.masterVolumeSlider, 0, 100, 100) {
+            setMasterVolume(it.toDouble() / 100.0)
+            binding.masterVolumeText.text = "Master volume: $it%"
+        }
+        setupSlider(binding.tempoSlider, 50, 150, 90) {
+            Rhythm.setTempo(it)
+            binding.tempoText.text = "tempo: ${it}bpm"
+        }
         val layout = RadioGroup.LayoutParams(
             RadioGroup.LayoutParams.WRAP_CONTENT,
             RadioGroup.LayoutParams.MATCH_PARENT
@@ -102,6 +91,33 @@ class PlayFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    private fun setupSlider(
+        slider: SeekBar,
+        min: Int,
+        max: Int,
+        initialProgress: Int,
+        callback: (Int) -> Unit
+    ) {
+        slider.min = min
+        slider.max = max
+        slider.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar,
+                progress: Int, fromUser: Boolean
+            ) {
+                callback(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+            }
+        })
+        slider.progress = initialProgress
     }
 
     private fun putChords() {

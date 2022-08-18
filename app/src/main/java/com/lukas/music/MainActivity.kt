@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(TabListener(binding.tabPager))
         startAudio()
         Rhythm.start()
+        supportActionBar?.hide()
     }
 
     companion object {

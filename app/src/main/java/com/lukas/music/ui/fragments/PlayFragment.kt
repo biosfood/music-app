@@ -39,6 +39,23 @@ class PlayFragment : Fragment() {
             Rhythm.setTempo(it)
             binding.tempoText.text = "tempo: ${it}bpm"
         }
+        setupBeatIndicator()
+        Song.currentSong.stepCallback += {
+            Handler(Looper.getMainLooper()).post {
+                beatIndicators[Song.currentSong.indexBehind].isChecked = false
+                beatIndicators[Song.currentSong.index].isChecked = true
+            }
+        }
+        Song.currentSong.chordProgression.stepCallback += {
+            Handler(Looper.getMainLooper()).post { putChords() }
+        }
+        Song.currentSong.chordProgression.miniStepCallback += {
+            Handler(Looper.getMainLooper()).post { updateChordView() }
+        }
+        return binding.root
+    }
+
+    private fun setupBeatIndicator() {
         val layout = RadioGroup.LayoutParams(
             RadioGroup.LayoutParams.WRAP_CONTENT,
             RadioGroup.LayoutParams.MATCH_PARENT
@@ -57,40 +74,27 @@ class PlayFragment : Fragment() {
             beatIndicators += child
             binding.beatIndicator.addView(child)
         }
-        Song.currentSong.stepCallback += {
-            Handler(Looper.getMainLooper()).post {
-                beatIndicators[Song.currentSong.indexBehind].isChecked = false
-                beatIndicators[Song.currentSong.index].isChecked = true
-            }
+    }
+
+    private fun updateChordView() {
+        if (chordDisplays.isEmpty()) {
+            putChords()
         }
-        Song.currentSong.chordProgression.stepCallback += {
-            Handler(Looper.getMainLooper()).post {
-                putChords()
-            }
+        chordDisplays[Song.currentSong.chordProgression.currentItem.index].setBackgroundColor(
+            ContextCompat.getColor(
+                binding.root.context,
+                R.color.gray_400
+            )
+        )
+        if (Song.currentSong.chordProgression.currentItem.index == 0) {
+            return
         }
-        Song.currentSong.chordProgression.miniStepCallback += {
-            Handler(Looper.getMainLooper()).post {
-                if (chordDisplays.isEmpty()) {
-                    putChords()
-                }
-                chordDisplays[Song.currentSong.chordProgression.currentItem.index].setBackgroundColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.gray_400
-                    )
-                )
-                if (Song.currentSong.chordProgression.currentItem.index == 0) {
-                    return@post
-                }
-                chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setBackgroundColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.gray_600
-                    )
-                )
-            }
-        }
-        return binding.root
+        chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setBackgroundColor(
+            ContextCompat.getColor(
+                binding.root.context,
+                R.color.gray_600
+            )
+        )
     }
 
     private fun setupSlider(
@@ -135,5 +139,5 @@ class PlayFragment : Fragment() {
         binding.phraseTable.isStretchAllColumns = true
     }
 
-    external fun setMasterVolume(volume: Double)
+    private external fun setMasterVolume(volume: Double)
 }

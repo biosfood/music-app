@@ -38,7 +38,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.keySelection.onItemSelectedListener = this
         binding.keySelection.setSelection(Song.currentSong.root.noteName.index)
         binding.addPhraseButton.setOnClickListener {
-            Song.currentSong.chordProgression.phrases += Phrase()
+            Song.currentSong.chordProgression += Phrase()
             updateChords()
         }
         updateChords()
@@ -47,9 +47,9 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     fun updateChords() {
         binding.chords.removeAllViews()
-        for (phrase in Song.currentSong.chordProgression.phrases) {
+        for (phrase in Song.currentSong.chordProgression) {
             val row = TableRow(binding.root.context)
-            for (chord in phrase.chords) {
+            for (chord in phrase) {
                 val card = CardView(binding.root.context)
                 card.radius = 10f
                 card.layoutParams = layout
@@ -64,7 +64,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
             val button = ImageButton(binding.root.context)
             button.setOnClickListener {
-                Song.currentSong.chordProgression.phrases -= phrase
+                Song.currentSong.chordProgression -= phrase
                 updateChords()
             }
             button.setImageResource(android.R.drawable.ic_delete)

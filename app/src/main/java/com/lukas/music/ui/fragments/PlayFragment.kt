@@ -1,6 +1,8 @@
 package com.lukas.music.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +14,11 @@ import com.lukas.music.R
 import com.lukas.music.databinding.FragmentPlayBinding
 import com.lukas.music.instruments.Rhythm
 import com.lukas.music.song.Song
-import com.lukas.music.song.Song.Companion.setOnBeatCallback
-import com.lukas.music.song.Song.Companion.setOnChordCallback
-import com.lukas.music.song.Song.Companion.setOnPhraseCallback
-import com.lukas.music.song.chords.Chord
 
 class PlayFragment : Fragment() {
     lateinit var binding: FragmentPlayBinding
     private val beatIndicators = mutableListOf<RadioButton>()
-    private val chordDisplays = mutableMapOf<Chord, CardView>()
+    private val chordDisplays = mutableListOf<CardView>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,39 +68,55 @@ class PlayFragment : Fragment() {
             beatIndicators += child
             binding.beatIndicator.addView(child)
         }
-        binding.root.setOnBeatCallback { before, now ->
-            beatIndicators[before].isChecked = false
-            beatIndicators[now].isChecked = true
-        }
-        binding.root.setOnPhraseCallback {
-            binding.phraseDisplay.removeAllViews()
-            chordDisplays.clear()
-            for (chord in it.chords) {
-                val card = CardView(binding.root.context)
-                val text = TextView(binding.root.context)
-                text.text = chord.toString(true, Song.currentSong.root)
-                card.layoutParams = SongFragment.layout
-                card.addView(text)
-                binding.phraseDisplay.addView(card)
-                chordDisplays[chord] = card
+        Song.currentSong.stepCallback += {
+            Handler(Looper.getMainLooper()).post {
+                beatIndicators[Song.currentSong.indexBehind].isChecked = false
+                beatIndicators[Song.currentSong.index].isChecked = true
             }
-            binding.phraseTable.isStretchAllColumns = true
         }
-        binding.root.setOnChordCallback { old, new ->
-            chordDisplays[old]?.setBackgroundColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.gray_600
+        Song.currentSong.chordProgression.stepCallback += {
+            Handler(Looper.getMainLooper()).post {
+                putChords()
+            }
+        }
+        Song.currentSong.chordProgression.miniStepCallback += {
+            Handler(Looper.getMainLooper()).post {
+                if (chordDisplays.isEmpty()) {
+                    putChords()
+                }
+                chordDisplays[Song.currentSong.chordProgression.currentItem.index].setBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.gray_400
+                    )
                 )
-            )
-            chordDisplays[new]?.setBackgroundColor(
-                ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.gray_400
+                if (Song.currentSong.chordProgression.currentItem.index == 0) {
+                    return@post
+                }
+                chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.gray_600
+                    )
                 )
-            )
+            }
         }
         return binding.root
+    }
+
+    private fun putChords() {
+        binding.phraseDisplay.removeAllViews()
+        chordDisplays.clear()
+        for (chord in Song.currentSong.chordProgression.currentItem) {
+            val card = CardView(binding.root.context)
+            val text = TextView(binding.root.context)
+            text.text = chord.toString(true, Song.currentSong.root)
+            card.layoutParams = SongFragment.layout
+            card.addView(text)
+            binding.phraseDisplay.addView(card)
+            chordDisplays += card
+        }
+        binding.phraseTable.isStretchAllColumns = true
     }
 
     external fun setMasterVolume(volume: Double)

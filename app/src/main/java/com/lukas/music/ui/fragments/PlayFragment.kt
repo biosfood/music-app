@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment
 import com.lukas.music.databinding.FragmentPlayBinding
 import com.lukas.music.instruments.Rhythm
 import com.lukas.music.song.Song
+import com.lukas.music.song.Song.Companion.setOnBeatCallback
 
 class PlayFragment : Fragment() {
     lateinit var binding: FragmentPlayBinding
+    val beatIndicators = mutableListOf<RadioButton>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,10 +63,14 @@ class PlayFragment : Fragment() {
             if (i == 0) {
                 child.isChecked = true
             }
-            Song.currentSong.stepButtons += child
+            beatIndicators += child
             binding.beatIndicator.addView(child)
         }
         Song.currentSong.chordDisplay = binding.currentChord
+        binding.root.setOnBeatCallback { before, now ->
+            beatIndicators[before].isChecked = false
+            beatIndicators[now].isChecked = true
+        }
         return binding.root
     }
 

@@ -2,8 +2,9 @@ package com.lukas.music.song
 
 import android.os.Handler
 import android.os.Looper
-import android.widget.RadioButton
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.doOnDetach
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.chords.ChordProgression
@@ -16,21 +17,23 @@ class Song(
 ) {
     private var beat = beats - 1
     private lateinit var chord: Chord
-    val stepButtons = mutableListOf<RadioButton>()
     lateinit var chordDisplay: TextView
+    private val beatCallback = mutableListOf<(Int, Int) -> Unit>()
 
     fun step() {
         if (chordProgression.phrases.isEmpty()) {
             return
         }
         Handler(Looper.getMainLooper()).post {
-            stepButtons[beat].isChecked = false
+            val before = beat
             beat++
             if (beat >= beats) {
                 beat = 0
                 chord = chordProgression.step()
             }
-            stepButtons[beat].isChecked = true
+            for (callback in beatCallback) {
+                callback(before, beat)
+            }
             // this should not be executed here, but otherwise timing problems show up...
             val chordNotes = chord.getNotes(root)
             for (voice in Instrument.voice) {
@@ -46,5 +49,12 @@ class Song(
             ChordProgression(),
             4
         )
+
+        fun View.setOnBeatCallback(callback: (Int, Int) -> Unit) {
+            currentSong.beatCallback += callback
+            doOnDetach {
+                currentSong.beatCallback.remove(callback)
+            }
+        }
     }
 }

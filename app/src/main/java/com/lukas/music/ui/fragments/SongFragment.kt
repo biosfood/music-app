@@ -52,13 +52,15 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
             for (chord in phrase) {
                 val card = CardView(binding.root.context)
                 card.radius = 10f
-                card.layoutParams = layout
+                card.layoutParams = tableRowLayout
                 card.setOnClickListener {
                     EditChordFragment(chord, this).showNow(childFragmentManager, "")
                 }
                 val text = TextView(binding.root.context)
                 text.text = chord.toString(displayChordNames, Song.currentSong.root)
-                text.layoutParams = layout
+                text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                text.layoutParams = tableRowLayout
+                text.textSize = 20f
                 card.addView(text)
                 row.addView(card)
             }
@@ -75,7 +77,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     companion object {
-        val layout = TableRow.LayoutParams(
+        val tableRowLayout = TableRow.LayoutParams(
             TableRow.LayoutParams.MATCH_PARENT,
             TableRow.LayoutParams.MATCH_PARENT
         )
@@ -85,7 +87,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
         )
 
         init {
-            layout.setMargins(10)
+            tableRowLayout.setMargins(10)
         }
     }
 

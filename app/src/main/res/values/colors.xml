@@ -11,4 +11,14 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+    <color name="gray_0x10">#101010</color>
+    <color name="gray_0x20">#202020</color>
+    <color name="gray_0x30">#303030</color>
+    <color name="gray_0x40">#404040</color>
+    <color name="gray_0x50">#505050</color>
+    <color name="gray_0x60">#606060</color>
+    <color name="gray_0x70">#707070</color>
+    <color name="gray_0x80">#808080</color>
+    <color name="gray_0x90">#909090</color>
+    <color name="gray_0xA0">#A0A0A0</color>
 </resources>

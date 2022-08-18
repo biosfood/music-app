@@ -16,7 +16,7 @@ import com.lukas.music.instruments.Rhythm
 import com.lukas.music.song.Song
 
 class PlayFragment : Fragment() {
-    lateinit var binding: FragmentPlayBinding
+    private lateinit var binding: FragmentPlayBinding
     private val beatIndicators = mutableListOf<RadioButton>()
     private val chordDisplays = mutableListOf<CardView>()
 
@@ -80,20 +80,14 @@ class PlayFragment : Fragment() {
         if (chordDisplays.isEmpty()) {
             putChords()
         }
-        chordDisplays[Song.currentSong.chordProgression.currentItem.index].setBackgroundColor(
-            ContextCompat.getColor(
-                binding.root.context,
-                R.color.gray_400
-            )
+        chordDisplays[Song.currentSong.chordProgression.currentItem.index].setCardBackgroundColor(
+            ContextCompat.getColor(binding.root.context, R.color.purple_700)
         )
         if (Song.currentSong.chordProgression.currentItem.index == 0) {
             return
         }
-        chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setBackgroundColor(
-            ContextCompat.getColor(
-                binding.root.context,
-                R.color.gray_600
-            )
+        chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setCardBackgroundColor(
+            ContextCompat.getColor(binding.root.context, R.color.gray_0x40)
         )
     }
 
@@ -129,14 +123,21 @@ class PlayFragment : Fragment() {
         chordDisplays.clear()
         for (chord in Song.currentSong.chordProgression.currentItem) {
             val card = CardView(binding.root.context)
+            card.layoutParams = SongFragment.tableRowLayout
+            card.radius = 10f
+            card.preventCornerOverlap = false
             val text = TextView(binding.root.context)
             text.text = chord.toString(true, Song.currentSong.root)
-            card.layoutParams = SongFragment.layout
+            text.layoutParams = SongFragment.tableRowLayout
+            text.textSize = 20f
+            text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             card.addView(text)
             binding.phraseDisplay.addView(card)
             chordDisplays += card
         }
         binding.phraseTable.isStretchAllColumns = true
+        binding.nextChordText.text =
+            Song.currentSong.chordProgression.lookahead(1)[0].toString(true, Song.currentSong.root)
     }
 
     private external fun setMasterVolume(volume: Double)

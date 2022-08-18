@@ -45,7 +45,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return binding.root
     }
 
-    private fun updateChords() {
+    fun updateChords() {
         binding.chords.removeAllViews()
         for (phrase in Song.currentSong.chordProgression.phrases) {
             val row = TableRow(binding.root.context)
@@ -53,6 +53,9 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 val card = CardView(binding.root.context)
                 card.radius = 10f
                 card.layoutParams = layout
+                card.setOnClickListener {
+                    EditChordFragment(chord, this).showNow(childFragmentManager, "")
+                }
                 val text = TextView(binding.root.context)
                 text.text = chord.toString(displayChordNames, Song.currentSong.root)
                 text.layoutParams = layout

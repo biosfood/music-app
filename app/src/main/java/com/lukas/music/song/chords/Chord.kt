@@ -2,8 +2,13 @@ package com.lukas.music.song.chords
 
 import com.lukas.music.song.note.Note
 
-class Chord(val note: Int, private val chordType: ChordType) {
-    private val interval = Interval(note)
+class Chord(note: Int, var chordType: ChordType) {
+    var note: Int = note
+        set(value) {
+            field = value
+            interval = Interval(value)
+        }
+    var interval = Interval(note)
 
     fun getNotes(root: Note): Array<Note> {
         return Array(chordType.notes.size) { root + note + chordType.notes[it] }

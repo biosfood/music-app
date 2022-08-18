@@ -13,4 +13,10 @@
     <string name="new_phrase_description">Add a new phrase</string>
     <string name="actual_chords">Actual chords</string>
     <string name="key_selection_description">select the song\'s key</string>
+    <string name="edit_chord">Edit chord</string>
+    <string name="chord_pitch_description">Edit this chord\'s pitch</string>
+    <string name="chord_type_description">Edit this chord\'s type</string>
+    <string name="chord_pitch">Chord pitch</string>
+    <string name="chord_type">Chord type</string>
+    <string name="exit">Exit this menu</string>
 </resources>

@@ -64,6 +64,7 @@ class PlayFragment : Fragment() {
             Song.currentSong.stepButtons += child
             binding.beatIndicator.addView(child)
         }
+        Song.currentSong.chordDisplay = binding.currentChord
         return binding.root
     }
 

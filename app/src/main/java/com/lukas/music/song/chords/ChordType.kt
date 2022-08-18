@@ -5,11 +5,16 @@ enum class ChordType(
     private val asString: String,
     val transform: (String) -> String
 ) {
-    Major(arrayOf(0, 4, 7), "major", { it.uppercase() }),
-    Minor(arrayOf(0, 3, 7), "minor", { it.lowercase() }),
+    MAJOR(arrayOf(0, 4, 7), "major", { it.uppercase() }),
+    MINOR(arrayOf(0, 3, 7), "minor", { it.lowercase() }),
+    DIMINISHED(arrayOf(0, 3, 6), "diminished", { it.lowercase() + "0" }),
     ;
 
     override fun toString(): String {
         return asString
+    }
+
+    companion object {
+        val VALUES = values()
     }
 }

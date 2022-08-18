@@ -3,6 +3,7 @@ package com.lukas.music.song
 import android.os.Handler
 import android.os.Looper
 import android.widget.RadioButton
+import android.widget.TextView
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.chords.ChordProgression
@@ -16,6 +17,7 @@ class Song(
     private var beat = 0
     private var chord: Chord = chordProgression.step()
     val stepButtons = mutableListOf<RadioButton>()
+    lateinit var chordDisplay: TextView
 
     fun step() {
         Handler(Looper.getMainLooper()).post {
@@ -31,6 +33,7 @@ class Song(
             for (voice in Instrument.voice) {
                 voice.step(root, chordNotes)
             }
+            chordDisplay.text = chord.toString(true, root)
         }
     }
 

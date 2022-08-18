@@ -1,7 +1,7 @@
 package com.lukas.music.song.chords
 
 class Interval(private val distance: Int) {
-    private val name: IntervalName = when (distance) {
+    val name: IntervalName = when (distance) {
         0 -> IntervalName.UNISON
         1, 2 -> IntervalName.SECOND
         3, 4 -> IntervalName.THIRD
@@ -13,7 +13,7 @@ class Interval(private val distance: Int) {
         else -> throw IllegalArgumentException("cannot make interval from distance $distance")
     }
     private val modifier: Modifier = when (distance) {
-        0, 5, 12 -> Modifier.PERFECT
+        0, 7, 12 -> Modifier.PERFECT
         1, 3, 5, 8, 10 -> Modifier.MINOR
         else -> Modifier.MAJOR
     }
@@ -36,12 +36,20 @@ class Interval(private val distance: Int) {
         override fun toString(): String {
             return romanVersion
         }
+
+        companion object {
+            val VALUES = values()
+            val NAMES = Array(VALUES.size) { VALUES[it].romanVersion }
+        }
     }
 
     enum class Modifier(val descriptor: String, val offset: Int) {
         PERFECT("", 0),
         MINOR("", 0),
         MAJOR("", 1);
-    }
 
+        companion object {
+            val VALUES = values()
+        }
+    }
 }

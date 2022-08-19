@@ -10,8 +10,8 @@
 
 package com.lukas.music.util
 
-import android.widget.Button
-import android.widget.SeekBar
+import android.view.View
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.lukas.music.R
 import kotlin.reflect.KMutableProperty0
@@ -49,4 +49,63 @@ fun Button.setupToggle(target: KMutableProperty0<Boolean>, activeColor: Int) {
     setBackgroundColor(
         ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
     )
+}
+
+fun <T> Spinner.setup(
+    items: Array<T>,
+    initialIndex: Int,
+    callback: (Int) -> Unit = {},
+) {
+    val arrayAdapter = ArrayAdapter(
+        context,
+        android.R.layout.simple_spinner_dropdown_item, items
+    )
+    spinnerSetupMain<T>(arrayAdapter, initialIndex, callback)
+}
+
+fun <T> Spinner.setup(
+    items: List<T>,
+    initialIndex: Int,
+    callback: (Int) -> Unit = {},
+) {
+    val arrayAdapter = ArrayAdapter(
+        context,
+        android.R.layout.simple_spinner_dropdown_item, items
+    )
+    spinnerSetupMain<T>(arrayAdapter, initialIndex, callback)
+}
+
+private fun <T> Spinner.spinnerSetupMain(
+    arrayAdapter: ArrayAdapter<T>,
+    initialIndex: Int,
+    callback: (Int) -> Unit
+) {
+    adapter = arrayAdapter
+    setSelection(initialIndex)
+    onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            callback(position)
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+}
+
+fun <T : Enum<*>> Spinner.smartSetup(
+    items: Array<T>,
+    target: KMutableProperty0<T>,
+    callback: (Int) -> Unit = {}
+) {
+    val arrayAdapter = ArrayAdapter(
+        context,
+        android.R.layout.simple_spinner_dropdown_item, items
+    )
+    spinnerSetupMain<T>(arrayAdapter, target.get().ordinal) {
+        target.set(items[it])
+    }
 }

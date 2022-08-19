@@ -10,7 +10,7 @@
 
 package com.lukas.music.song.chords
 
-class Interval(private val distance: Int) {
+class Interval(val distance: Int) {
     val name: IntervalName = when (distance) {
         0 -> IntervalName.UNISON
         1, 2 -> IntervalName.SECOND
@@ -32,7 +32,7 @@ class Interval(private val distance: Int) {
         return name.toString()
     }
 
-    enum class IntervalName(val distance: Int, val romanVersion: String) {
+    enum class IntervalName(private val distance: Int, val romanVersion: String) {
         UNISON(0, "I"),
         SECOND(1, "II"),
         THIRD(3, "III"),

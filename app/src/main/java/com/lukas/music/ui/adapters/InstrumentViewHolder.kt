@@ -12,9 +12,11 @@ package com.lukas.music.ui.adapters
 
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lukas.music.R
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.ui.fragments.EditInstrumentFragment
+import com.lukas.music.util.setupToggle
 
 class InstrumentViewHolder(
     val binding: FragmentInstrumentBinding,
@@ -29,9 +31,6 @@ class InstrumentViewHolder(
             binding.editInstrumentButton.setOnClickListener {
                 EditInstrumentFragment(instrument!!, this).showNow(childFragmentManager, "")
             }
-            binding.activeSwitch.setOnCheckedChangeListener { _, newActive ->
-                instrument?.muted = !newActive
-            }
-            binding.activeSwitch.isChecked = !instrument!!.muted
+            binding.muteButton.setupToggle(instrument!!::muted, R.color.red)
         }
 }

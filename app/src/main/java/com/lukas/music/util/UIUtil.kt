@@ -10,7 +10,11 @@
 
 package com.lukas.music.util
 
+import android.widget.Button
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
+import com.lukas.music.R
+import kotlin.reflect.KMutableProperty0
 
 fun SeekBar.setup(
     min: Int, max: Int, initialProgress: Int, callback: (Int) -> Unit
@@ -33,4 +37,16 @@ fun SeekBar.setup(
         }
     })
     this.progress = initialProgress
+}
+
+fun Button.setupToggle(target: KMutableProperty0<Boolean>, activeColor: Int) {
+    setOnClickListener {
+        target.set(!target.get())
+        setBackgroundColor(
+            ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
+        )
+    }
+    setBackgroundColor(
+        ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
+    )
 }

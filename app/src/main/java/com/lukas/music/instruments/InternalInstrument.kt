@@ -40,6 +40,10 @@ class InternalInstrument {
             setVolume(id, value)
         }
 
+    init {
+        refresh()
+    }
+
     private fun refresh() {
         // this is to resend the old information to the internal c++ code (when changing the waveform)
         muted = muted

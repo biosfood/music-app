@@ -31,6 +31,23 @@ class PlayFragment : Fragment() {
                 if (Rhythm.on) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
             )
         }
+        binding.advancePhraseButton.setOnClickListener {
+            Song.currentSong.chordProgression.bigStep(true)
+        }
+        binding.reversePhraseButton.setOnClickListener {
+            Song.currentSong.chordProgression.bigReverse(true)
+        }
+        binding.advanceMeasureButton.setOnClickListener {
+            Song.currentSong.chordProgression.step()
+        }
+        binding.reverseMeasureButton.setOnClickListener {
+            Song.currentSong.chordProgression.currentItem?.let {
+                chordDisplays[it.index].setCardBackgroundColor(
+                    ContextCompat.getColor(binding.root.context, R.color.gray_0x40)
+                )
+            }
+            Song.currentSong.chordProgression.reverse()
+        }
         setupSlider(binding.masterVolumeSlider, 0, 100, 100) {
             setMasterVolume(it.toDouble() / 100.0)
             binding.masterVolumeText.text = "Master volume: $it%"
@@ -80,13 +97,10 @@ class PlayFragment : Fragment() {
         if (chordDisplays.isEmpty()) {
             putChords()
         }
-        chordDisplays[Song.currentSong.chordProgression.currentItem.index].setCardBackgroundColor(
+        chordDisplays[Song.currentSong.chordProgression.currentItem!!.index].setCardBackgroundColor(
             ContextCompat.getColor(binding.root.context, R.color.purple_700)
         )
-        if (Song.currentSong.chordProgression.currentItem.index == 0) {
-            return
-        }
-        chordDisplays[Song.currentSong.chordProgression.currentItem.indexBehind].setCardBackgroundColor(
+        chordDisplays[Song.currentSong.chordProgression.currentItem!!.indexBehind].setCardBackgroundColor(
             ContextCompat.getColor(binding.root.context, R.color.gray_0x40)
         )
     }
@@ -121,7 +135,7 @@ class PlayFragment : Fragment() {
     private fun putChords() {
         binding.phraseDisplay.removeAllViews()
         chordDisplays.clear()
-        for (chord in Song.currentSong.chordProgression.currentItem) {
+        for (chord in Song.currentSong.chordProgression.currentItem ?: return) {
             val card = CardView(binding.root.context)
             card.layoutParams = SongFragment.tableRowLayout
             card.radius = 10f

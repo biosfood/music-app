@@ -8,8 +8,8 @@ open class Cycle<T>(initialSize: Int = 0) : ArrayList<T>(initialSize) {
     val indexBehind: Int
         get() = (index - 1 + size) % size
 
-    val currentItem: T
-        get() = this[index]
+    val currentItem: T?
+        get() = if (size == 0) null else this[index]
 
     open fun step(): T? {
         if (size == 0) {
@@ -26,6 +26,22 @@ open class Cycle<T>(initialSize: Int = 0) : ArrayList<T>(initialSize) {
             callback()
         }
         return this[index]
+    }
+
+    open fun reset() {
+        index = size - 1
+        step()
+    }
+
+    open fun reverse() {
+        if (size == 0) {
+            return
+        }
+        index = indexBehind
+        // TODO: back around handlers
+        for (callback in stepCallback) {
+            callback()
+        }
     }
 
     fun lookahead(distance: Int): T {
@@ -52,5 +68,53 @@ open class MetaCycle<T : Cycle<out Any>> : Cycle<T>() {
             callback()
         }
         return this[index]
+    }
+
+    override fun reset() {
+        this[index].reset()
+        super.reset()
+    }
+
+    fun bigStep(keepSubindex: Boolean = false) {
+        val subindex = currentItem?.index ?: return
+        currentItem?.index = currentItem!!.size - 1
+        step()
+        if (keepSubindex) {
+            currentItem?.index = subindex
+            currentItem?.index = currentItem?.indexBehind ?: return
+            currentItem?.step()
+            for (callback in miniStepCallback) {
+                callback()
+            }
+        }
+    }
+
+    override fun reverse() {
+        currentItem?.reverse() ?: return
+        if (currentItem!!.index == currentItem!!.size - 1) {
+            currentItem!!.reset()
+            super.reverse()
+            currentItem!!.index = currentItem!!.size - 1
+        }
+        for (callback in miniStepCallback) {
+            callback()
+        }
+    }
+
+    fun bigReverse(keepSubindex: Boolean = false) {
+        val subindex = currentItem?.index ?: return
+        currentItem?.reset()
+        index = indexBehind
+        index = indexBehind
+        currentItem?.index = currentItem!!.size - 1
+        step()
+        if (keepSubindex) {
+            currentItem?.index = subindex
+            currentItem?.index = currentItem!!.indexBehind
+            currentItem?.step()
+            for (callback in miniStepCallback) {
+                callback()
+            }
+        }
     }
 }

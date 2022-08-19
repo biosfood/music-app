@@ -33,6 +33,63 @@
         tools:layout_conversion_absoluteHeight="56dp"
         tools:layout_conversion_absoluteWidth="56dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/reverseMeasureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/reverse_measure"
+        android:src="@android:drawable/ic_media_previous"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="56dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/reversePhraseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/reverse_phrase"
+        android:src="@android:drawable/ic_media_rew"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toStartOf="@+id/reverseMeasureButton"
+        app:layout_constraintTop_toTopOf="@+id/reverseMeasureButton"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="56dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/advanceMeasureButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/advance_measure"
+        android:src="@android:drawable/ic_media_next"
+        app:fabSize="mini"
+        app:layout_constraintStart_toEndOf="@+id/playButton"
+        app:layout_constraintTop_toTopOf="@+id/reverseMeasureButton"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="56dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/advancePhraseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/advance_phrase"
+        android:src="@android:drawable/ic_media_ff"
+        app:fabSize="mini"
+        app:layout_constraintStart_toEndOf="@+id/advanceMeasureButton"
+        app:layout_constraintTop_toTopOf="@+id/reverseMeasureButton"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="56dp" />
+
     <TextView
         android:id="@+id/tempoText"
         android:layout_width="wrap_content"
@@ -122,7 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Next chord not known yet . . ."
+            android:text="@string/unknown_chord"
             android:textSize="20sp"
             tools:layout_conversion_absoluteHeight="27dp"
             tools:layout_conversion_absoluteWidth="258dp" />

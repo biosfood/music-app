@@ -19,4 +19,9 @@
     <string name="chord_pitch">Chord pitch</string>
     <string name="chord_type">Chord type</string>
     <string name="exit">Exit this menu</string>
+    <string name="advance_measure">Go to the next measure</string>
+    <string name="reverse_measure">Go to the start of the current measure</string>
+    <string name="advance_phrase">Go to the next phrase</string>
+    <string name="reverse_phrase">Go to the start of the current phrase</string>
+    <string name="unknown_chord">Next chord not known yet . . .</string>
 </resources>

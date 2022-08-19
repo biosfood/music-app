@@ -34,4 +34,7 @@
     <string name="advance_phrase">Go to the next phrase</string>
     <string name="reverse_phrase">Go to the start of the current phrase</string>
     <string name="unknown_chord">Next chord not known yet . . .</string>
+    <string name="edit_instrument">Edit instrument</string>
+    <string name="instrument_name">Instrument name:</string>
+    <string name="close">close this menu</string>
 </resources>

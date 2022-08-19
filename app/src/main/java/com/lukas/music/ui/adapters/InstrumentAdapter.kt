@@ -19,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.Waveform
+import com.lukas.music.ui.fragments.InstrumentListFragment
 
 
-class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.InstrumentViewHolder>() {
+class InstrumentAdapter(val parent: InstrumentListFragment) :
+    RecyclerView.Adapter<InstrumentAdapter.InstrumentViewHolder>() {
     class InstrumentViewHolder(val binding: FragmentInstrumentBinding) :
         RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
         lateinit var instrument: Instrument
@@ -58,7 +60,7 @@ class InstrumentAdapter : RecyclerView.Adapter<InstrumentAdapter.InstrumentViewH
     override fun onBindViewHolder(holder: InstrumentViewHolder, position: Int) {
         val instrument = Instrument.instruments[position]
         holder.instrument = instrument
-        instrument.applyToView(holder.binding)
+        instrument.applyToView(holder.binding, parent.childFragmentManager)
     }
 
     override fun getItemCount(): Int {

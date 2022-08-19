@@ -27,7 +27,7 @@ class InstrumentListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentInstrumentListBinding.inflate(inflater)
-        binding.recyclerView.adapter = InstrumentAdapter()
+        binding.recyclerView.adapter = InstrumentAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         return binding.root
     }

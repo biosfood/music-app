@@ -15,7 +15,8 @@ import com.lukas.music.song.note.Note
 import com.lukas.music.song.note.NoteName
 
 
-class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class SongFragment(val playFragment: PlayFragment) : Fragment(),
+    AdapterView.OnItemSelectedListener {
     private lateinit var binding: FragmentSongBinding
     var displayChordNames = true
 
@@ -74,6 +75,7 @@ class SongFragment : Fragment(), AdapterView.OnItemSelectedListener {
             row.addView(button)
             binding.chords.addView(row)
         }
+        playFragment.updateChords()
     }
 
     companion object {

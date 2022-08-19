@@ -64,7 +64,7 @@ class PlayFragment : Fragment() {
             }
         }
         Song.currentSong.chordProgression.stepCallback += {
-            Handler(Looper.getMainLooper()).post { putChords() }
+            Handler(Looper.getMainLooper()).post { updateChords() }
         }
         Song.currentSong.chordProgression.miniStepCallback += {
             Handler(Looper.getMainLooper()).post { updateChordView() }
@@ -95,7 +95,8 @@ class PlayFragment : Fragment() {
 
     private fun updateChordView() {
         if (chordDisplays.isEmpty()) {
-            putChords()
+            updateChords()
+            return
         }
         chordDisplays[Song.currentSong.chordProgression.currentItem!!.index].setCardBackgroundColor(
             ContextCompat.getColor(binding.root.context, R.color.purple_700)
@@ -132,7 +133,7 @@ class PlayFragment : Fragment() {
         slider.progress = initialProgress
     }
 
-    private fun putChords() {
+    fun updateChords() {
         binding.phraseDisplay.removeAllViews()
         chordDisplays.clear()
         for (chord in Song.currentSong.chordProgression.currentItem ?: return) {
@@ -152,6 +153,7 @@ class PlayFragment : Fragment() {
         binding.phraseTable.isStretchAllColumns = true
         binding.nextChordText.text =
             Song.currentSong.chordProgression.lookahead(1)[0].toString(true, Song.currentSong.root)
+        updateChordView()
     }
 
     private external fun setMasterVolume(volume: Double)

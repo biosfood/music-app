@@ -13,9 +13,10 @@ import com.lukas.music.ui.tab.TabListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val playFragment = PlayFragment()
     private val tabFragments = listOf(
-        PlayFragment(),
-        SongFragment(),
+        playFragment,
+        SongFragment(playFragment),
         InstrumentListFragment(),
         CreditsFragment(),
     )

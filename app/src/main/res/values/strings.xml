@@ -37,4 +37,5 @@
     <string name="edit_instrument">Edit instrument</string>
     <string name="instrument_name">Instrument name:</string>
     <string name="close">close this menu</string>
+    <string name="waveform">Waveform:</string>
 </resources>

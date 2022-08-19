@@ -11,44 +11,15 @@
 package com.lukas.music.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
-import com.lukas.music.instruments.Waveform
 import com.lukas.music.ui.fragments.InstrumentListFragment
 
 
 class InstrumentAdapter(val parent: InstrumentListFragment) :
-    RecyclerView.Adapter<InstrumentAdapter.InstrumentViewHolder>() {
-    class InstrumentViewHolder(val binding: FragmentInstrumentBinding) :
-        RecyclerView.ViewHolder(binding.root), AdapterView.OnItemSelectedListener {
-        lateinit var instrument: Instrument
-
-        init {
-            val adapter = ArrayAdapter(
-                binding.root.context,
-                android.R.layout.simple_spinner_dropdown_item, Waveform.VALUES
-            )
-            binding.waveformSelection.adapter = adapter
-            binding.waveformSelection.onItemSelectedListener = this
-        }
-
-        override fun onItemSelected(
-            adapterView: AdapterView<*>?,
-            view: View?,
-            position: Int,
-            id: Long
-        ) {
-            instrument.waveform = Waveform.VALUES[position]
-        }
-
-        override fun onNothingSelected(adapterView: AdapterView<*>?) {
-        }
-    }
+    RecyclerView.Adapter<InstrumentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InstrumentViewHolder {
         val context = parent.context

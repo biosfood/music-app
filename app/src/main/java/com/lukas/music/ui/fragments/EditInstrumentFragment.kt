@@ -10,17 +10,21 @@
 
 package com.lukas.music.ui.fragments
 
+import android.R
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.lukas.music.databinding.FragmentEditInstrumentBinding
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.instruments.Waveform
 
 class EditInstrumentFragment(
     private val instrument: Instrument,
@@ -45,6 +49,24 @@ class EditInstrumentFragment(
                 instrument.applyToView(parent, manager)
             }
         })
+        val adapter = ArrayAdapter(
+            binding.root.context,
+            R.layout.simple_spinner_dropdown_item, Waveform.VALUES
+        )
+        binding.waveformSelection.adapter = adapter
+        binding.waveformSelection.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    instrument.waveform = Waveform.VALUES[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
         binding.closeButton.setOnClickListener {
             dismiss()
         }

@@ -21,12 +21,20 @@ class MonoInstrument(name: String) : Instrument(name) {
             internalInstrument.waveform = value
         }
 
+    override var volume: Float = 1.0f
+        set(value) {
+            field = value
+            internalInstrument.volume = volume
+        }
+
+    override var muted: Boolean = false
+        set(value) {
+            field = value
+            internalInstrument.muted = value
+        }
+
     override fun startNote(note: Note) {
         internalInstrument.startNote(note.frequency)
-    }
-
-    override fun changeActive(newActive: Boolean) {
-        internalInstrument.active = newActive
     }
 
     override fun stop() {

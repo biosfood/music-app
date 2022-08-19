@@ -16,7 +16,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Space
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -24,6 +27,7 @@ import com.lukas.music.R
 import com.lukas.music.databinding.FragmentPlayBinding
 import com.lukas.music.instruments.Rhythm
 import com.lukas.music.song.Song
+import com.lukas.music.util.setup
 
 class PlayFragment : Fragment() {
     private lateinit var binding: FragmentPlayBinding
@@ -58,11 +62,11 @@ class PlayFragment : Fragment() {
             }
             Song.currentSong.chordProgression.reverse()
         }
-        setupSlider(binding.masterVolumeSlider, 0, 100, 100) {
+        binding.masterVolumeSlider.setup(0, 100, 100) {
             setMasterVolume(it.toDouble() / 100.0)
             binding.masterVolumeText.text = "Master volume: $it%"
         }
-        setupSlider(binding.tempoSlider, 50, 150, 90) {
+        binding.tempoSlider.setup(50, 150, 90) {
             Rhythm.setTempo(it)
             binding.tempoText.text = "tempo: ${it}bpm"
         }
@@ -114,33 +118,6 @@ class PlayFragment : Fragment() {
         chordDisplays[Song.currentSong.chordProgression.currentItem!!.indexBehind].setCardBackgroundColor(
             ContextCompat.getColor(binding.root.context, R.color.gray_0x40)
         )
-    }
-
-    private fun setupSlider(
-        slider: SeekBar,
-        min: Int,
-        max: Int,
-        initialProgress: Int,
-        callback: (Int) -> Unit
-    ) {
-        slider.min = min
-        slider.max = max
-        slider.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seekBar: SeekBar,
-                progress: Int, fromUser: Boolean
-            ) {
-                callback(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-            }
-        })
-        slider.progress = initialProgress
     }
 
     fun updateChords() {

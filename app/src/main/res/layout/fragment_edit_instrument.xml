@@ -54,7 +54,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/close_button"
@@ -68,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/waveformSelection" />
+        app:layout_constraintTop_toBottomOf="@+id/volumeSeek" />
 
     <Spinner
         android:id="@+id/waveformSelection"
@@ -80,7 +81,8 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="@+id/instrumentNameTextBox"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/instrumentNameTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/instrumentNameTextBox"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/textView7"
@@ -90,5 +92,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/waveformSelection"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/waveformSelection" />
+
+    <SeekBar
+        android:id="@+id/volumeSeek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/waveformSelection"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/volumeText" />
+
+    <TextView
+        android:id="@+id/volumeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/placeholder"
+        app:layout_constraintEnd_toEndOf="@+id/waveformSelection"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/waveformSelection" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

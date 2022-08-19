@@ -10,37 +10,18 @@
 
 package com.lukas.music.instruments
 
-import androidx.fragment.app.FragmentManager
-import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.song.note.Note
 import com.lukas.music.song.voice.BassVoice
 import com.lukas.music.song.voice.ChordVoice
 import com.lukas.music.song.voice.Voice
-import com.lukas.music.ui.fragments.EditInstrumentFragment
 
 abstract class Instrument(var name: String) {
-    private var active = false
     abstract var waveform: Waveform
-
-    fun applyToView(binding: FragmentInstrumentBinding, childFragmentManager: FragmentManager) {
-        binding.instrumentNameText.text = name
-        binding.editInstrumentButton.setOnClickListener {
-            EditInstrumentFragment(
-                this,
-                binding,
-                childFragmentManager
-            ).showNow(childFragmentManager, "")
-        }
-        binding.activeSwitch.setOnCheckedChangeListener { _, newActive ->
-            active = newActive
-            changeActive(newActive)
-        }
-        binding.activeSwitch.isChecked = active
-    }
+    abstract var volume: Float
+    abstract var muted: Boolean
 
     abstract fun startNote(note: Note)
     abstract fun stop()
-    abstract fun changeActive(newActive: Boolean)
 
     companion object {
         val instruments =

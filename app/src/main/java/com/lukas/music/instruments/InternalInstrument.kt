@@ -12,19 +12,39 @@ package com.lukas.music.instruments
 
 class InternalInstrument {
     private val id = createInstrument()
-    var active: Boolean = false
-        set(value) {
-            field = value
-            setInstrumentActive(id, value)
-        }
 
     var waveform: Waveform = Waveform.SINE
         set(value) {
             field = value
             setInstrumentWaveform(id, value.id)
-            // this is to resend the setInstrumentActive for the new waveform in the internal c++ code
-            active = active
+            refresh()
         }
+
+    var volume: Float = 0.3f
+        set(value) {
+            field = value
+            if (!muted) {
+                actualVolume = value
+            }
+        }
+
+    var muted: Boolean = false
+        set(value) {
+            field = value
+            actualVolume = if (value) 0.0f else volume
+        }
+
+    private var actualVolume: Float = 1.0f
+        set(value) {
+            field = value
+            setVolume(id, value)
+        }
+
+    private fun refresh() {
+        // this is to resend the old information to the internal c++ code (when changing the waveform)
+        muted = muted
+        volume = volume
+    }
 
     fun startNote(frequency: Double) {
         startNote(id, frequency)
@@ -35,8 +55,8 @@ class InternalInstrument {
     }
 
     private external fun createInstrument(): Int
-    private external fun setInstrumentActive(id: Int, isActive: Boolean)
     private external fun setInstrumentWaveform(id: Int, waveform: Int)
     private external fun startNote(id: Int, frequency: Double)
     private external fun endNote(id: Int)
+    private external fun setVolume(id: Int, volume: Float)
 }

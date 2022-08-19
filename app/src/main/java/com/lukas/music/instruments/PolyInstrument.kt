@@ -24,6 +24,22 @@ class PolyInstrument(name: String) : Instrument(name) {
             }
         }
 
+    override var volume: Float = 1.0f
+        set(value) {
+            field = value
+            for (internalInstrument in internalInstruments) {
+                internalInstrument.volume = volume
+            }
+        }
+
+    override var muted: Boolean = false
+        set(value) {
+            field = value
+            for (instrument in internalInstruments) {
+                instrument.muted = value
+            }
+        }
+
     override fun startNote(note: Note) {
         for ((index, instrumentPlaying) in playing.withIndex()) {
             if (!instrumentPlaying) {
@@ -33,12 +49,6 @@ class PolyInstrument(name: String) : Instrument(name) {
             }
         }
         throw IllegalStateException("cannot start another note with the current amount of oscillators")
-    }
-
-    override fun changeActive(newActive: Boolean) {
-        for (instrument in internalInstruments) {
-            instrument.active = newActive
-        }
     }
 
     override fun stop() {

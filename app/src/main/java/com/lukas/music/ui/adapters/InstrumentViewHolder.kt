@@ -10,11 +10,28 @@
 
 package com.lukas.music.ui.adapters
 
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.ui.fragments.EditInstrumentFragment
 
-class InstrumentViewHolder(val binding: FragmentInstrumentBinding) :
+class InstrumentViewHolder(
+    val binding: FragmentInstrumentBinding,
+    private val childFragmentManager: FragmentManager
+) :
     RecyclerView.ViewHolder(binding.root) {
-    lateinit var instrument: Instrument
+    var instrument: Instrument? = null
+        set(value) {
+            field = value
+            value ?: return
+            binding.instrumentNameText.text = instrument?.name
+            binding.editInstrumentButton.setOnClickListener {
+                EditInstrumentFragment(instrument!!, this).showNow(childFragmentManager, "")
+            }
+            binding.activeSwitch.setOnCheckedChangeListener { _, newActive ->
+                instrument?.muted = !newActive
+            }
+            binding.activeSwitch.isChecked = !instrument!!.muted
+        }
 }

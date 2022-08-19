@@ -25,13 +25,12 @@ class InstrumentAdapter(val parent: InstrumentListFragment) :
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = FragmentInstrumentBinding.inflate(inflater, parent, false)
-        return InstrumentViewHolder(binding)
+        return InstrumentViewHolder(binding, this.parent.childFragmentManager)
     }
 
     override fun onBindViewHolder(holder: InstrumentViewHolder, position: Int) {
         val instrument = Instrument.instruments[position]
         holder.instrument = instrument
-        instrument.applyToView(holder.binding, parent.childFragmentManager)
     }
 
     override fun getItemCount(): Int {

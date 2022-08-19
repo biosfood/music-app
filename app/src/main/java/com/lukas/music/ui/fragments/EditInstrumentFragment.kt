@@ -20,16 +20,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
 import com.lukas.music.databinding.FragmentEditInstrumentBinding
-import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.Waveform
+import com.lukas.music.ui.adapters.InstrumentViewHolder
+import com.lukas.music.util.setup
 
 class EditInstrumentFragment(
     private val instrument: Instrument,
-    private val parent: FragmentInstrumentBinding,
-    private val manager: FragmentManager
+    private val viewHolder: InstrumentViewHolder
 ) : DialogFragment() {
     lateinit var binding: FragmentEditInstrumentBinding
 
@@ -46,7 +45,7 @@ class EditInstrumentFragment(
 
             override fun afterTextChanged(s: Editable?) {
                 instrument.name = binding.instrumentNameTextBox.text.toString()
-                instrument.applyToView(parent, manager)
+                viewHolder.instrument = viewHolder.instrument
             }
         })
         val adapter = ArrayAdapter(
@@ -67,6 +66,10 @@ class EditInstrumentFragment(
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+        binding.volumeSeek.setup(0, 100, 30) {
+            binding.volumeText.text = "volume: $it%"
+            instrument.volume = it.toFloat() / 100f
+        }
         binding.closeButton.setOnClickListener {
             dismiss()
         }

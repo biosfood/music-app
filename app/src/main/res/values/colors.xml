@@ -31,4 +31,5 @@
     <color name="gray_0x90">#909090</color>
     <color name="gray_0xA0">#A0A0A0</color>
     <color name="red">#F00000</color>
+    <color name="blue">#0000F0</color>
 </resources>

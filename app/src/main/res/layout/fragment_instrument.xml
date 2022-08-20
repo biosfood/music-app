@@ -29,6 +29,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="@string/placeholder"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,11 +54,22 @@
             android:id="@+id/muteButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:backgroundTint="@color/gray_0x60"
             android:text="M"
             app:layout_constraintBottom_toBottomOf="@+id/editInstrumentButton"
             app:layout_constraintStart_toEndOf="@+id/editInstrumentButton"
+            app:layout_constraintTop_toTopOf="@+id/editInstrumentButton" />
+
+        <Button
+            android:id="@+id/soloButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:backgroundTint="@color/gray_0x60"
+            android:text="S"
+            app:layout_constraintBottom_toBottomOf="@+id/editInstrumentButton"
+            app:layout_constraintStart_toEndOf="@+id/muteButton"
             app:layout_constraintTop_toTopOf="@+id/editInstrumentButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import com.lukas.music.song.voice.ChordVoice
 import com.lukas.music.song.voice.Voice
 
 abstract class Instrument(var name: String) {
+    lateinit var voice: Voice
     abstract var waveform: Waveform
     abstract var volume: Float
     abstract var muted: Boolean

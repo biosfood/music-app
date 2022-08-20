@@ -39,13 +39,20 @@ fun SeekBar.setup(
     this.progress = initialProgress
 }
 
-fun Button.setupToggle(target: KMutableProperty0<Boolean>, activeColor: Int) {
+fun Button.setupToggle(
+    target: KMutableProperty0<Boolean>,
+    activeColor: Int,
+    callback: (Boolean) -> Unit = {}
+) {
     setOnClickListener {
         target.set(!target.get())
-        setBackgroundColor(
-            ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
-        )
+        updateToggle(target, activeColor)
+        callback(target.get())
     }
+    updateToggle(target, activeColor)
+}
+
+fun Button.updateToggle(target: KMutableProperty0<Boolean>, activeColor: Int) {
     setBackgroundColor(
         ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
     )

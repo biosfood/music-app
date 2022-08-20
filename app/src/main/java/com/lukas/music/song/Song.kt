@@ -20,6 +20,17 @@ class Song(
     val beats: Int
 ) : Cycle<Int>(beats) {
     val chordProgression = ChordProgression()
+    var soloInstrument: Instrument? = null
+        set(value) {
+            field = value
+            value?.let {
+                for (instrument in Instrument.instruments) {
+                    if (instrument != value) {
+                        instrument.stop()
+                    }
+                }
+            }
+        }
 
     init {
         for (i in 0 until beats) {
@@ -34,8 +45,12 @@ class Song(
         super.step()
         val chord = chordProgression.currentItem?.currentItem ?: return index
         val chordNotes = chord.getNotes(root)
-        for (voice in Instrument.voice) {
-            voice.step(root, chordNotes)
+        soloInstrument?.let {
+            it.voice.step(root, chordNotes)
+        } ?: run {
+            for (voice in Instrument.voice) {
+                voice.step(root, chordNotes)
+            }
         }
         return index
     }

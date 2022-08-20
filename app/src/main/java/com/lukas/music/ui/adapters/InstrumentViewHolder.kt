@@ -15,14 +15,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.R
 import com.lukas.music.databinding.FragmentInstrumentBinding
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.song.Song
 import com.lukas.music.ui.fragments.EditInstrumentFragment
 import com.lukas.music.util.setupToggle
+import com.lukas.music.util.updateToggle
 
 class InstrumentViewHolder(
     val binding: FragmentInstrumentBinding,
     private val childFragmentManager: FragmentManager
 ) :
     RecyclerView.ViewHolder(binding.root) {
+    init {
+        HOLDERS += this
+    }
+
+    var solo: Boolean = false
+        set(value) {
+            if (value) {
+                for (holder in HOLDERS) {
+                    holder.solo = false
+                }
+                Song.currentSong.soloInstrument = instrument
+            }
+            field = value
+            binding.soloButton.updateToggle(this::solo, R.color.blue)
+        }
+
     var instrument: Instrument? = null
         set(value) {
             field = value
@@ -32,5 +50,14 @@ class InstrumentViewHolder(
                 EditInstrumentFragment(instrument!!, this).showNow(childFragmentManager, "")
             }
             binding.muteButton.setupToggle(instrument!!::muted, R.color.red)
+            binding.soloButton.setupToggle(this::solo, R.color.blue) {
+                if (!it) {
+                    Song.currentSong.soloInstrument = null
+                }
+            }
         }
+
+    companion object {
+        val HOLDERS = mutableListOf<InstrumentViewHolder>()
+    }
 }

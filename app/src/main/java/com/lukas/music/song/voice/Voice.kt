@@ -17,4 +17,10 @@ abstract class Voice(val instrument: Instrument) {
     abstract val steps: List<Int>
 
     abstract fun step(root: Note, chord: Array<Note>)
+
+    init {
+        // TODO: fix this (have voice be an attribute of Instrument)!
+        // TODO: introduce DefaultVoices and CustomVoice
+        instrument.voice = this
+    }
 }

@@ -46,6 +46,9 @@ class EditChordFragment(val chord: Chord, private val songFragment: SongFragment
         } else Interval.IntervalName.NAMES
         binding.pitchSpinner.setup(pitches, chord.interval.name.ordinal) {
             chord.note = Scale.MAJOR.steps[it]
+            if (binding.typeSpinner.selectedItemPosition == 0) {
+                chord.chordType = Scale.MAJOR.chordTypes[chord.interval.name.ordinal]
+            }
             songFragment.updateChords()
         }
     }

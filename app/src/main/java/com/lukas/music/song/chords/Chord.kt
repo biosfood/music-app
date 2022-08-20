@@ -21,7 +21,9 @@ class Chord(note: Int, var chordType: ChordType) {
     var interval = Interval(note)
         set(value) {
             field = value
-            note = value.distance
+            if (note != value.distance) {
+                note = value.distance
+            }
         }
 
     fun getNotes(root: Note): Array<Note> {

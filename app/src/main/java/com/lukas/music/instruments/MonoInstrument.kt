@@ -34,10 +34,19 @@ class MonoInstrument(name: String) : Instrument(name) {
         }
 
     override fun startNote(note: Note) {
-        internalInstrument.startNote(note.frequency)
+        if (note == internalInstrument.note) {
+            return
+        }
+        internalInstrument.startNote(note)
     }
 
     override fun stop() {
         internalInstrument.endNote()
+    }
+
+    override fun stopNote(note: Note) {
+        if (note == internalInstrument.note) {
+            stop()
+        }
     }
 }

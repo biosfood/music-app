@@ -14,13 +14,23 @@ import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
 
 abstract class Voice(val instrument: Instrument) {
-    abstract val steps: List<Int>
+    abstract var noteActive: Array<Array<Boolean>>
 
-    abstract fun step(root: Note, chord: Array<Note>)
+    abstract fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note>
 
-    init {
-        // TODO: fix this (have voice be an attribute of Instrument)!
-        // TODO: introduce DefaultVoices and CustomVoice
-        instrument.voice = this
+    fun step(root: Note, chordNotes: Array<Note>, beat: Int) {
+        if (instrument.muted) {
+            return
+        }
+        val activeNotes = noteActive[beat]
+        val notes = getNotes(root, chordNotes)
+        for ((index, active) in activeNotes.withIndex()) {
+            val note = notes[index]
+            if (!active) {
+                instrument.stopNote(note)
+                continue
+            }
+            instrument.startNote(note)
+        }
     }
 }

@@ -46,10 +46,10 @@ class Song(
         val chord = chordProgression.currentItem?.currentItem ?: return index
         val chordNotes = chord.getNotes(root)
         soloInstrument?.let {
-            it.voice.step(root, chordNotes)
+            it.voice.step(root, chordNotes, index)
         } ?: run {
-            for (voice in Instrument.voice) {
-                voice.step(root, chordNotes)
+            for (instrument in Instrument.instruments) {
+                instrument.voice.step(root, chordNotes, index)
             }
         }
         return index

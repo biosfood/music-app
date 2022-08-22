@@ -43,8 +43,11 @@ class PolyInstrument(name: String) : Instrument(name) {
     override fun startNote(note: Note) {
         for ((index, instrumentPlaying) in playing.withIndex()) {
             if (!instrumentPlaying) {
-                internalInstruments[index].startNote(note.frequency)
+                internalInstruments[index].startNote(note)
                 playing[index] = true
+                return
+            }
+            if (internalInstruments[index].note == note) {
                 return
             }
         }
@@ -55,6 +58,15 @@ class PolyInstrument(name: String) : Instrument(name) {
         for ((i, instrument) in internalInstruments.withIndex()) {
             instrument.endNote()
             playing[i] = false
+        }
+    }
+
+    override fun stopNote(note: Note) {
+        for ((i, instrument) in internalInstruments.withIndex()) {
+            if (instrument.note == note) {
+                instrument.endNote()
+                playing[i] = false
+            }
         }
     }
 }

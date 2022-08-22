@@ -12,17 +12,16 @@ package com.lukas.music.instruments
 
 import com.lukas.music.song.note.Note
 import com.lukas.music.song.voice.BassVoice
-import com.lukas.music.song.voice.ChordVoice
-import com.lukas.music.song.voice.Voice
 
 abstract class Instrument(var name: String) {
-    lateinit var voice: Voice
+    var voice = BassVoice(this)
     abstract var waveform: Waveform
     abstract var volume: Float
     abstract var muted: Boolean
 
     abstract fun startNote(note: Note)
     abstract fun stop()
+    abstract fun stopNote(note: Note)
 
     companion object {
         val instruments =
@@ -30,10 +29,5 @@ abstract class Instrument(var name: String) {
                 MonoInstrument("Bass"),
                 PolyInstrument("Chords"),
             )
-
-        val voice = mutableListOf<Voice>(
-            BassVoice(instruments[0]),
-            ChordVoice(instruments[1]),
-        )
     }
 }

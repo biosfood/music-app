@@ -28,6 +28,22 @@ class Note(private val id: Int) {
         return this + (-other)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Note
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
+
+
     companion object {
         val NOTES = Array(128) { Note(it) }
 

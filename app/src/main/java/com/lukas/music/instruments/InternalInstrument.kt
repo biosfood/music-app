@@ -10,8 +10,11 @@
 
 package com.lukas.music.instruments
 
+import com.lukas.music.song.note.Note
+
 class InternalInstrument {
     private val id = createInstrument()
+    var note: Note? = null
 
     var waveform: Waveform = Waveform.SINE
         set(value) {
@@ -50,11 +53,13 @@ class InternalInstrument {
         volume = volume
     }
 
-    fun startNote(frequency: Double) {
-        startNote(id, frequency)
+    fun startNote(note: Note) {
+        this.note = note
+        startNote(id, note.frequency)
     }
 
     fun endNote() {
+        note = null
         endNote(id)
     }
 

@@ -25,10 +25,6 @@ abstract class Instrument(var name: String) {
     abstract fun stopNote(note: Note)
 
     companion object {
-        val instruments =
-            mutableListOf<Instrument>(
-                MonoInstrument("Bass"),
-                PolyInstrument("Chords"),
-            )
+        val instruments = mutableListOf<Instrument>()
     }
 }

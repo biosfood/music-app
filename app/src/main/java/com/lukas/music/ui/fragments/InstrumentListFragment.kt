@@ -10,13 +10,18 @@
 
 package com.lukas.music.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.databinding.FragmentInstrumentListBinding
+import com.lukas.music.instruments.Instrument
+import com.lukas.music.instruments.MonoInstrument
+import com.lukas.music.instruments.PolyInstrument
 import com.lukas.music.ui.adapters.InstrumentAdapter
 
 class InstrumentListFragment : Fragment() {
@@ -29,6 +34,23 @@ class InstrumentListFragment : Fragment() {
         binding = FragmentInstrumentListBinding.inflate(inflater)
         binding.recyclerView.adapter = InstrumentAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.addInstrumentButton.setOnClickListener {
+            val builder = AlertDialog.Builder(binding.root.context)
+            builder.setTitle("Instrument type:")
+                .setItems(
+                    arrayOf("mono", "poly")
+                ) { _, index ->
+                    when (index) {
+                        0 -> Instrument.instruments += MonoInstrument("New mono Instrument")
+                        1 -> Instrument.instruments += PolyInstrument("New poly Instrument")
+                    }
+                    (binding.recyclerView.adapter as RecyclerView.Adapter).notifyItemInserted(
+                        Instrument.instruments.size - 1
+                    )
+                }
+            builder.create()
+            builder.show()
+        }
         return binding.root
     }
 }

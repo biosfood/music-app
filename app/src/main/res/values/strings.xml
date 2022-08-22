@@ -38,4 +38,5 @@
     <string name="instrument_name">Instrument name:</string>
     <string name="close">close this menu</string>
     <string name="waveform">Waveform:</string>
+    <string name="voice">Voice:</string>
 </resources>

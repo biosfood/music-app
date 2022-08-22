@@ -16,7 +16,7 @@ import com.lukas.music.song.note.Note
 import com.lukas.music.util.Cycle
 
 class Song(
-    var root: Note,
+    root: Note,
     val beats: Int
 ) : Cycle<Int>(beats) {
     val chordProgression = ChordProgression()
@@ -32,12 +32,25 @@ class Song(
             }
         }
 
+    var root: Note = root
+        set(value) {
+            field = value
+            stopAllInstruments()
+        }
+
+    private fun stopAllInstruments() {
+        for (instrument in Instrument.instruments) {
+            instrument.stop()
+        }
+    }
+
     init {
         for (i in 0 until beats) {
             this += i
         }
         wraparoundListeners += {
             chordProgression.step()
+            stopAllInstruments()
         }
     }
 

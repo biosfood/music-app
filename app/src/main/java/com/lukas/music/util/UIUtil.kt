@@ -114,5 +114,6 @@ fun <T : Enum<*>> Spinner.smartSetup(
     )
     spinnerSetupMain<T>(arrayAdapter, target.get().ordinal) {
         target.set(items[it])
+        callback(it)
     }
 }

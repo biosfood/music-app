@@ -8,27 +8,20 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.lukas.music.instruments
+package com.lukas.music.song.voice
 
+import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
-import com.lukas.music.song.voice.BassVoice
-import com.lukas.music.song.voice.Voice
 
-abstract class Instrument(var name: String) {
-    var voice: Voice = BassVoice(this)
-    abstract var waveform: Waveform
-    abstract var volume: Float
-    abstract var muted: Boolean
+class ChordVoice(instrument: Instrument) : Voice(instrument) {
+    override var noteActive: Array<Array<Boolean>> = arrayOf(
+        Array(3) { false },
+        Array(3) { true },
+        Array(3) { false },
+        Array(3) { true },
+    )
 
-    abstract fun startNote(note: Note)
-    abstract fun stop()
-    abstract fun stopNote(note: Note)
-
-    companion object {
-        val instruments =
-            mutableListOf<Instrument>(
-                MonoInstrument("Bass"),
-                PolyInstrument("Chords"),
-            )
+    override fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note> {
+        return chordNotes
     }
 }

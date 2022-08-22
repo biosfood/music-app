@@ -12,6 +12,7 @@ package com.lukas.music.song.voice
 
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
+import kotlin.reflect.KClass
 
 abstract class Voice(val instrument: Instrument) {
     abstract var noteActive: Array<Array<Boolean>>
@@ -32,5 +33,14 @@ abstract class Voice(val instrument: Instrument) {
             }
             instrument.startNote(note)
         }
+    }
+
+    companion object {
+        val DEFAULT_VOICES = listOf<KClass<out Voice>>(
+            BassVoice::class,
+            ChordVoice::class,
+        )
+
+        val DEFAULT_VOICE_NAMES = listOf("Bass", "Chord")
     }
 }

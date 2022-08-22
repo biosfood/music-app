@@ -16,6 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.databinding.FragmentInstrumentListBinding
@@ -34,21 +35,49 @@ class InstrumentListFragment : Fragment() {
         binding = FragmentInstrumentListBinding.inflate(inflater)
         binding.recyclerView.adapter = InstrumentAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.addInstrumentButton.setOnClickListener {
-            val builder = AlertDialog.Builder(binding.root.context)
-            builder.setTitle("Instrument type:")
-                .setItems(
-                    arrayOf("mono", "poly")
-                ) { _, index ->
-                    when (index) {
-                        0 -> Instrument.instruments += MonoInstrument("New mono Instrument")
-                        1 -> Instrument.instruments += PolyInstrument("New poly Instrument")
-                    }
-                    (binding.recyclerView.adapter as RecyclerView.Adapter).notifyItemInserted(
-                        Instrument.instruments.size - 1
-                    )
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+            0
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val adapter = recyclerView.adapter as InstrumentAdapter
+                val startPosition = viewHolder.adapterPosition
+                val endPosition = target.adapterPosition
+                val instrument = Instrument.instruments[startPosition]
+                Instrument.instruments.removeAt(startPosition)
+                if (endPosition < startPosition) {
+                    Instrument.instruments.add(endPosition + 1, instrument)
+                } else {
+                    Instrument.instruments.add(endPosition - 1, instrument)
                 }
-            builder.create()
+                adapter.notifyItemMoved(startPosition, endPosition)
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+        }
+        val helper = ItemTouchHelper(callback)
+        helper.attachToRecyclerView(binding.recyclerView)
+
+        val builder = AlertDialog.Builder(binding.root.context)
+        builder.setTitle("Instrument type:")
+            .setItems(
+                arrayOf("mono", "poly")
+            ) { _, index ->
+                when (index) {
+                    0 -> Instrument.instruments += MonoInstrument("New mono Instrument")
+                    1 -> Instrument.instruments += PolyInstrument("New poly Instrument")
+                }
+                (binding.recyclerView.adapter as RecyclerView.Adapter).notifyItemInserted(
+                    Instrument.instruments.size - 1
+                )
+            }
+        builder.create()
+        binding.addInstrumentButton.setOnClickListener {
             builder.show()
         }
         return binding.root

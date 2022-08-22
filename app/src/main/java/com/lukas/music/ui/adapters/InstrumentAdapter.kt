@@ -25,7 +25,7 @@ class InstrumentAdapter(val parent: InstrumentListFragment) :
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = FragmentInstrumentBinding.inflate(inflater, parent, false)
-        return InstrumentViewHolder(binding, this.parent.childFragmentManager)
+        return InstrumentViewHolder(binding, this.parent.childFragmentManager, this)
     }
 
     override fun onBindViewHolder(holder: InstrumentViewHolder, position: Int) {

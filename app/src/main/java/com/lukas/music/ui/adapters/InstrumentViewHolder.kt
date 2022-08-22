@@ -22,7 +22,8 @@ import com.lukas.music.util.updateToggle
 
 class InstrumentViewHolder(
     val binding: FragmentInstrumentBinding,
-    private val childFragmentManager: FragmentManager
+    private val childFragmentManager: FragmentManager,
+    private val adapter: InstrumentAdapter
 ) :
     RecyclerView.ViewHolder(binding.root) {
     init {
@@ -54,6 +55,11 @@ class InstrumentViewHolder(
                 if (!it) {
                     Song.currentSong.soloInstrument = null
                 }
+            }
+            binding.deleteButton.setOnClickListener {
+                val index = Instrument.instruments.indexOf(instrument)
+                Instrument.instruments -= instrument!!
+                adapter.notifyItemRemoved(index)
             }
         }
 

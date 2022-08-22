@@ -40,4 +40,5 @@
     <string name="waveform">Waveform:</string>
     <string name="voice">Voice:</string>
     <string name="add_instrument">Add a new instrument</string>
+    <string name="delete_instrument">Delete this instrument</string>
 </resources>

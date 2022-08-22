@@ -36,7 +36,7 @@ class InstrumentListFragment : Fragment() {
         binding.recyclerView.adapter = InstrumentAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         val callback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             0
         ) {
             override fun onMove(

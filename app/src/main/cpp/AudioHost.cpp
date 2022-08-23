@@ -15,6 +15,9 @@ aaudio_data_callback_result_t dataCallback(
     }
     AudioHost *thiz = static_cast<AudioHost *>(userData);
     for (auto const &instrument: *thiz->instruments) {
+        if (!instrument) {
+            continue;
+        }
         instrument->render(buffer, sampleCount);
     }
     for (uint32_t i = 0; i < sampleCount; i++) {

@@ -60,6 +60,7 @@ class InstrumentViewHolder(
                 val index = Instrument.instruments.indexOf(instrument)
                 Instrument.instruments -= instrument!!
                 adapter.notifyItemRemoved(index)
+                instrument!!.destroy()
             }
         }
 

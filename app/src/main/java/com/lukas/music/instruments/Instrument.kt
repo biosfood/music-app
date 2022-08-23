@@ -23,6 +23,7 @@ abstract class Instrument(var name: String) {
     abstract fun startNote(note: Note)
     abstract fun stop()
     abstract fun stopNote(note: Note)
+    abstract fun destroy()
 
     companion object {
         val instruments = mutableListOf<Instrument>()

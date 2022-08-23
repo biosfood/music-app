@@ -69,4 +69,10 @@ class PolyInstrument(name: String) : Instrument(name) {
             }
         }
     }
+
+    override fun destroy() {
+        for (instrument in internalInstruments) {
+            instrument.destroy()
+        }
+    }
 }

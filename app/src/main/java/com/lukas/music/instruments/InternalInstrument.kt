@@ -63,9 +63,14 @@ class InternalInstrument {
         endNote(id)
     }
 
+    fun destroy() {
+        destroy(id)
+    }
+
     private external fun createInstrument(): Int
     private external fun setInstrumentWaveform(id: Int, waveform: Int)
     private external fun startNote(id: Int, frequency: Double)
     private external fun endNote(id: Int)
     private external fun setVolume(id: Int, volume: Float)
+    private external fun destroy(id: Int)
 }

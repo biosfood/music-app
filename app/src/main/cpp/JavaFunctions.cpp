@@ -8,12 +8,24 @@
 static AudioHost *audioHost;
 
 
-template <class _InputIterator>
+template<class _InputIterator>
 void *listGet(_InputIterator iterator, uint32_t n) {
     for (uint32_t i = 0; i < n; i++) {
         iterator++;
     }
     return *iterator;
+}
+
+Instrument *getInstrument(uint32_t id) {
+    return static_cast<Instrument *>(listGet(audioHost->instruments->begin(), id));
+}
+
+template<class _InputIterator>
+void listSet(_InputIterator iterator, uint32_t n, void *value) {
+    for (uint32_t i = 0; i < n; i++) {
+        iterator++;
+    }
+    *iterator = static_cast<Instrument *>(value);
 }
 
 extern "C" {
@@ -34,17 +46,13 @@ Java_com_lukas_music_instruments_InternalInstrument_createInstrument(JNIEnv *env
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_startNote(JNIEnv *env, jobject thiz,
                                                               jint id, jdouble frequency) {
-    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
-                                                               id));
-    instrument->startNote(frequency);
+    getInstrument(id)->startNote(frequency);
 }
 
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_endNote(JNIEnv *env, jobject thiz,
                                                             jint id) {
-    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
-                                                               id));
-    instrument->endNote();
+    getInstrument(id)->endNote();
 }
 JNIEXPORT void JNICALL
 Java_com_lukas_music_ui_fragments_PlayFragment_setMasterVolume(JNIEnv *env, jobject thiz,
@@ -54,16 +62,18 @@ Java_com_lukas_music_ui_fragments_PlayFragment_setMasterVolume(JNIEnv *env, jobj
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_setInstrumentWaveform(JNIEnv *env, jobject thiz,
                                                                           jint id, jint waveform) {
-    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
-                                                               id));
-    instrument->setWaveform(static_cast<WaveformType>(waveform));
+    getInstrument(id)->setWaveform(static_cast<WaveformType>(waveform));
 }
 
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_setVolume(JNIEnv *env, jobject thiz, jint id,
                                                               jfloat volume) {
-    Instrument *instrument = static_cast<Instrument *>(listGet(audioHost->instruments->begin(),
-                                                               id));
-    instrument->wave->amplitude = volume;
+    getInstrument(id)->wave->amplitude = volume;
+}
+
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_InternalInstrument_destroy(JNIEnv *env, jobject thiz, jint id) {
+    listSet(audioHost->instruments->begin(), id, nullptr);
+    delete getInstrument(id);
 }
 }

@@ -49,4 +49,8 @@ class MonoInstrument(name: String) : Instrument(name) {
             stop()
         }
     }
+
+    override fun destroy() {
+        internalInstrument.destroy()
+    }
 }

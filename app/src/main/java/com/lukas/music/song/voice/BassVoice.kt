@@ -21,6 +21,8 @@ class BassVoice(instrument: Instrument) : Voice(instrument) {
         arrayOf(false)
     )
 
+    override val noteCount: Int = 1
+
     override fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note> {
         return arrayOf(chordNotes[0] - 24)
     }

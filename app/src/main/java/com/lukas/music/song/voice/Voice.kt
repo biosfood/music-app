@@ -16,6 +16,7 @@ import kotlin.reflect.KClass
 
 abstract class Voice(val instrument: Instrument) {
     abstract var noteActive: Array<Array<Boolean>>
+    abstract val noteCount: Int
 
     abstract fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note>
 

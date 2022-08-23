@@ -113,7 +113,9 @@ fun <T : Enum<*>> Spinner.smartSetup(
         android.R.layout.simple_spinner_dropdown_item, items
     )
     spinnerSetupMain<T>(arrayAdapter, target.get().ordinal) {
-        target.set(items[it])
+        if (target.get() != items[it]) {
+            target.set(items[it])
+        }
         callback(it)
     }
 }

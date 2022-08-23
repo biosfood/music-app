@@ -14,11 +14,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableRow
+import androidx.core.view.setMargins
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.button.MaterialButton
 import com.lukas.music.databinding.FragmentEditVoiceBinding
+import com.lukas.music.song.Song
 import com.lukas.music.song.voice.Voice
+import com.lukas.music.util.ArrayProperty
+import com.lukas.music.util.setupToggle
 
-class EditVoiceFragment(val voice: Voice) : DialogFragment() {
+class EditVoiceFragment(private val voice: Voice) : DialogFragment() {
     private lateinit var binding: FragmentEditVoiceBinding
 
     override fun onCreateView(
@@ -26,6 +32,17 @@ class EditVoiceFragment(val voice: Voice) : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditVoiceBinding.inflate(inflater)
+        for (row in 0 until voice.noteCount) {
+            val rowLayout = TableRow(binding.root.context)
+            for (column in 0 until Song.currentSong.beats) {
+                val button = MaterialButton(binding.root.context)
+                button.layoutParams = buttonLayout
+                button.setupToggle(ArrayProperty(voice.noteActive[column], row), R.color.blue)
+                rowLayout.addView(button)
+            }
+            binding.noteGrid.addView(rowLayout)
+        }
+        binding.noteGrid.isStretchAllColumns = true
         binding.closeButton.setOnClickListener {
             dismiss()
         }
@@ -38,5 +55,13 @@ class EditVoiceFragment(val voice: Voice) : DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    companion object {
+        val buttonLayout = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT)
+
+        init {
+            buttonLayout.setMargins(5)
+        }
     }
 }

@@ -57,6 +57,9 @@ class EditInstrumentFragment(
             Voice.DEFAULT_VOICE_NAMES,
             Voice.DEFAULT_VOICES.indexOf(instrument.voice::class)
         ) {
+            if (instrument.voice::class == Voice.DEFAULT_VOICES[it]) {
+                return@setup
+            }
             instrument.voice = Voice.DEFAULT_VOICES[it].constructors.first().call(instrument)
         }
         binding.editVoiceButton.setOnClickListener {

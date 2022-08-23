@@ -20,6 +20,7 @@ class ChordVoice(instrument: Instrument) : Voice(instrument) {
         Array(3) { false },
         Array(3) { true },
     )
+    override val noteCount: Int = 3
 
     override fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note> {
         return chordNotes

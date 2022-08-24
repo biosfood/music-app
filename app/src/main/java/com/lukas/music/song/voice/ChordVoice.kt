@@ -14,13 +14,7 @@ import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
 
 class ChordVoice(instrument: Instrument) : Voice(instrument) {
-    override var noteActive: Array<Array<Boolean>> = arrayOf(
-        Array(3) { false },
-        Array(3) { true },
-        Array(3) { false },
-        Array(3) { true },
-    )
-    override val noteCount: Int = 3
+    override val noteCount: Int get() = 3
 
     override fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note> {
         return chordNotes

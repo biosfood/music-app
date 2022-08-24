@@ -11,20 +11,24 @@
 package com.lukas.music.song.voice
 
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.song.Song
 import com.lukas.music.song.note.Note
 import kotlin.reflect.KClass
 
 abstract class Voice(val instrument: Instrument) {
-    abstract var noteActive: Array<Array<Boolean>>
     abstract val noteCount: Int
+    val noteActive: Array<Array<Boolean>> =
+        Array(Song.currentSong.beats * Song.currentSong.subBeats) { Array(noteCount) { false } }
+    var repeatNote = true // TODO
 
     abstract fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note>
 
-    fun step(root: Note, chordNotes: Array<Note>, beat: Int) {
+    fun step(root: Note, chordNotes: Array<Note>, beat: Int, subBeat: Int) {
         if (instrument.muted) {
             return
         }
-        val activeNotes = noteActive[beat]
+        val beatIndex = beat * Song.currentSong.subBeats + subBeat
+        val activeNotes = noteActive[beatIndex]
         val notes = getNotes(root, chordNotes)
         for ((index, active) in activeNotes.withIndex()) {
             val note = notes[index]

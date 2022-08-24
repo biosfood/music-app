@@ -14,11 +14,13 @@ import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.chords.ChordProgression
 import com.lukas.music.song.note.Note
 import com.lukas.music.util.Cycle
+import com.lukas.music.util.MetaCycle
 
 class Song(
     root: Note,
-    val beats: Int
-) : Cycle<Int>(beats) {
+    val beats: Int,
+    val subBeats: Int,
+) : MetaCycle<Cycle<Int>>() {
     val chordProgression = ChordProgression()
     var soloInstrument: Instrument? = null
         set(value) {
@@ -46,7 +48,11 @@ class Song(
 
     init {
         for (i in 0 until beats) {
-            this += i
+            val cycle = Cycle<Int>()
+            for (j in 0 until subBeats) {
+                cycle += j
+            }
+            this += cycle
         }
         wraparoundListeners += {
             chordProgression.step()
@@ -54,24 +60,25 @@ class Song(
         }
     }
 
-    override fun step(): Int {
+    override fun step(): Cycle<Int>? {
         super.step()
-        val chord = chordProgression.currentItem?.currentItem ?: return index
+        val chord = chordProgression.currentItem?.currentItem ?: return currentItem
         val chordNotes = chord.getNotes(root)
         soloInstrument?.let {
-            it.voice.step(root, chordNotes, index)
+            it.voice.step(root, chordNotes, index, currentItem!!.index)
         } ?: run {
             for (instrument in Instrument.instruments) {
-                instrument.voice.step(root, chordNotes, index)
+                instrument.voice.step(root, chordNotes, index, currentItem!!.index)
             }
         }
-        return index
+        return currentItem
     }
 
     companion object {
         var currentSong = Song(
             Note.NOTES[69],
-            4
+            4,
+            2,
         )
     }
 }

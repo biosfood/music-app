@@ -42,19 +42,24 @@ fun SeekBar.setup(
 fun Button.setupToggle(
     target: KMutableProperty0<Boolean>,
     activeColor: Int,
-    callback: (Boolean) -> Unit = {}
+    inactiveColor: Int = R.color.gray_0x60,
+    callback: (Boolean) -> Unit = {},
 ) {
     setOnClickListener {
         target.set(!target.get())
-        updateToggle(target, activeColor)
+        updateToggle(target, activeColor, inactiveColor)
         callback(target.get())
     }
-    updateToggle(target, activeColor)
+    updateToggle(target, activeColor, inactiveColor)
 }
 
-fun Button.updateToggle(target: KMutableProperty0<Boolean>, activeColor: Int) {
+fun Button.updateToggle(
+    target: KMutableProperty0<Boolean>,
+    activeColor: Int,
+    inactiveColor: Int = R.color.gray_0x60,
+) {
     setBackgroundColor(
-        ContextCompat.getColor(context, if (target.get()) activeColor else R.color.gray_0x60)
+        ContextCompat.getColor(context, if (target.get()) activeColor else inactiveColor)
     )
 }
 

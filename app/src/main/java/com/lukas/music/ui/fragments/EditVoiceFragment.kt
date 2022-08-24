@@ -8,7 +8,7 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.lukas.music
+package com.lukas.music.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +18,7 @@ import android.widget.TableRow
 import androidx.core.view.setMargins
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
+import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEditVoiceBinding
 import com.lukas.music.song.Song
 import com.lukas.music.song.voice.Voice
@@ -32,12 +33,16 @@ class EditVoiceFragment(private val voice: Voice) : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditVoiceBinding.inflate(inflater)
-        for (row in 0 until voice.noteCount) {
+        for (row in voice.noteCount - 1 downTo 0) {
             val rowLayout = TableRow(binding.root.context)
-            for (column in 0 until Song.currentSong.beats) {
+            for (column in 0 until Song.currentSong.beats * Song.currentSong.subBeats) {
                 val button = MaterialButton(binding.root.context)
                 button.layoutParams = buttonLayout
-                button.setupToggle(ArrayProperty(voice.noteActive[column], row), R.color.blue)
+                button.setupToggle(
+                    ArrayProperty(voice.noteActive[column], row),
+                    R.color.blue,
+                    inactiveColor = if (column % Song.currentSong.subBeats == 0) R.color.gray_0x50 else R.color.gray_0x70
+                )
                 rowLayout.addView(button)
             }
             binding.noteGrid.addView(rowLayout)

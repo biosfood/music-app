@@ -17,7 +17,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.lukas.music.EditVoiceFragment
 import com.lukas.music.databinding.FragmentEditInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.Waveform

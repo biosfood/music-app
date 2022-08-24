@@ -36,6 +36,10 @@ object Rhythm {
         if (this::task.isInitialized) {
             task.cancel()
         }
-        task = timer.schedule((60000 / tempo).toLong(), (60000 / tempo).toLong(), callback)
+        task = timer.schedule(
+            (60000 / tempo / Song.currentSong.subBeats).toLong(),
+            (60000 / tempo / Song.currentSong.subBeats).toLong(),
+            callback
+        )
     }
 }

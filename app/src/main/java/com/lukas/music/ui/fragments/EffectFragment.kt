@@ -15,8 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEffectBinding
 import com.lukas.music.instruments.effect.Effect
+import com.lukas.music.util.setupToggle
 import com.lukas.music.util.smartSetup
 
 class EffectFragment(private val effect: Effect) : Fragment() {
@@ -28,6 +30,10 @@ class EffectFragment(private val effect: Effect) : Fragment() {
     ): View? {
         binding = FragmentEffectBinding.inflate(inflater)
         binding.effectName.text = effect.type.toString()
+        binding.activeButton.setupToggle(effect::active, R.color.blue) {
+            binding.activeButton.text = if (it) "ON" else "OFF"
+        }
+        binding.activeButton.text = if (effect.active) "ON" else "OFF"
         binding.influenceSeekBar.smartSetup(0, 100, effect.influence::percentageValue) {
             binding.influenceText.text = effect.influence.description.text(effect.influence)
         }

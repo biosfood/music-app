@@ -35,11 +35,11 @@
                 android:id="@+id/influenceSeekBar"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/effectName"
-                app:layout_constraintTop_toBottomOf="@+id/effectName" />
+                app:layout_constraintTop_toBottomOf="@+id/activeButton" />
 
             <TextView
                 android:id="@+id/influenceText"
@@ -89,6 +89,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/parameter1SeekBar"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/activeButton"
+                android:layout_width="65dp"
+                android:layout_height="48dp"
+                app:layout_constraintEnd_toEndOf="@+id/influenceSeekBar"
+                app:layout_constraintTop_toTopOf="@+id/effectName" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -18,6 +18,12 @@ class Effect(val type: EffectType, private val instrument: Instrument) {
     }
     val influence = EffectParameter(influenceDescription, instrument)
 
+    var active: Boolean = false
+        set(value) {
+            field = value
+            instrument.updateEffects()
+        }
+
     companion object {
         val influenceDescription = EffectParameterDescription(0.0f, 1.0f, 0.0f) {
             "influence: ${it.percentageValue}%"

@@ -82,7 +82,7 @@ class InternalInstrument {
         applyEffectAttributes(
             id,
             effect.type.ordinal,
-            effect.influence.value,
+            if (effect.active) effect.influence.value else 0f,
             effect.parameters[0].value
         )
     }

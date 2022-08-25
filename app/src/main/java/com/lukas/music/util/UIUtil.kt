@@ -36,6 +36,9 @@ fun SeekBar.setup(
         override fun onStopTrackingTouch(seekBar: SeekBar) {
         }
     })
+    if (progress == initialProgress) {
+        callback(initialProgress)
+    }
     this.progress = initialProgress
 }
 

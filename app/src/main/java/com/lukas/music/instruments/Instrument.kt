@@ -10,6 +10,8 @@
 
 package com.lukas.music.instruments
 
+import com.lukas.music.instruments.effect.Effect
+import com.lukas.music.instruments.effect.EffectType
 import com.lukas.music.song.note.Note
 import com.lukas.music.song.voice.BassVoice
 import com.lukas.music.song.voice.Voice
@@ -17,6 +19,10 @@ import com.lukas.music.song.voice.Voice
 abstract class Instrument(var name: String) {
     var voice: Voice = BassVoice(this)
     var envelope = Envelope(this)
+    val effects = Array(EffectType.VALUES.size) {
+        Effect(EffectType.VALUES[it])
+    }
+
     abstract var waveform: Waveform
     abstract var volume: Float
     abstract var muted: Boolean

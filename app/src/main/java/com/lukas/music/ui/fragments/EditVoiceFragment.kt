@@ -16,18 +16,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TableRow
 import androidx.core.view.setMargins
-import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEditVoiceBinding
 import com.lukas.music.song.Song
 import com.lukas.music.song.voice.Voice
 import com.lukas.music.util.ArrayProperty
+import com.lukas.music.util.EasyDialogFragment
 import com.lukas.music.util.setupToggle
 
-class EditVoiceFragment(private val voice: Voice) : DialogFragment() {
-    private lateinit var binding: FragmentEditVoiceBinding
-
+class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentEditVoiceBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,14 +50,6 @@ class EditVoiceFragment(private val voice: Voice) : DialogFragment() {
             dismiss()
         }
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
     }
 
     companion object {

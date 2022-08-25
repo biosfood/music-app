@@ -14,29 +14,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.lukas.music.databinding.FragmentEditEnvelopeBinding
-import com.lukas.music.instruments.Envelope
+import com.lukas.music.databinding.FragmentEditEffectsBinding
+import com.lukas.music.instruments.Instrument
 import com.lukas.music.util.EasyDialogFragment
-import com.lukas.music.util.smartSetup
 
-class EditEnvelopeFragment(private val envelope: Envelope) :
-    EasyDialogFragment<FragmentEditEnvelopeBinding>() {
+class EditEffectsFragment(private val instrument: Instrument) :
+    EasyDialogFragment<FragmentEditEffectsBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEditEnvelopeBinding.inflate(inflater)
-        binding.attackSeek.smartSetup(5, 200, envelope::attack) {
-            binding.attackText.text = "Attack: $it ms"
-        }
-        binding.delaySeek.smartSetup(5, 200, envelope::delay) {
-            binding.delayText.text = "Delay: $it ms"
-        }
-        binding.sustainSeek.smartSetup(0, 100, envelope::sustain) {
-            binding.sustainText.text = "Sustain: $it%"
-        }
-        binding.releaseSeek.smartSetup(5, 200, envelope::release) {
-            binding.releaseText.text = "Release: $it ms"
+        binding = FragmentEditEffectsBinding.inflate(inflater)
+        for (effect in instrument.effects) {
+            val effectEditor = EffectFragment(effect)
+            childFragmentManager.beginTransaction().add(binding.effectsDisplay.id, effectEditor)
+                .commit()
         }
         binding.closeButton.setOnClickListener {
             dismiss()

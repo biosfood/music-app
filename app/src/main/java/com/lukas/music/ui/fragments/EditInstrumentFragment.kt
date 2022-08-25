@@ -16,21 +16,19 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.lukas.music.databinding.FragmentEditInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.Waveform
 import com.lukas.music.song.voice.Voice
 import com.lukas.music.ui.adapters.InstrumentViewHolder
+import com.lukas.music.util.EasyDialogFragment
 import com.lukas.music.util.setup
 import com.lukas.music.util.smartSetup
 
 class EditInstrumentFragment(
     private val instrument: Instrument,
     private val viewHolder: InstrumentViewHolder
-) : DialogFragment() {
-    lateinit var binding: FragmentEditInstrumentBinding
-
+) : EasyDialogFragment<FragmentEditInstrumentBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,17 +65,12 @@ class EditInstrumentFragment(
         binding.editEnvelopeButton.setOnClickListener {
             EditEnvelopeFragment(instrument.envelope).showNow(childFragmentManager, "")
         }
+        binding.editEffectsButton.setOnClickListener {
+            EditEffectsFragment(instrument).showNow(childFragmentManager, "")
+        }
         binding.closeButton.setOnClickListener {
             dismiss()
         }
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
     }
 }

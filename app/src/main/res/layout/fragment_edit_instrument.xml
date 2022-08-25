@@ -14,6 +14,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditInstrumentFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editEffectsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/edit_voice"
+        android:src="@android:drawable/ic_menu_edit"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editEnvelopeButton" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_envelope"
+        app:layout_constraintBottom_toBottomOf="@+id/editEnvelopeButton"
+        app:layout_constraintEnd_toStartOf="@+id/editEnvelopeButton"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/editEnvelopeButton" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -59,7 +84,7 @@
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:contentDescription="@string/close"
@@ -67,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEnvelopeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/editEffectsButton" />
 
     <Spinner
         android:id="@+id/waveformSelection"
@@ -163,10 +188,10 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/edit_envelope"
-        app:layout_constraintBottom_toBottomOf="@+id/editEnvelopeButton"
-        app:layout_constraintEnd_toStartOf="@+id/editEnvelopeButton"
+        android:text="@string/edit_effects"
+        app:layout_constraintBottom_toBottomOf="@+id/editEffectsButton"
+        app:layout_constraintEnd_toStartOf="@+id/editEffectsButton"
         app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/editEnvelopeButton" />
+        app:layout_constraintTop_toTopOf="@+id/editEffectsButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,27 +8,8 @@
  * You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.lukas.music.instruments.effect
+package com.lukas.music.util
 
-import com.lukas.music.util.format
+fun Double.format(digits: Int) = "%.${digits}f".format(this)
 
-enum class EffectType(
-    val title: String,
-    val parameterDescriptions: Array<EffectParameterDescription>
-) {
-    LowPass("low pass filter",
-        arrayOf(
-            EffectParameterDescription(-1f, 3f, 1f) {
-                "cutoff: ${it.value.format(1)} octaves"
-            }
-        )),
-    ;
-
-    override fun toString(): String {
-        return title
-    }
-
-    companion object {
-        val VALUES = values()
-    }
-}
+fun Float.format(digits: Int) = "%.${digits}f".format(this)

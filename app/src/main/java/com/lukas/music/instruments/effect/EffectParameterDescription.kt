@@ -10,25 +10,9 @@
 
 package com.lukas.music.instruments.effect
 
-import com.lukas.music.util.format
-
-enum class EffectType(
-    val title: String,
-    val parameterDescriptions: Array<EffectParameterDescription>
-) {
-    LowPass("low pass filter",
-        arrayOf(
-            EffectParameterDescription(-1f, 3f, 1f) {
-                "cutoff: ${it.value.format(1)} octaves"
-            }
-        )),
-    ;
-
-    override fun toString(): String {
-        return title
-    }
-
-    companion object {
-        val VALUES = values()
-    }
-}
+class EffectParameterDescription(
+    val min: Float,
+    val max: Float,
+    val initialValue: Float,
+    val text: (EffectParameter) -> String,
+)

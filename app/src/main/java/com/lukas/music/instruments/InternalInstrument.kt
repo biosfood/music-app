@@ -79,7 +79,7 @@ class InternalInstrument {
     }
 
     fun applyEffectAttributes(effect: Effect) {
-        applyEffectAttributes(id, effect.type.ordinal, effect.parameter1)
+        applyEffectAttributes(id, effect.type.ordinal, effect.parameters[0].value)
     }
 
     private external fun createInstrument(): Int

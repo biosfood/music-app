@@ -10,25 +10,21 @@
 
 package com.lukas.music.instruments.effect
 
-import com.lukas.music.util.format
+import com.lukas.music.instruments.Instrument
+import kotlin.math.roundToInt
 
-enum class EffectType(
-    val title: String,
-    val parameterDescriptions: Array<EffectParameterDescription>
-) {
-    LowPass("low pass filter",
-        arrayOf(
-            EffectParameterDescription(-1f, 3f, 1f) {
-                "cutoff: ${it.value.format(1)} octaves"
-            }
-        )),
-    ;
+class EffectParameter(val description: EffectParameterDescription, val instrument: Instrument) {
+    var value: Float = description.initialValue
+        set(value) {
+            field = value
+            instrument.updateEffects()
+        }
 
-    override fun toString(): String {
-        return title
-    }
-
-    companion object {
-        val VALUES = values()
-    }
+    // linear interpolation between description extrema
+    var percentageValue: Int
+        get() = ((value - description.min) / (description.max - description.min) * 100).roundToInt()
+        set(value) {
+            this.value =
+                description.min + (description.max - description.min) * (value.toFloat() / 100f)
+        }
 }

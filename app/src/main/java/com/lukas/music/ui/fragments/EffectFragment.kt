@@ -27,9 +27,10 @@ class EffectFragment(private val effect: Effect) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEffectBinding.inflate(inflater)
-        binding.effectName.text = effect.type.description
-        binding.parameter1SeekBar.smartSetup(-100, 300, effect::parameter1Percent) {
-            binding.parameter1Text.text = effect.type.parameter1Text(it)
+        binding.effectName.text = effect.type.toString()
+        binding.parameter1SeekBar.smartSetup(0, 100, effect.parameters[0]::percentageValue) {
+            binding.parameter1Text.text =
+                effect.parameters[0].description.text(effect.parameters[0])
         }
         return binding.root
     }

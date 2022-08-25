@@ -76,4 +76,20 @@ Java_com_lukas_music_instruments_InternalInstrument_destroy(JNIEnv *env, jobject
     listSet(audioHost->instruments->begin(), id, nullptr);
     delete getInstrument(id);
 }
+
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_InternalInstrument_updateEnvelopeParameters(JNIEnv *env,
+                                                                             jobject thiz, jint id,
+                                                                             jfloat attack,
+                                                                             jfloat delay,
+                                                                             jfloat sustain,
+                                                                             jfloat release) {
+    Instrument *instrument = getInstrument((id));
+    Envelope *envelope = instrument->envelope;
+    envelope->attack = attack;
+    envelope->delay = delay;
+    envelope->sustain = sustain;
+    envelope->release = release;
+    envelope->update();
+}
 }

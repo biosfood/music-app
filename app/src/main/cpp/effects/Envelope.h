@@ -16,15 +16,16 @@ private:
     EnvelopePhase phase;
     float attackIncrement, delayIncrement, releaseIncrement;
     float value = 0;
+    AudioHost *host;
 public:
-    float attack = 0.05, delay = 0.2, sustain = 0.75, release = 1;
+    float attack = 0.05, delay = 0.05, sustain = 0.7, release = 0.1;
 
     void initialize(AudioHost *host);
 
+    void update();
+
     void startNote();
-
     void endNote();
-
     void doRender(uint32_t sampleCount);
 };
 

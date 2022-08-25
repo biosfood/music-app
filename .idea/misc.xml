@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/layout/credits_layout.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/fragment_credits.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_chord.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_edit_envelope.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_instrument.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_edit_voice.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/fragment_instrument.xml" value="0.33" />

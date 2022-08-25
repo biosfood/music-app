@@ -10,24 +10,28 @@
 
 package com.lukas.music.instruments
 
-import com.lukas.music.song.note.Note
-import com.lukas.music.song.voice.BassVoice
-import com.lukas.music.song.voice.Voice
+class Envelope(val instrument: Instrument) {
+    var attack: Int = 50
+        set(value) {
+            field = value
+            instrument.updateEnvelope()
+        }
 
-abstract class Instrument(var name: String) {
-    var voice: Voice = BassVoice(this)
-    var envelope = Envelope(this)
-    abstract var waveform: Waveform
-    abstract var volume: Float
-    abstract var muted: Boolean
+    var delay: Int = 50
+        set(value) {
+            field = value
+            instrument.updateEnvelope()
+        }
 
-    abstract fun startNote(note: Note)
-    abstract fun stop()
-    abstract fun stopNote(note: Note)
-    abstract fun destroy()
-    abstract fun updateEnvelope()
+    var sustain: Int = 70
+        set(value) {
+            field = value
+            instrument.updateEnvelope()
+        }
 
-    companion object {
-        val instruments = mutableListOf<Instrument>()
-    }
+    var release: Int = 100
+        set(value) {
+            field = value
+            instrument.updateEnvelope()
+        }
 }

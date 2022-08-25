@@ -13,7 +13,7 @@ package com.lukas.music.instruments
 import com.lukas.music.song.note.Note
 
 class InternalInstrument {
-    private val id = createInstrument()
+    val id = createInstrument()
     var note: Note? = null
 
     var waveform: Waveform = Waveform.SINE
@@ -67,10 +67,27 @@ class InternalInstrument {
         destroy(id)
     }
 
+    fun applyEnvelope(envelope: Envelope) {
+        updateEnvelopeParameters(
+            id,
+            envelope.attack.toFloat() / 1000f,
+            envelope.delay.toFloat() / 1000f,
+            envelope.sustain.toFloat() / 100f,
+            envelope.release.toFloat() / 1000f,
+        )
+    }
+
     private external fun createInstrument(): Int
     private external fun setInstrumentWaveform(id: Int, waveform: Int)
     private external fun startNote(id: Int, frequency: Double)
     private external fun endNote(id: Int)
     private external fun setVolume(id: Int, volume: Float)
     private external fun destroy(id: Int)
+    private external fun updateEnvelopeParameters(
+        id: Int,
+        attack: Float,
+        delay: Float,
+        sustain: Float,
+        release: Float
+    )
 }

@@ -3,6 +3,11 @@
 #include "Envelope.h"
 
 void Envelope::initialize(AudioHost *host) {
+    this->host = host;
+    update();
+}
+
+void Envelope::update() {
     attackIncrement = 1 / attack / host->sampleRate;
     delayIncrement = 1 / delay / host->sampleRate;
     releaseIncrement = 1 / release / host->sampleRate;

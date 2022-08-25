@@ -39,6 +39,18 @@ fun SeekBar.setup(
     this.progress = initialProgress
 }
 
+fun SeekBar.smartSetup(
+    min: Int,
+    max: Int,
+    target: KMutableProperty0<Int>,
+    callback: (Int) -> Unit
+) {
+    setup(min, max, target.get()) {
+        target.set(it)
+        callback(it)
+    }
+}
+
 fun Button.setupToggle(
     target: KMutableProperty0<Boolean>,
     activeColor: Int,

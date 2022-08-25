@@ -75,4 +75,10 @@ class PolyInstrument(name: String) : Instrument(name) {
             instrument.destroy()
         }
     }
+
+    override fun updateEnvelope() {
+        for (instrument in internalInstruments) {
+            instrument.applyEnvelope(envelope)
+        }
+    }
 }

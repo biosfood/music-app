@@ -23,7 +23,7 @@ import com.lukas.music.song.chords.ChordType
 import com.lukas.music.song.chords.Interval
 import com.lukas.music.util.setup
 
-class EditChordFragment(val chord: Chord, private val songFragment: SongFragment) :
+class EditChordFragment(private val chord: Chord, private val songFragment: SongFragment) :
     DialogFragment() {
     lateinit var binding: FragmentEditChordBinding
 

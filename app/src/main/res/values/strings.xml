@@ -42,4 +42,5 @@
     <string name="add_instrument">Add a new instrument</string>
     <string name="delete_instrument">Delete this instrument</string>
     <string name="edit_voice">Edit voice</string>
+    <string name="edit_envelope">Edit envelope</string>
 </resources>

@@ -64,6 +64,9 @@ class EditInstrumentFragment(
         binding.editVoiceButton.setOnClickListener {
             EditVoiceFragment(instrument.voice).showNow(childFragmentManager, "")
         }
+        binding.editEnvelopeButton.setOnClickListener {
+            EditEnvelopeFragment(instrument.envelope).showNow(childFragmentManager, "")
+        }
         binding.closeButton.setOnClickListener {
             dismiss()
         }

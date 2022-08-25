@@ -53,4 +53,8 @@ class MonoInstrument(name: String) : Instrument(name) {
     override fun destroy() {
         internalInstrument.destroy()
     }
+
+    override fun updateEnvelope() {
+        internalInstrument.applyEnvelope(envelope)
+    }
 }

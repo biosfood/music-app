@@ -81,4 +81,12 @@ class PolyInstrument(name: String) : Instrument(name) {
             instrument.applyEnvelope(envelope)
         }
     }
+
+    override fun updateEffects() {
+        for (instrument in internalInstruments) {
+            for (effect in effects) {
+                instrument.applyEffectAttributes(effect)
+            }
+        }
+    }
 }

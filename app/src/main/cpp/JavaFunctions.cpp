@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <android/input.h>
 #include "AudioHost.h"
+#include "Instrument.h"
 #include <jni.h>
 #include <string>
 #include <list>
@@ -91,5 +92,20 @@ Java_com_lukas_music_instruments_InternalInstrument_updateEnvelopeParameters(JNI
     envelope->sustain = sustain;
     envelope->release = release;
     envelope->update();
+}
+
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_InternalInstrument_applyEffectAttributes(JNIEnv *env, jobject thiz,
+                                                                          jint id,
+                                                                          jint effect_number,
+                                                                          jfloat parameter1) {
+    Instrument *instrument = getInstrument(id);
+    Effect *effect;
+    switch (effect_number) {
+        case 0:
+            effect = instrument->lowPass;
+            break;
+    }
+    effect->parameter1 = parameter1;
 }
 }

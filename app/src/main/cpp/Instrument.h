@@ -6,6 +6,7 @@ class Instrument;
 #include "effects/Envelope.h"
 #include "waveforms/Waveform.h"
 #include "AudioHost.h"
+#include "effects/LowPass.h"
 
 class Instrument {
 private:
@@ -15,6 +16,7 @@ public:
 
     Envelope *const envelope = new Envelope();
     Waveform *wave;
+    LowPass *lowPass = new LowPass();
 
     void render(float *buffer, uint32_t count);
     void startNote(float frequency);

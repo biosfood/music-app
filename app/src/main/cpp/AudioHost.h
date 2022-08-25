@@ -3,7 +3,8 @@
 
 class AudioHost;
 
-#include "Instrument.h"
+class Instrument;
+
 #include <aaudio/AAudio.h>
 #include <list>
 

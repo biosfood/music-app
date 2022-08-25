@@ -10,4 +10,17 @@
 
 package com.lukas.music.instruments.effect
 
-class Effect(val type: EffectType)
+import com.lukas.music.instruments.Instrument
+
+class Effect(val type: EffectType, private val instrument: Instrument) {
+    var parameter1: Float = 1.0f
+        set(value) {
+            field = value
+            instrument.updateEffects()
+        }
+    var parameter1Percent: Int
+        get() = (parameter1 * 100).toInt()
+        set(value) {
+            parameter1 = value.toFloat() / 100f
+        }
+}

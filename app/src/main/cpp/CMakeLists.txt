@@ -17,6 +17,8 @@ add_library(
         Instrument.cpp
         effects/Envelope.cpp
         effects/Processable.cpp
+        effects/Effect.cpp
+        effects/LowPass.cpp
 )
 
 find_library(

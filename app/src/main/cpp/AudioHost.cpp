@@ -1,7 +1,9 @@
 #include "AudioHost.h"
+#include "Instrument.h"
 #include <android/log.h>
 #include <thread>
 #include <mutex>
+#include <jni.h>
 
 const uint32_t bufferSize = 2;
 aaudio_data_callback_result_t dataCallback(

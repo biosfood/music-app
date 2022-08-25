@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lukas.music.databinding.FragmentEffectBinding
 import com.lukas.music.instruments.effect.Effect
+import com.lukas.music.util.smartSetup
 
 class EffectFragment(private val effect: Effect) : Fragment() {
     lateinit var binding: FragmentEffectBinding
@@ -27,6 +28,9 @@ class EffectFragment(private val effect: Effect) : Fragment() {
     ): View? {
         binding = FragmentEffectBinding.inflate(inflater)
         binding.effectName.text = effect.type.description
+        binding.parameter1SeekBar.smartSetup(-100, 300, effect::parameter1Percent) {
+            binding.parameter1Text.text = effect.type.parameter1Text(it)
+        }
         return binding.root
     }
 }

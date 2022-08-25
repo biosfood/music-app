@@ -10,6 +10,7 @@
 
 package com.lukas.music.instruments
 
+import com.lukas.music.instruments.effect.Effect
 import com.lukas.music.song.note.Note
 
 class InternalInstrument {
@@ -77,6 +78,10 @@ class InternalInstrument {
         )
     }
 
+    fun applyEffectAttributes(effect: Effect) {
+        applyEffectAttributes(id, effect.type.ordinal, effect.parameter1)
+    }
+
     private external fun createInstrument(): Int
     private external fun setInstrumentWaveform(id: Int, waveform: Int)
     private external fun startNote(id: Int, frequency: Double)
@@ -90,4 +95,6 @@ class InternalInstrument {
         sustain: Float,
         release: Float
     )
+
+    private external fun applyEffectAttributes(id: Int, effectNumber: Int, parameter1: Float)
 }

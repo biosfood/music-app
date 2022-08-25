@@ -20,7 +20,7 @@ abstract class Instrument(var name: String) {
     var voice: Voice = BassVoice(this)
     var envelope = Envelope(this)
     val effects = Array(EffectType.VALUES.size) {
-        Effect(EffectType.VALUES[it])
+        Effect(EffectType.VALUES[it], this)
     }
 
     abstract var waveform: Waveform
@@ -32,6 +32,7 @@ abstract class Instrument(var name: String) {
     abstract fun stopNote(note: Note)
     abstract fun destroy()
     abstract fun updateEnvelope()
+    abstract fun updateEffects()
 
     companion object {
         val instruments = mutableListOf<Instrument>()

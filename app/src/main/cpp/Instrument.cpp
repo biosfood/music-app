@@ -9,6 +9,7 @@ Instrument::Instrument(AudioHost *host) {
     wave = new Sine();
     wave->host = host;
     envelope->initialize(host);
+    lowPass->host = host;
 }
 
 void multiply(float *target, float *modulation, uint32_t size) {
@@ -27,12 +28,16 @@ void Instrument::render(float *buffer, uint32_t count) {
     float *modulation = envelope->render(count);
     float *waveform = wave->render(count);
     multiply(waveform, modulation, count);
-    add(buffer, waveform, count);
+    lowPass->input = waveform;
+    float *filtered = lowPass->render(count);
+    add(buffer, filtered, count);
 }
 
 void Instrument::startNote(float frequency) {
     wave->setFrequency(frequency);
     envelope->startNote();
+    lowPass->frequency = frequency;
+    lowPass->update();
 }
 
 void Instrument::endNote() {

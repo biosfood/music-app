@@ -10,8 +10,13 @@
 
 package com.lukas.music.instruments.effect
 
-enum class EffectType(val description: String, val parameter1Name: String) {
-    LowPass("low pass filter", "cutoff frequency"),
+import kotlin.math.roundToInt
+
+enum class EffectType(
+    val description: String,
+    val parameter1Text: (Int) -> String,
+) {
+    LowPass("low pass filter", { "cutoff: ${(it.toFloat() / 100f).roundToInt()} octaves" }),
     ;
 
     companion object {

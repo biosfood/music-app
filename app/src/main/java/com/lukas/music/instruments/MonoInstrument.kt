@@ -57,4 +57,10 @@ class MonoInstrument(name: String) : Instrument(name) {
     override fun updateEnvelope() {
         internalInstrument.applyEnvelope(envelope)
     }
+
+    override fun updateEffects() {
+        for (effect in effects) {
+            internalInstrument.applyEffectAttributes(effect)
+        }
+    }
 }

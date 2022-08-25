@@ -6,6 +6,8 @@ class Waveform;
 enum WaveformType {
     SINE = 0,
     SAWTOOTH = 1,
+    SQUARE = 2,
+    TRIANGLE = 3,
 };
 
 #include "../effects/Processable.h"

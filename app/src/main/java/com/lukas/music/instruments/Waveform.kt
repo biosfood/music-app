@@ -13,6 +13,8 @@ package com.lukas.music.instruments
 enum class Waveform(val id: Int, private val identifier: String) {
     SINE(0, "sine"),
     SAWTOOTH(1, "sawtooth"),
+    SQUARE(2, "square"),
+    TRIANGLE(3, "triangle"),
     ;
 
     override fun toString(): String {

@@ -1,6 +1,8 @@
 #include "Instrument.h"
 #include "waveforms/Sawtooth.h"
 #include "waveforms/Sine.h"
+#include "waveforms/Square.h"
+#include "waveforms/Triangle.h"
 
 Instrument::Instrument(AudioHost *host) {
     this->host = host;
@@ -46,6 +48,11 @@ void Instrument::setWaveform(WaveformType waveform) {
         case SAWTOOTH:
             wave = new Sawtooth();
             break;
+        case SQUARE:
+            wave = new Square();
+            break;
+        case TRIANGLE:
+            wave = new Triangle();
     }
     wave->host = host;
     delete old;

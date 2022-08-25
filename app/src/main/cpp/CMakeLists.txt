@@ -10,6 +10,8 @@ add_library(
         waveforms/Sine.cpp
         waveforms/Sawtooth.cpp
         waveforms/Waveform.cpp
+        waveforms/Square.cpp
+        waveforms/Triangle.cpp
         JavaFunctions.cpp
         AudioHost.cpp
         Instrument.cpp

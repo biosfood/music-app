@@ -98,6 +98,7 @@ JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_applyEffectAttributes(JNIEnv *env, jobject thiz,
                                                                           jint id,
                                                                           jint effect_number,
+                                                                          jfloat influence,
                                                                           jfloat parameter1) {
     Instrument *instrument = getInstrument(id);
     Effect *effect;
@@ -106,6 +107,7 @@ Java_com_lukas_music_instruments_InternalInstrument_applyEffectAttributes(JNIEnv
             effect = instrument->lowPass;
             break;
     }
+    effect->influence = influence;
     effect->parameter1 = parameter1;
 }
 }

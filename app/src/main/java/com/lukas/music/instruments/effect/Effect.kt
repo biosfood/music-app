@@ -16,4 +16,11 @@ class Effect(val type: EffectType, private val instrument: Instrument) {
     val parameters = Array(type.parameterDescriptions.size) {
         EffectParameter(type.parameterDescriptions[it], instrument)
     }
+    val influence = EffectParameter(influenceDescription, instrument)
+
+    companion object {
+        val influenceDescription = EffectParameterDescription(0.0f, 1.0f, 0.0f) {
+            "influence: ${it.percentageValue}%"
+        }
+    }
 }

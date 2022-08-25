@@ -7,7 +7,7 @@
 
 class Effect : public Processable {
 public:
-    float parameter1, frequency;
+    float parameter1, frequency, influence;
     float *input;
     AudioHost *host;
 

@@ -46,7 +46,7 @@ class EditInstrumentFragment(
             }
         })
         binding.waveformSelection.smartSetup(Waveform.VALUES, instrument::waveform)
-        binding.volumeSeek.setup(0, 100, 30) {
+        binding.volumeSeek.setup(0, 100, (instrument.volume * 100f).toInt()) {
             binding.volumeText.text = "volume: $it%"
             instrument.volume = it.toFloat() / 100f
         }

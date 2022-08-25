@@ -79,7 +79,12 @@ class InternalInstrument {
     }
 
     fun applyEffectAttributes(effect: Effect) {
-        applyEffectAttributes(id, effect.type.ordinal, effect.parameters[0].value)
+        applyEffectAttributes(
+            id,
+            effect.type.ordinal,
+            effect.influence.value,
+            effect.parameters[0].value
+        )
     }
 
     private external fun createInstrument(): Int
@@ -96,5 +101,10 @@ class InternalInstrument {
         release: Float
     )
 
-    private external fun applyEffectAttributes(id: Int, effectNumber: Int, parameter1: Float)
+    private external fun applyEffectAttributes(
+        id: Int,
+        effectNumber: Int,
+        influence: Float,
+        parameter1: Float
+    )
 }

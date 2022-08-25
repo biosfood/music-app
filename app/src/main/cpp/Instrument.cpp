@@ -18,6 +18,12 @@ void multiply(float *target, float *modulation, uint32_t size) {
     }
 }
 
+void multiply(float *target, float value, uint32_t size) {
+    for (uint32_t i = 0; i < size; i++) {
+        target[i] *= value;
+    }
+}
+
 void add(float *target, float *other, uint32_t size) {
     for (uint32_t i = 0; i < size; i++) {
         target[i] += other[i];
@@ -30,7 +36,10 @@ void Instrument::render(float *buffer, uint32_t count) {
     multiply(waveform, modulation, count);
     lowPass->input = waveform;
     float *filtered = lowPass->render(count);
-    add(buffer, filtered, count);
+    multiply(filtered, lowPass->influence, count);
+    multiply(waveform, 1 - lowPass->influence, count);
+    add(waveform, filtered, count);
+    add(buffer, waveform, count);
 }
 
 void Instrument::startNote(float frequency) {

@@ -28,6 +28,9 @@ class EffectFragment(private val effect: Effect) : Fragment() {
     ): View? {
         binding = FragmentEffectBinding.inflate(inflater)
         binding.effectName.text = effect.type.toString()
+        binding.influenceSeekBar.smartSetup(0, 100, effect.influence::percentageValue) {
+            binding.influenceText.text = effect.influence.description.text(effect.influence)
+        }
         binding.parameter1SeekBar.smartSetup(0, 100, effect.parameters[0]::percentageValue) {
             binding.parameter1Text.text =
                 effect.parameters[0].description.text(effect.parameters[0])

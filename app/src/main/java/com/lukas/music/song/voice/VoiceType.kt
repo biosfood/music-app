@@ -10,13 +10,23 @@
 
 package com.lukas.music.song.voice
 
-import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.note.Note
 
-class BassVoice(instrument: Instrument) : Voice(instrument) {
-    override val noteCount: Int get() = 1
+enum class VoiceType(
+    val title: String,
+    val noteCount: Int,
+    val getNotes: (Note, Array<Note>) -> Array<Note>
+) {
+    Bass("Bass Note", 1, { _, chordNotes -> arrayOf(chordNotes[0] - 24) }),
+    Chord("Chord Notes", 3, { _, chordNotes -> chordNotes }),
+    RootRelative("Song root relative", 12, { root, _ -> Array(12) { root + it } }),
+    ;
 
-    override fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note> {
-        return arrayOf(chordNotes[0] - 24)
+    override fun toString(): String {
+        return title
+    }
+
+    companion object {
+        val VALUES = values()
     }
 }

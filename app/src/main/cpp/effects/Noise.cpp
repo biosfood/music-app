@@ -14,6 +14,8 @@ const static float c3 = 1.f / c1;
 void Noise::doRender(uint32_t sampleCount) {
     for (uint32_t i = 0; i < sampleCount; i++) {
         float random = ((float) rand() / (float) (RAND_MAX + 1));
-        buffer[i] = (2.f * ((random * c2) + (random * c2) + (random * c2)) - 3.f * (c2 - 1.f)) * c3;
+        buffer[i] =
+                (2.f * ((random * c2) + (random * c2) + (random * c2)) - 3.f * (c2 - 1.f)) * c3 /
+                10;
     }
 }

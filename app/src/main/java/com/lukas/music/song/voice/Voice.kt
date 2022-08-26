@@ -13,15 +13,20 @@ package com.lukas.music.song.voice
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.song.Song
 import com.lukas.music.song.note.Note
-import kotlin.reflect.KClass
 
-abstract class Voice(val instrument: Instrument) {
-    abstract val noteCount: Int
-    val noteActive: Array<Array<Boolean>> =
-        Array(Song.currentSong.beats * Song.currentSong.subBeats) { Array(noteCount) { false } }
+class Voice(val instrument: Instrument) {
+    var type: VoiceType = VoiceType.Bass
+        set(value) {
+            field = value
+            noteActive =
+                Array(Song.currentSong.beats * Song.currentSong.subBeats) { Array(value.noteCount) { false } }
+        }
     var restrikeNotes = false
+    lateinit var noteActive: Array<Array<Boolean>>
 
-    abstract fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note>
+    init {
+        type = type
+    }
 
     fun step(root: Note, chordNotes: Array<Note>, beat: Int, subBeat: Int) {
         if (instrument.muted) {
@@ -29,7 +34,7 @@ abstract class Voice(val instrument: Instrument) {
         }
         val beatIndex = beat * Song.currentSong.subBeats + subBeat
         val activeNotes = noteActive[beatIndex]
-        val notes = getNotes(root, chordNotes)
+        val notes = type.getNotes(root, chordNotes)
         for ((index, active) in activeNotes.withIndex()) {
             val note = notes[index]
             if (!active) {
@@ -40,14 +45,5 @@ abstract class Voice(val instrument: Instrument) {
                 instrument.startNote(note)
             }
         }
-    }
-
-    companion object {
-        val DEFAULT_VOICES = listOf<KClass<out Voice>>(
-            BassVoice::class,
-            ChordVoice::class,
-        )
-
-        val DEFAULT_VOICE_NAMES = listOf("Bass", "Chord")
     }
 }

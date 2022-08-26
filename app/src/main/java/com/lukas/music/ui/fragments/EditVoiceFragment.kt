@@ -32,7 +32,7 @@ class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentE
     ): View? {
         binding = FragmentEditVoiceBinding.inflate(inflater)
         binding.restrikeButton.setupToggle(voice::restrikeNotes, R.color.green)
-        for (row in voice.noteCount - 1 downTo 0) {
+        for (row in voice.type.noteCount - 1 downTo 0) {
             val rowLayout = TableRow(binding.root.context)
             for (column in 0 until Song.currentSong.beats * Song.currentSong.subBeats) {
                 val button = MaterialButton(binding.root.context)
@@ -51,6 +51,14 @@ class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentE
             dismiss()
         }
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 
     companion object {

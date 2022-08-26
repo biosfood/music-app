@@ -19,7 +19,7 @@ import android.view.ViewGroup
 import com.lukas.music.databinding.FragmentEditInstrumentBinding
 import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.Waveform
-import com.lukas.music.song.voice.Voice
+import com.lukas.music.song.voice.VoiceType
 import com.lukas.music.ui.adapters.InstrumentViewHolder
 import com.lukas.music.util.EasyDialogFragment
 import com.lukas.music.util.setup
@@ -50,15 +50,7 @@ class EditInstrumentFragment(
             binding.volumeText.text = "volume: $it%"
             instrument.volume = it.toFloat() / 100f
         }
-        binding.voiceSelection.setup(
-            Voice.DEFAULT_VOICE_NAMES,
-            Voice.DEFAULT_VOICES.indexOf(instrument.voice::class)
-        ) {
-            if (instrument.voice::class == Voice.DEFAULT_VOICES[it]) {
-                return@setup
-            }
-            instrument.voice = Voice.DEFAULT_VOICES[it].constructors.first().call(instrument)
-        }
+        binding.voiceSelection.smartSetup(VoiceType.VALUES, instrument.voice::type)
         binding.editVoiceButton.setOnClickListener {
             EditVoiceFragment(instrument.voice).showNow(childFragmentManager, "")
         }

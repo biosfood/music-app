@@ -8,8 +8,12 @@ void Triangle::renderWaveform(uint32_t frameCount) {
     for (uint32_t i = 0; i < frameCount; i++) {
         buffer[i] = value;
         value += step;
-        if (value > 1 || value < -1) {
+        if (value > 1) {
             step *= -1;
+            value = 1;
+        } else if (value < -1) {
+            step *= -1;
+            value = -1;
         }
     }
 }

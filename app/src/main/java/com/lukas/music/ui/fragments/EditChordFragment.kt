@@ -16,7 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.lukas.music.databinding.FragmentEditChordBinding
-import com.lukas.music.song.Scale
+import com.lukas.music.song.ScaleType
 import com.lukas.music.song.Song
 import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.chords.ChordType
@@ -42,12 +42,12 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
 
     private fun setupPitchSpinner() {
         val pitches = if (songFragment.displayChordNames) {
-            Array(Scale.MAJOR.steps.size) { (Song.currentSong.root + Scale.MAJOR.steps[it]).noteName.toString() }
+            Array(ScaleType.MAJOR.steps.size) { (Song.currentSong.root + ScaleType.MAJOR.steps[it]).noteName.toString() }
         } else Interval.IntervalName.NAMES
         binding.pitchSpinner.setup(pitches, chord.interval.name.ordinal) {
-            chord.note = Scale.MAJOR.steps[it]
+            chord.note = ScaleType.MAJOR.steps[it]
             if (binding.typeSpinner.selectedItemPosition == 0) {
-                chord.chordType = Scale.MAJOR.chordTypes[chord.interval.name.ordinal]
+                chord.chordType = ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]
             }
             songFragment.updateChords()
         }
@@ -60,11 +60,11 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
         }
         binding.typeSpinner.setup(
             values,
-            if (chord.chordType == Scale.MAJOR.chordTypes[chord.interval.name.ordinal]) 0
+            if (chord.chordType == ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]) 0
             else chord.chordType.ordinal + 1
         ) {
             if (it == 0) {
-                chord.chordType = Scale.MAJOR.chordTypes[chord.interval.name.ordinal]
+                chord.chordType = ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]
             } else {
                 chord.chordType = ChordType.VALUES[it - 1]
             }

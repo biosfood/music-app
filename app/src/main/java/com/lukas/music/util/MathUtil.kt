@@ -13,3 +13,9 @@ package com.lukas.music.util
 fun Double.format(digits: Int) = "%.${digits}f".format(this)
 
 fun Float.format(digits: Int) = "%.${digits}f".format(this)
+
+inline fun <T, reified U> Array<T>.transform(callback: (T) -> U): Array<U> {
+    return Array(this.size) {
+        callback(this[it])
+    }
+}

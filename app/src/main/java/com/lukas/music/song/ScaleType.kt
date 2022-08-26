@@ -12,7 +12,11 @@ package com.lukas.music.song
 
 import com.lukas.music.song.chords.ChordType
 
-enum class Scale(val identifier: String, val steps: Array<Int>, val chordTypes: Array<ChordType>) {
+enum class ScaleType(
+    val identifier: String,
+    val steps: Array<Int>,
+    val chordTypes: Array<ChordType>
+) {
     MAJOR(
         "major",
         arrayOf(0, 2, 4, 5, 7, 9, 11, 12),

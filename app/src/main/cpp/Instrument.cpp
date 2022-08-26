@@ -30,15 +30,21 @@ void add(float *target, float *other, uint32_t size) {
     }
 }
 
+void processEffect(float *waveform, uint32_t count, Effect *effect) {
+    if (effect->influence < 0.01f) {
+        return;
+    }
+    effect->input = waveform;
+    float *effectOutput = effect->render(count);
+    multiply(effectOutput, effect->influence, count);
+    multiply(waveform, 1 - effect->influence, count);
+    add(waveform, effectOutput, count);
+}
+
 void Instrument::render(float *buffer, uint32_t count) {
-    float *modulation = envelope->render(count);
     float *waveform = wave->render(count);
-    multiply(waveform, modulation, count);
-    lowPass->input = waveform;
-    float *filtered = lowPass->render(count);
-    multiply(filtered, lowPass->influence, count);
-    multiply(waveform, 1 - lowPass->influence, count);
-    add(waveform, filtered, count);
+    processEffect(waveform, count, lowPass);
+    multiply(waveform, envelope->render(count), count);
     add(buffer, waveform, count);
 }
 

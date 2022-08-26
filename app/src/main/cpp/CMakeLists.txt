@@ -19,6 +19,7 @@ add_library(
         effects/Processable.cpp
         effects/Effect.cpp
         effects/LowPass.cpp
+        effects/Noise.cpp
 )
 
 find_library(

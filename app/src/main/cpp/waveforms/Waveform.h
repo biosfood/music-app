@@ -15,7 +15,6 @@ enum WaveformType {
 
 class Waveform : public Processable {
 public:
-    float amplitude = 0.0f;
     AudioHost *host;
 
     void doRender(uint32_t sampleCount);

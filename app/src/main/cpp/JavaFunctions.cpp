@@ -69,7 +69,7 @@ Java_com_lukas_music_instruments_InternalInstrument_setInstrumentWaveform(JNIEnv
 JNIEXPORT void JNICALL
 Java_com_lukas_music_instruments_InternalInstrument_setVolume(JNIEnv *env, jobject thiz, jint id,
                                                               jfloat volume) {
-    getInstrument(id)->wave->amplitude = volume;
+    getInstrument(id)->volume = volume;
 }
 
 JNIEXPORT void JNICALL
@@ -105,6 +105,9 @@ Java_com_lukas_music_instruments_InternalInstrument_applyEffectAttributes(JNIEnv
     switch (effect_number) {
         case 0:
             effect = instrument->lowPass;
+            break;
+        case 1:
+            effect = instrument->noise;
             break;
     }
     effect->influence = influence;

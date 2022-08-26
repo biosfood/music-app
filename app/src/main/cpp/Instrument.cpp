@@ -10,6 +10,7 @@ Instrument::Instrument(AudioHost *host) {
     wave->host = host;
     envelope->initialize(host);
     lowPass->host = host;
+    noise->host = host;
 }
 
 void multiply(float *target, float *modulation, uint32_t size) {
@@ -44,7 +45,9 @@ void processEffect(float *waveform, uint32_t count, Effect *effect) {
 void Instrument::render(float *buffer, uint32_t count) {
     float *waveform = wave->render(count);
     processEffect(waveform, count, lowPass);
+    processEffect(waveform, count, noise);
     multiply(waveform, envelope->render(count), count);
+    multiply(waveform, volume, count);
     add(buffer, waveform, count);
 }
 

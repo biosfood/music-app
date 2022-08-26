@@ -34,9 +34,6 @@ class MonoInstrument(name: String) : Instrument(name) {
         }
 
     override fun startNote(note: Note) {
-        if (note == internalInstrument.note) {
-            return
-        }
         internalInstrument.startNote(note)
     }
 
@@ -63,4 +60,6 @@ class MonoInstrument(name: String) : Instrument(name) {
             internalInstrument.applyEffectAttributes(effect)
         }
     }
+
+    override fun isPlaying(note: Note): Boolean = internalInstrument.note == note
 }

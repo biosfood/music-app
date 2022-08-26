@@ -48,10 +48,11 @@ class PolyInstrument(name: String) : Instrument(name) {
                 return
             }
             if (internalInstruments[index].note == note) {
+                internalInstruments[index].startNote(note)
                 return
             }
         }
-        throw IllegalStateException("cannot start another note with the current amount of oscillators")
+        println("cannot start another note with the current amount of oscillators")
     }
 
     override fun stop() {
@@ -88,5 +89,14 @@ class PolyInstrument(name: String) : Instrument(name) {
                 instrument.applyEffectAttributes(effect)
             }
         }
+    }
+
+    override fun isPlaying(note: Note): Boolean {
+        for (instrument in internalInstruments) {
+            if (instrument.note == note) {
+                return true
+            }
+        }
+        return false
     }
 }

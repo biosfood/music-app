@@ -33,6 +33,7 @@ abstract class Instrument(var name: String) {
     abstract fun destroy()
     abstract fun updateEnvelope()
     abstract fun updateEffects()
+    abstract fun isPlaying(note: Note): Boolean
 
     companion object {
         val instruments = mutableListOf<Instrument>()

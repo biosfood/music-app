@@ -31,6 +31,7 @@ class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentE
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditVoiceBinding.inflate(inflater)
+        binding.restrikeButton.setupToggle(voice::restrikeNotes, R.color.green)
         for (row in voice.noteCount - 1 downTo 0) {
             val rowLayout = TableRow(binding.root.context)
             for (column in 0 until Song.currentSong.beats * Song.currentSong.subBeats) {

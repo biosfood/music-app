@@ -44,4 +44,6 @@
     <string name="edit_voice">Edit voice</string>
     <string name="edit_envelope">Edit envelope</string>
     <string name="edit_effects">Edit effects</string>
+    <string name="restrike">restrike</string>
+    <string name="restrike_description">restrike a note if it\'s already playing?</string>
 </resources>

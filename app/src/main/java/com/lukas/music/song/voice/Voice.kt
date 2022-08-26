@@ -19,7 +19,7 @@ abstract class Voice(val instrument: Instrument) {
     abstract val noteCount: Int
     val noteActive: Array<Array<Boolean>> =
         Array(Song.currentSong.beats * Song.currentSong.subBeats) { Array(noteCount) { false } }
-    var repeatNote = true // TODO
+    var restrikeNotes = false
 
     abstract fun getNotes(root: Note, chordNotes: Array<Note>): Array<Note>
 
@@ -36,7 +36,9 @@ abstract class Voice(val instrument: Instrument) {
                 instrument.stopNote(note)
                 continue
             }
-            instrument.startNote(note)
+            if (restrikeNotes || !instrument.isPlaying(note)) {
+                instrument.startNote(note)
+            }
         }
     }
 

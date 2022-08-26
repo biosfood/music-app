@@ -24,6 +24,8 @@ class Voice(val instrument: Instrument) {
     var restrikeNotes = false
     lateinit var noteActive: Array<Array<Boolean>>
 
+    var octaveOffset = 0
+
     init {
         type = type
     }
@@ -36,7 +38,7 @@ class Voice(val instrument: Instrument) {
         val activeNotes = noteActive[beatIndex]
         val notes = type.getNotes(root, chordNotes)
         for ((index, active) in activeNotes.withIndex()) {
-            val note = notes[index]
+            val note = notes[index] + 12 * octaveOffset
             if (!active) {
                 instrument.stopNote(note)
                 continue

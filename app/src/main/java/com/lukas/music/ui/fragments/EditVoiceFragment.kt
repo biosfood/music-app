@@ -23,6 +23,7 @@ import com.lukas.music.song.Song
 import com.lukas.music.song.voice.Voice
 import com.lukas.music.util.ArrayProperty
 import com.lukas.music.util.EasyDialogFragment
+import com.lukas.music.util.setup
 import com.lukas.music.util.setupToggle
 
 class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentEditVoiceBinding>() {
@@ -45,6 +46,10 @@ class EditVoiceFragment(private val voice: Voice) : EasyDialogFragment<FragmentE
                 rowLayout.addView(button)
             }
             binding.noteGrid.addView(rowLayout)
+        }
+        binding.octaveSeekBar.setup(-4, 4, voice.octaveOffset) {
+            voice.octaveOffset = it
+            binding.octaveText.text = "octave = $it"
         }
         binding.noteGrid.isStretchAllColumns = true
         binding.closeButton.setOnClickListener {

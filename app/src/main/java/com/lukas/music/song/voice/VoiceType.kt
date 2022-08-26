@@ -17,7 +17,7 @@ enum class VoiceType(
     val noteCount: Int,
     val getNotes: (Note, Array<Note>) -> Array<Note>
 ) {
-    Bass("Bass Note", 1, { _, chordNotes -> arrayOf(chordNotes[0] - 24) }),
+    Bass("Bass Note", 1, { _, chordNotes -> arrayOf(chordNotes[0]) }),
     Chord("Chord Notes", 3, { _, chordNotes -> chordNotes }),
     RootRelative("Song root relative", 12, { root, _ -> Array(12) { root + it } }),
     ;

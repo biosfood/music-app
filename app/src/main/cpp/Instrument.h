@@ -17,8 +17,7 @@ public:
 
     Envelope *const envelope = new Envelope();
     Waveform *wave;
-    LowPass *lowPass = new LowPass();
-    Noise *noise = new Noise();
+    std::list<Effect *> effects;
     float volume = 0;
 
     void render(float *buffer, uint32_t count);

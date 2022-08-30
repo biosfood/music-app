@@ -13,8 +13,8 @@ package com.lukas.music.instruments.effect
 import com.lukas.music.util.format
 
 enum class EffectType(
-    val title: String,
-    val parameterDescriptions: Array<EffectParameterDescription>
+    private val title: String,
+    val parameterDescriptions: Array<EffectParameterDescription?>
 ) {
     LowPass("low pass filter",
         arrayOf(
@@ -24,9 +24,7 @@ enum class EffectType(
         )),
     Noise("noise",
         arrayOf(
-            EffectParameterDescription(0f, 1f, 0f) {
-                "unused"
-            }
+            null
         )
     )
     ;

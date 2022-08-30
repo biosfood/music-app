@@ -78,13 +78,17 @@ class InternalInstrument {
         )
     }
 
-    fun applyEffectAttributes(effect: Effect) {
+    fun applyEffectAttributes(instrument: Instrument, effect: Effect) {
         applyEffectAttributes(
             id,
-            effect.type.ordinal,
+            instrument.effects.indexOf(effect),
             if (effect.active) effect.influence.value else 0f,
-            effect.parameters[0].value
+            effect.parameters[0]?.value ?: 0f
         )
+    }
+
+    fun moveEffects(from: Int, to: Int) {
+        moveEffects(id, from, to)
     }
 
     private external fun createInstrument(): Int
@@ -107,4 +111,6 @@ class InternalInstrument {
         influence: Float,
         parameter1: Float
     )
+
+    private external fun moveEffects(id: Int, from: Int, to: Int)
 }

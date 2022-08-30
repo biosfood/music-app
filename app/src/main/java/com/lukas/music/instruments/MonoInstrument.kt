@@ -33,14 +33,6 @@ class MonoInstrument(name: String) : Instrument(name) {
             internalInstrument.muted = value
         }
 
-    override fun startNote(note: Note) {
-        internalInstrument.startNote(note)
-    }
-
-    override fun stop() {
-        internalInstrument.endNote()
-    }
-
     override fun stopNote(note: Note) {
         if (note == internalInstrument.note) {
             stop()
@@ -51,15 +43,15 @@ class MonoInstrument(name: String) : Instrument(name) {
         internalInstrument.destroy()
     }
 
-    override fun updateEnvelope() {
-        internalInstrument.applyEnvelope(envelope)
-    }
-
     override fun updateEffects() {
         for (effect in effects) {
-            internalInstrument.applyEffectAttributes(effect)
+            internalInstrument.applyEffectAttributes(this, effect)
         }
     }
 
     override fun isPlaying(note: Note): Boolean = internalInstrument.note == note
+    override fun moveEffects(from: Int, to: Int) = internalInstrument.moveEffects(from, to)
+    override fun updateEnvelope() = internalInstrument.applyEnvelope(envelope)
+    override fun startNote(note: Note) = internalInstrument.startNote(note)
+    override fun stop() = internalInstrument.endNote()
 }

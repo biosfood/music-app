@@ -101,16 +101,24 @@ Java_com_lukas_music_instruments_InternalInstrument_applyEffectAttributes(JNIEnv
                                                                           jfloat influence,
                                                                           jfloat parameter1) {
     Instrument *instrument = getInstrument(id);
-    Effect *effect;
-    switch (effect_number) {
-        case 0:
-            effect = instrument->lowPass;
-            break;
-        case 1:
-            effect = instrument->noise;
-            break;
-    }
+    auto iterator = instrument->effects.begin();
+    std::advance(iterator, effect_number);
+    auto *effect = *iterator;
     effect->influence = influence;
     effect->parameter1 = parameter1;
+}
+
+JNIEXPORT void JNICALL
+Java_com_lukas_music_instruments_InternalInstrument_moveEffects(JNIEnv *env, jobject thiz, jint id,
+                                                                jint from, jint to) {
+    Instrument *instrument = getInstrument(id);
+    auto source = instrument->effects.begin();
+    std::advance(source, from);
+    auto destination = instrument->effects.begin();
+    std::advance(destination, to);
+    if (instrument->effects.size() == to + 1) {
+        destination = instrument->effects.end();
+    }
+    instrument->effects.splice(destination, instrument->effects, source);
 }
 }

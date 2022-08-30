@@ -9,8 +9,12 @@ Instrument::Instrument(AudioHost *host) {
     wave = new Sine();
     wave->host = host;
     envelope->initialize(host);
-    lowPass->host = host;
+    auto *filter = new LowPass();
+    filter->host = host;
+    effects.push_back(filter);
+    auto *noise = new Noise();
     noise->host = host;
+    effects.push_back(noise);
 }
 
 void multiply(float *target, float *modulation, uint32_t size) {
@@ -44,8 +48,9 @@ void processEffect(float *waveform, uint32_t count, Effect *effect) {
 
 void Instrument::render(float *buffer, uint32_t count) {
     float *waveform = wave->render(count);
-    processEffect(waveform, count, lowPass);
-    processEffect(waveform, count, noise);
+    for (auto effect: effects) {
+        processEffect(waveform, count, effect);
+    }
     multiply(waveform, envelope->render(count), count);
     multiply(waveform, volume, count);
     add(buffer, waveform, count);
@@ -54,8 +59,10 @@ void Instrument::render(float *buffer, uint32_t count) {
 void Instrument::startNote(float frequency) {
     wave->setFrequency(frequency);
     envelope->startNote();
-    lowPass->frequency = frequency;
-    lowPass->update();
+    for (auto effect: effects) {
+        effect->frequency = frequency;
+        effect->update();
+    }
 }
 
 void Instrument::endNote() {

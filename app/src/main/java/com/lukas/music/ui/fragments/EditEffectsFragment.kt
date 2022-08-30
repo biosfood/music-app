@@ -14,9 +14,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lukas.music.databinding.FragmentEditEffectsBinding
 import com.lukas.music.instruments.Instrument
+import com.lukas.music.ui.adapters.EffectsAdapter
 import com.lukas.music.util.EasyDialogFragment
+import com.lukas.music.util.makeMoveCallback
 
 class EditEffectsFragment(private val instrument: Instrument) :
     EasyDialogFragment<FragmentEditEffectsBinding>() {
@@ -25,11 +29,12 @@ class EditEffectsFragment(private val instrument: Instrument) :
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditEffectsBinding.inflate(inflater)
-        for (effect in instrument.effects) {
-            val effectEditor = EffectFragment(effect)
-            childFragmentManager.beginTransaction().add(binding.effectsDisplay.id, effectEditor)
-                .commit()
-        }
+        binding.effectsDisplay.adapter = EffectsAdapter(this, instrument)
+        binding.effectsDisplay.layoutManager = LinearLayoutManager(context)
+        val helper = ItemTouchHelper(makeMoveCallback(instrument.effects) { from, to ->
+            instrument.moveEffects(from, to)
+        })
+        helper.attachToRecyclerView(binding.effectsDisplay)
         binding.closeButton.setOnClickListener {
             dismiss()
         }

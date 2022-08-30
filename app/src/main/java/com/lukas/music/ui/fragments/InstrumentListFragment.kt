@@ -24,6 +24,7 @@ import com.lukas.music.instruments.Instrument
 import com.lukas.music.instruments.MonoInstrument
 import com.lukas.music.instruments.PolyInstrument
 import com.lukas.music.ui.adapters.InstrumentAdapter
+import com.lukas.music.util.makeMoveCallback
 
 class InstrumentListFragment : Fragment() {
     lateinit var binding: FragmentInstrumentListBinding
@@ -35,32 +36,7 @@ class InstrumentListFragment : Fragment() {
         binding = FragmentInstrumentListBinding.inflate(inflater)
         binding.recyclerView.adapter = InstrumentAdapter(this)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        val callback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            0
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val adapter = recyclerView.adapter as InstrumentAdapter
-                val startPosition = viewHolder.adapterPosition
-                val endPosition = target.adapterPosition
-                val instrument = Instrument.instruments[startPosition]
-                Instrument.instruments.removeAt(startPosition)
-                if (endPosition < startPosition) {
-                    Instrument.instruments.add(endPosition + 1, instrument)
-                } else {
-                    Instrument.instruments.add(endPosition - 1, instrument)
-                }
-                adapter.notifyItemMoved(startPosition, endPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-        }
-        val helper = ItemTouchHelper(callback)
+        val helper = ItemTouchHelper(makeMoveCallback(Instrument.instruments))
         helper.attachToRecyclerView(binding.recyclerView)
 
         val builder = AlertDialog.Builder(binding.root.context)

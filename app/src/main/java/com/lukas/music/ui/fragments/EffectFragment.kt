@@ -10,25 +10,18 @@
 
 package com.lukas.music.ui.fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEffectBinding
 import com.lukas.music.instruments.effect.Effect
 import com.lukas.music.util.setupToggle
 import com.lukas.music.util.smartSetup
 
-class EffectFragment(private val effect: Effect) : Fragment() {
-    lateinit var binding: FragmentEffectBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentEffectBinding.inflate(inflater)
+class EffectFragment(val binding: FragmentEffectBinding) : RecyclerView.ViewHolder(
+    binding.root
+) {
+    fun setEffect(effect: Effect) {
         binding.effectName.text = effect.type.toString()
         binding.activeButton.setupToggle(effect::active, R.color.blue) {
             binding.activeButton.text = if (it) "ON" else "OFF"
@@ -37,10 +30,15 @@ class EffectFragment(private val effect: Effect) : Fragment() {
         binding.influenceSeekBar.smartSetup(0, 100, effect.influence::percentageValue) {
             binding.influenceText.text = effect.influence.description.text(effect.influence)
         }
-        binding.parameter1SeekBar.smartSetup(0, 100, effect.parameters[0]::percentageValue) {
-            binding.parameter1Text.text =
-                effect.parameters[0].description.text(effect.parameters[0])
+        binding.parameter1SeekBar.visibility =
+            if (effect.parameters[0] == null) View.GONE else View.VISIBLE
+        binding.parameter1Text.visibility =
+            if (effect.parameters[0] == null) View.GONE else View.VISIBLE
+        effect.parameters[0]?.let {
+            binding.parameter1SeekBar.smartSetup(0, 100, it::percentageValue) {
+                binding.parameter1Text.text =
+                    effect.parameters[0]!!.description.text(effect.parameters[0]!!)
+            }
         }
-        return binding.root
     }
 }

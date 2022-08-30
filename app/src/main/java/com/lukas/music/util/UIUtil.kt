@@ -13,6 +13,8 @@ package com.lukas.music.util
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.R
 import kotlin.reflect.KMutableProperty0
 
@@ -137,5 +139,33 @@ fun <T : Enum<*>> Spinner.smartSetup(
             target.set(items[it])
         }
         callback(it)
+    }
+}
+
+fun <T> makeMoveCallback(
+    list: MutableList<T>,
+    callback: (Int, Int) -> Unit = { _, _ -> }
+): ItemTouchHelper.SimpleCallback {
+    return object : ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        0
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            val adapter = recyclerView.adapter
+            val startPosition = viewHolder.adapterPosition
+            val endPosition = target.adapterPosition
+            val item = list[startPosition]
+            list.removeAt(startPosition)
+            list.add(endPosition, item)
+            adapter!!.notifyItemMoved(startPosition, endPosition)
+            callback(startPosition, endPosition)
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
     }
 }

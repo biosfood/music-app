@@ -14,7 +14,9 @@ import com.lukas.music.instruments.Instrument
 
 class Effect(val type: EffectType, private val instrument: Instrument) {
     val parameters = Array(type.parameterDescriptions.size) {
-        EffectParameter(type.parameterDescriptions[it], instrument)
+        type.parameterDescriptions[it]?.let { parameterDescription ->
+            EffectParameter(parameterDescription, instrument)
+        }
     }
     val influence = EffectParameter(influenceDescription, instrument)
 

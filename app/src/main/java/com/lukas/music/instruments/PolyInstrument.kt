@@ -86,7 +86,7 @@ class PolyInstrument(name: String) : Instrument(name) {
     override fun updateEffects() {
         for (instrument in internalInstruments) {
             for (effect in effects) {
-                instrument.applyEffectAttributes(effect)
+                instrument.applyEffectAttributes(this, effect)
             }
         }
     }
@@ -98,5 +98,11 @@ class PolyInstrument(name: String) : Instrument(name) {
             }
         }
         return false
+    }
+
+    override fun moveEffects(from: Int, to: Int) {
+        for (instrument in internalInstruments) {
+            instrument.moveEffects(from, to)
+        }
     }
 }

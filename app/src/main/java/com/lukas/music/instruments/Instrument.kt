@@ -18,7 +18,7 @@ import com.lukas.music.song.voice.Voice
 abstract class Instrument(var name: String) {
     var voice: Voice = Voice(this)
     var envelope = Envelope(this)
-    val effects = Array(EffectType.VALUES.size) {
+    val effects = MutableList(EffectType.VALUES.size) {
         Effect(EffectType.VALUES[it], this)
     }
 
@@ -33,6 +33,7 @@ abstract class Instrument(var name: String) {
     abstract fun updateEnvelope()
     abstract fun updateEffects()
     abstract fun isPlaying(note: Note): Boolean
+    abstract fun moveEffects(from: Int, to: Int)
 
     companion object {
         val instruments = mutableListOf<Instrument>()

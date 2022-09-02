@@ -3,6 +3,7 @@
 #include "waveforms/Sine.h"
 #include "waveforms/Square.h"
 #include "waveforms/Triangle.h"
+#include "effects/Distortion.h"
 
 Instrument::Instrument(AudioHost *host) {
     this->host = host;
@@ -15,6 +16,9 @@ Instrument::Instrument(AudioHost *host) {
     auto *noise = new Noise();
     noise->host = host;
     effects.push_back(noise);
+    auto *distortion = new Distortion();
+    distortion->host = host;
+    effects.push_back(distortion);
 }
 
 void multiply(float *target, float *modulation, uint32_t size) {

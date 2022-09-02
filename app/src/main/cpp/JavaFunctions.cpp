@@ -116,8 +116,8 @@ Java_com_lukas_music_instruments_InternalInstrument_moveEffects(JNIEnv *env, job
     std::advance(source, from);
     auto destination = instrument->effects.begin();
     std::advance(destination, to);
-    if (instrument->effects.size() == to + 1) {
-        destination = instrument->effects.end();
+    if (from < to) {
+        std::advance(destination, 1);
     }
     instrument->effects.splice(destination, instrument->effects, source);
 }

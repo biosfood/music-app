@@ -22,11 +22,17 @@ enum class EffectType(
                 "cutoff: ${it.value.format(1)} octaves"
             }
         )),
-    Noise("noise",
+    Noise(
+        "noise",
         arrayOf(
             null
         )
-    )
+    ),
+    Distortion("distortion", arrayOf(
+        EffectParameterDescription(1f, 4f, 1f) {
+            "strength: ${it.value.format(1)}x"
+        }
+    ))
     ;
 
     override fun toString(): String {

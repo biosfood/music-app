@@ -20,6 +20,7 @@ add_library(
         effects/Effect.cpp
         effects/LowPass.cpp
         effects/Noise.cpp
+        effects/Distortion.cpp
 )
 
 find_library(

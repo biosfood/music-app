@@ -27,6 +27,7 @@ import com.lukas.music.R
 import com.lukas.music.databinding.FragmentPlayBinding
 import com.lukas.music.instruments.Rhythm
 import com.lukas.music.song.Song
+import com.lukas.music.util.UIUtil
 import com.lukas.music.util.setup
 
 class PlayFragment : Fragment() {
@@ -125,12 +126,12 @@ class PlayFragment : Fragment() {
         chordDisplays.clear()
         for (chord in Song.currentSong.chordProgression.currentItem ?: return) {
             val card = CardView(binding.root.context)
-            card.layoutParams = SongFragment.tableRowLayout
+            card.layoutParams = UIUtil.cardLayout
             card.radius = 10f
             card.preventCornerOverlap = false
             val text = TextView(binding.root.context)
             text.text = chord.toString(true, Song.currentSong.root)
-            text.layoutParams = SongFragment.tableRowLayout
+            text.layoutParams = UIUtil.fillingLayout
             text.textSize = 20f
             text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             card.addView(text)

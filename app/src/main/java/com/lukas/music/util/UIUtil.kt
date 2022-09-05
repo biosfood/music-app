@@ -13,6 +13,7 @@ package com.lukas.music.util
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.setMargins
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.lukas.music.R
@@ -167,5 +168,24 @@ fun <T> makeMoveCallback(
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+    }
+}
+
+object UIUtil {
+    val cardLayout = TableRow.LayoutParams(
+        0,
+        TableRow.LayoutParams.WRAP_CONTENT,
+        1f
+    )
+    val buttonLayout = TableRow.LayoutParams(
+        0, TableRow.LayoutParams.MATCH_PARENT, 0.5f
+    )
+    val fillingLayout = TableRow.LayoutParams(
+        TableRow.LayoutParams.MATCH_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT
+    )
+
+    init {
+        cardLayout.setMargins(5)
     }
 }

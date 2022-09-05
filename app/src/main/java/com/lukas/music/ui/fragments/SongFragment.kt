@@ -16,13 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import com.lukas.music.databinding.FragmentSongBinding
 import com.lukas.music.song.Song
 import com.lukas.music.song.chords.Phrase
 import com.lukas.music.song.note.Note
 import com.lukas.music.song.note.NoteName
+import com.lukas.music.util.UIUtil
 
 
 class SongFragment(val playFragment: PlayFragment) : Fragment(),
@@ -63,14 +63,14 @@ class SongFragment(val playFragment: PlayFragment) : Fragment(),
             for (chord in phrase) {
                 val card = CardView(binding.root.context)
                 card.radius = 10f
-                card.layoutParams = tableRowLayout
+                card.layoutParams = UIUtil.cardLayout
                 card.setOnClickListener {
                     EditChordFragment(chord, this).showNow(childFragmentManager, "")
                 }
                 val text = TextView(binding.root.context)
                 text.text = chord.toString(displayChordNames, Song.currentSong.root)
                 text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-                text.layoutParams = tableRowLayout
+                text.layoutParams = UIUtil.fillingLayout
                 text.textSize = 20f
                 card.addView(text)
                 row.addView(card)
@@ -81,26 +81,11 @@ class SongFragment(val playFragment: PlayFragment) : Fragment(),
                 updateChords()
             }
             button.setImageResource(android.R.drawable.ic_delete)
-            button.layoutParams = buttonLayout
+            button.layoutParams = UIUtil.buttonLayout
             row.addView(button)
             binding.chords.addView(row)
         }
         playFragment.updateChords()
-    }
-
-    companion object {
-        val tableRowLayout = TableRow.LayoutParams(
-            TableRow.LayoutParams.MATCH_PARENT,
-            TableRow.LayoutParams.MATCH_PARENT
-        )
-        val buttonLayout = TableRow.LayoutParams(
-            0,
-            TableRow.LayoutParams.WRAP_CONTENT
-        )
-
-        init {
-            tableRowLayout.setMargins(10)
-        }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.core.view.setMargins
-import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEditChordBinding
@@ -27,12 +25,13 @@ import com.lukas.music.song.Song
 import com.lukas.music.song.chords.Accidental
 import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.chords.Interval
+import com.lukas.music.util.EasyDialogFragment
+import com.lukas.music.util.UIUtil
 import com.lukas.music.util.setup
 import com.lukas.music.util.updateToggle
 
 class EditChordFragment(private val chord: Chord, private val songFragment: SongFragment) :
-    DialogFragment() {
-    lateinit var binding: FragmentEditChordBinding
+    EasyDialogFragment<FragmentEditChordBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,7 +69,7 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
         for (description in descriptions) {
             val text = TextView(binding.root.context)
             text.text = description
-            text.layoutParams = layout
+            text.layoutParams = UIUtil.cardLayout
             text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             row.addView(text)
         }
@@ -80,7 +79,7 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
             for (position in 0 until Chord.NOTE_COUNT - 1) {
                 val button = MaterialButton(binding.root.context)
                 button.text = accidental.toString()
-                button.layoutParams = layout
+                button.layoutParams = UIUtil.cardLayout
                 button.updateToggle(chord.accidentals[position] == accidental, R.color.blue)
                 button.setOnClickListener {
                     if (chord.accidentals[position] == accidental) {
@@ -113,16 +112,6 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
     }
 
     companion object {
-        val layout = TableRow.LayoutParams(
-            TableRow.LayoutParams.WRAP_CONTENT,
-            TableRow.LayoutParams.WRAP_CONTENT
-        )
-
-        init {
-            layout.weight = 1.0f
-            layout.setMargins(5)
-        }
-
         val descriptions = arrayOf("III", "V", "VII", "IX")
     }
 }

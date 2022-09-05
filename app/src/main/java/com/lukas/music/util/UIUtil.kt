@@ -64,19 +64,19 @@ fun Button.setupToggle(
 ) {
     setOnClickListener {
         target.set(!target.get())
-        updateToggle(target, activeColor, inactiveColor)
+        updateToggle(target.get(), activeColor, inactiveColor)
         callback(target.get())
     }
-    updateToggle(target, activeColor, inactiveColor)
+    updateToggle(target.get(), activeColor, inactiveColor)
 }
 
 fun Button.updateToggle(
-    target: KMutableProperty0<Boolean>,
+    value: Boolean,
     activeColor: Int,
     inactiveColor: Int = R.color.gray_0x60,
 ) {
     setBackgroundColor(
-        ContextCompat.getColor(context, if (target.get()) activeColor else inactiveColor)
+        ContextCompat.getColor(context, if (value) activeColor else inactiveColor)
     )
 }
 

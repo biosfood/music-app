@@ -12,7 +12,7 @@ package com.lukas.music.song.note
 
 import kotlin.math.pow
 
-class Note(private val id: Int) {
+class Note(val id: Int) {
     val noteName = NoteName.VALUES[id % 12]
     val octave = id / 12 - 1
     val frequency = 440 * 2.0.pow((id - 69) / 12.0)
@@ -27,6 +27,8 @@ class Note(private val id: Int) {
     operator fun minus(other: Int): Note {
         return this + (-other)
     }
+
+    operator fun minus(other: Note): Int = id - other.id
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

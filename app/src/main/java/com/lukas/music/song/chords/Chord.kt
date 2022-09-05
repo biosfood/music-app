@@ -10,14 +10,18 @@
 
 package com.lukas.music.song.chords
 
+import com.lukas.music.song.Song
 import com.lukas.music.song.note.Note
 
-class Chord(note: Int, var chordType: ChordType) {
-    var note: Int = note
+class Chord {
+    val accidentals: Array<Accidental?> = arrayOf(Accidental.None, Accidental.None, null, null)
+
+    var note: Int = 0
         set(value) {
             field = value
             interval = Interval(value)
         }
+
     var interval = Interval(note)
         set(value) {
             field = value
@@ -27,19 +31,76 @@ class Chord(note: Int, var chordType: ChordType) {
         }
 
     fun getNotes(root: Note): Array<Note> {
-        return Array(chordType.notes.size) { root + note + chordType.notes[it] }
+        val result = Array(NOTE_COUNT) { root }
+        var resultIndex = 0
+        var accidentalIndex = 0
+        var octave = 0
+        while (resultIndex < NOTE_COUNT) {
+            if (accidentalIndex == 0) {
+                result[resultIndex] = root + note + 12 * octave
+                resultIndex++
+            } else if (accidentals[accidentalIndex - 1] != null) {
+                result[resultIndex] = root + note + when (accidentalIndex) {
+                    1 -> 4
+                    2 -> 7
+                    3 -> 10
+                    4 -> 14
+                    else -> 0
+                } + accidentals[accidentalIndex - 1]!!.distance + 12 * octave
+                resultIndex++
+            }
+            accidentalIndex++
+            if (accidentalIndex > accidentals.size) {
+                octave++
+                accidentalIndex = 0
+            }
+        }
+        return result
     }
 
     override fun toString(): String {
-        return chordType.transform(interval.toString())
+        return toString(false, Song.currentSong.root)
     }
 
     fun toString(displayChordNames: Boolean, root: Note): String {
-        val base = if (displayChordNames) {
+        var result = if (displayChordNames) {
             (root + note).noteName.toString()
         } else {
             interval.toString()
         }
-        return chordType.transform(base)
+        accidentals[0]?.let {
+            result += when (it) {
+                Accidental.Flat -> "-"
+                Accidental.Sharp -> "sus4"
+                else -> ""
+            }
+        }
+        accidentals[1]?.let {
+            if (accidentals[0] != null && it == Accidental.None) {
+                return@let
+            }
+            result += it.short + "5"
+        }
+        result = result.replace("-b5", "0")
+        result = result.replace("(?=[A-G])#5".toRegex(), "+")
+        accidentals[2]?.let {
+            result += when (it) {
+                Accidental.Sharp -> " maj7"
+                Accidental.None -> " 7"
+                Accidental.Flat -> " 6"
+            }
+        }
+        accidentals[3]?.let {
+            result += when (it) {
+                Accidental.Sharp -> " maj9"
+                Accidental.None -> " 9"
+                Accidental.Flat -> " b9"
+            }
+        }
+        return result
+    }
+
+    companion object {
+        val NOTE_COUNT = 5
     }
 }

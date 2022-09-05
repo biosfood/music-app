@@ -10,18 +10,14 @@
 
 package com.lukas.music.song.chords
 
-enum class ChordType(
-    val notes: Array<Int>,
-    private val asString: String,
-    val transform: (String) -> String
-) {
-    MAJOR(arrayOf(0, 4, 7), "major", { it.uppercase() }),
-    MINOR(arrayOf(0, 3, 7), "minor", { it.lowercase() }),
-    DIMINISHED(arrayOf(0, 3, 6), "diminished", { it.lowercase() + "0" }),
+enum class Accidental(val id: String, val short: String, val distance: Int) {
+    Flat("\u266D", "b", -1),
+    None("\u266E", "", 0),
+    Sharp("\u266F", "#", 1),
     ;
 
     override fun toString(): String {
-        return asString
+        return id
     }
 
     companion object {

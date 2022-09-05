@@ -11,6 +11,7 @@
  package com.lukas.music.song.voice
 
 import com.lukas.music.song.ScaleType
+import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.note.Note
 import com.lukas.music.util.transform
 
@@ -20,7 +21,7 @@ enum class VoiceType(
     val getNotes: (Note, Array<Note>) -> Array<Note>
 ) {
     Bass("Bass note", 1, { _, chordNotes -> arrayOf(chordNotes[0]) }),
-    Chord("Chord notes", 3, { _, chordNotes -> chordNotes }),
+    ChordVoice("Chord notes", Chord.NOTE_COUNT, { _, chordNotes -> chordNotes }),
     Scale("Scale notes", 8, { root, _ -> ScaleType.MAJOR.steps.transform { root + it } }),
     Root("Root note", 1, { root, _ -> arrayOf(root) }),
     RootRelative("Song root relative", 12, { root, _ -> Array(12) { root + it } }),

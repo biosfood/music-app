@@ -10,11 +10,12 @@
 
 package com.lukas.music.instruments
 
+import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.note.Note
 
 class PolyInstrument(name: String) : Instrument(name) {
-    private val internalInstruments = Array(3) { InternalInstrument() }
-    private val playing = Array(3) { false }
+    private val internalInstruments = Array(Chord.NOTE_COUNT) { InternalInstrument() }
+    private val playing = Array(Chord.NOTE_COUNT) { false }
 
     override var waveform: Waveform = Waveform.SINE
         set(value) {

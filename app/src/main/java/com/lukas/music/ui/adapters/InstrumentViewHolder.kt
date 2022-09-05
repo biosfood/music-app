@@ -39,7 +39,7 @@ class InstrumentViewHolder(
                 Song.currentSong.soloInstrument = instrument
             }
             field = value
-            binding.soloButton.updateToggle(this::solo, R.color.blue)
+            binding.soloButton.updateToggle(this.solo, R.color.blue)
         }
 
     var instrument: Instrument? = null

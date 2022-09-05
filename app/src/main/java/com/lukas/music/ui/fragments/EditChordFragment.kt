@@ -14,14 +14,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableRow
+import android.widget.TextView
+import androidx.core.view.children
+import androidx.core.view.setMargins
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.button.MaterialButton
+import com.lukas.music.R
 import com.lukas.music.databinding.FragmentEditChordBinding
 import com.lukas.music.song.ScaleType
 import com.lukas.music.song.Song
+import com.lukas.music.song.chords.Accidental
 import com.lukas.music.song.chords.Chord
-import com.lukas.music.song.chords.ChordType
 import com.lukas.music.song.chords.Interval
 import com.lukas.music.util.setup
+import com.lukas.music.util.updateToggle
 
 class EditChordFragment(private val chord: Chord, private val songFragment: SongFragment) :
     DialogFragment() {
@@ -33,11 +40,17 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
     ): View? {
         binding = FragmentEditChordBinding.inflate(inflater)
         setupPitchSpinner()
-        setupTypeSpinner()
+        setupEditor()
         binding.exitButton.setOnClickListener {
             dismiss()
         }
         return binding.root
+    }
+
+    private fun update() {
+        songFragment.updateChords()
+        binding.chordText.text = chord.toString(true, Song.currentSong.root)
+        updateEditor()
     }
 
     private fun setupPitchSpinner() {
@@ -46,29 +59,70 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
         } else Interval.IntervalName.NAMES
         binding.pitchSpinner.setup(pitches, chord.interval.name.ordinal) {
             chord.note = ScaleType.MAJOR.steps[it]
-            if (binding.typeSpinner.selectedItemPosition == 0) {
-                chord.chordType = ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]
-            }
-            songFragment.updateChords()
+            update()
+            // todo: setup chord to be the correct type
         }
     }
 
-    private fun setupTypeSpinner() {
-        val values = mutableListOf("default")
-        for (chordType in ChordType.VALUES) {
-            values += chordType.toString()
+    private fun setupEditor() {
+        binding.editorGrid.removeAllViews()
+        val row = TableRow(binding.root.context)
+        for (description in descriptions) {
+            val text = TextView(binding.root.context)
+            text.text = description
+            text.layoutParams = layout
+            text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+            row.addView(text)
         }
-        binding.typeSpinner.setup(
-            values,
-            if (chord.chordType == ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]) 0
-            else chord.chordType.ordinal + 1
-        ) {
-            if (it == 0) {
-                chord.chordType = ScaleType.MAJOR.chordTypes[chord.interval.name.ordinal]
-            } else {
-                chord.chordType = ChordType.VALUES[it - 1]
+        binding.editorGrid.addView(row)
+        for (accidental in Accidental.VALUES) {
+            val row = TableRow(binding.root.context)
+            for (position in 0 until Chord.NOTE_COUNT - 1) {
+                val button = MaterialButton(binding.root.context)
+                button.text = accidental.toString()
+                button.layoutParams = layout
+                button.updateToggle(chord.accidentals[position] == accidental, R.color.blue)
+                button.setOnClickListener {
+                    if (chord.accidentals[position] == accidental) {
+                        chord.accidentals[position] = null
+                    } else {
+                        chord.accidentals[position] = accidental
+                    }
+                    update()
+                }
+                row.addView(button)
             }
-            songFragment.updateChords()
+            binding.editorGrid.addView(row)
         }
+    }
+
+    private fun updateEditor() {
+        for ((index, view) in binding.editorGrid.children.iterator().withIndex()) {
+            if (index == 0) {
+                continue
+            }
+            view as TableRow
+            for ((childIndex, childView) in view.children.iterator().withIndex()) {
+                childView as MaterialButton
+                childView.updateToggle(
+                    chord.accidentals[childIndex] == Accidental.VALUES[index - 1],
+                    R.color.blue
+                )
+            }
+        }
+    }
+
+    companion object {
+        val layout = TableRow.LayoutParams(
+            TableRow.LayoutParams.WRAP_CONTENT,
+            TableRow.LayoutParams.WRAP_CONTENT
+        )
+
+        init {
+            layout.weight = 1.0f
+            layout.setMargins(5)
+        }
+
+        val descriptions = arrayOf("III", "V", "VII", "IX")
     }
 }

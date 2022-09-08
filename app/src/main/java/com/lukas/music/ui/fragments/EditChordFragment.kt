@@ -25,10 +25,7 @@ import com.lukas.music.song.Song
 import com.lukas.music.song.chords.Accidental
 import com.lukas.music.song.chords.Chord
 import com.lukas.music.song.chords.Interval
-import com.lukas.music.util.EasyDialogFragment
-import com.lukas.music.util.UIUtil
-import com.lukas.music.util.setup
-import com.lukas.music.util.updateToggle
+import com.lukas.music.util.*
 
 class EditChordFragment(private val chord: Chord, private val songFragment: SongFragment) :
     EasyDialogFragment<FragmentEditChordBinding>() {
@@ -38,6 +35,12 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditChordBinding.inflate(inflater)
+        Array(Accidental.VALUES.size) {
+            val button = MaterialButton(binding.root.context)
+            button.layoutParams = UIUtil.cardLayout
+            binding.accidentalSelection.addView(button)
+            return@Array button
+        }.setupEnumSelection(chord::accidental, Accidental.VALUES, callback = { update() })
         setupPitchSpinner()
         setupEditor()
         binding.exitButton.setOnClickListener {

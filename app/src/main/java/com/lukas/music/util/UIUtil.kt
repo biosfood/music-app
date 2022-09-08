@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.lukas.music.R
 import kotlin.reflect.KMutableProperty0
 
@@ -188,4 +189,32 @@ object UIUtil {
     init {
         cardLayout.setMargins(5)
     }
+}
+
+fun <T> Array<MaterialButton>.setupEnumSelection(
+    target: KMutableProperty0<T>,
+    values: Array<T>,
+    activeColor: Int = R.color.blue,
+    inactiveColor: Int = R.color.gray_0x60,
+    callback: () -> Unit = {},
+) {
+    fun update() {
+        for ((i, currentButton) in withIndex()) {
+            currentButton.setBackgroundColor(
+                ContextCompat.getColor(
+                    currentButton.context,
+                    if (target.get() == values[i]) activeColor else inactiveColor
+                )
+            )
+        }
+        callback()
+    }
+    for ((i, button) in withIndex()) {
+        button.text = values[i].toString()
+        button.setOnClickListener {
+            target.set(values[i])
+            update()
+        }
+    }
+    update()
 }

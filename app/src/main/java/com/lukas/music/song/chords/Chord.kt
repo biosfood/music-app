@@ -14,6 +14,7 @@ import com.lukas.music.song.Song
 import com.lukas.music.song.note.Note
 
 class Chord {
+    var accidental = Accidental.None
     val accidentals: Array<Accidental?> = arrayOf(Accidental.None, Accidental.None, null, null)
 
     var note: Int = 0
@@ -37,7 +38,7 @@ class Chord {
         var octave = 0
         while (resultIndex < NOTE_COUNT) {
             if (accidentalIndex == 0) {
-                result[resultIndex] = root + note + 12 * octave
+                result[resultIndex] = root + note + 12 * octave + accidental.distance
                 resultIndex++
             } else if (accidentals[accidentalIndex - 1] != null) {
                 result[resultIndex] = root + note + when (accidentalIndex) {
@@ -46,7 +47,7 @@ class Chord {
                     3 -> 10
                     4 -> 14
                     else -> 0
-                } + accidentals[accidentalIndex - 1]!!.distance + 12 * octave
+                } + accidentals[accidentalIndex - 1]!!.distance + 12 * octave + accidental.distance
                 resultIndex++
             }
             accidentalIndex++
@@ -64,7 +65,7 @@ class Chord {
 
     fun toString(displayChordNames: Boolean, root: Note): String {
         var result = if (displayChordNames) {
-            (root + note).noteName.toString()
+            (root + note + accidental.distance).noteName.toString()
         } else {
             interval.toString()
         }
@@ -101,6 +102,6 @@ class Chord {
     }
 
     companion object {
-        val NOTE_COUNT = 5
+        const val NOTE_COUNT = 5
     }
 }

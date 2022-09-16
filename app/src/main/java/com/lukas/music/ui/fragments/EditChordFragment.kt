@@ -60,9 +60,17 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
             Array(ScaleType.MAJOR.steps.size) { (Song.currentSong.root + ScaleType.MAJOR.steps[it]).noteName.toString() }
         } else Interval.IntervalName.NAMES
         binding.pitchSpinner.setup(pitches, chord.interval.name.ordinal) {
+            if (chord.note == ScaleType.MAJOR.steps[it]) {
+                update()
+                return@setup
+            }
             chord.note = ScaleType.MAJOR.steps[it]
+            chord.accidental = Accidental.None
+            chord.accidentals[0] =
+                Accidental.VALUES[(ScaleType.MAJOR.steps[(it + 2) % ScaleType.MAJOR.steps.size] distance chord.note) - 3]
+            chord.accidentals[1] =
+                Accidental.VALUES[(ScaleType.MAJOR.steps[(it + 4) % ScaleType.MAJOR.steps.size] distance chord.note) - 6]
             update()
-            // todo: setup chord to be the correct type
         }
     }
 
@@ -117,4 +125,13 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
     companion object {
         val descriptions = arrayOf("III", "V", "VII", "IX")
     }
+}
+
+infix fun Int.distance(other: Int): Int {
+    var result = this - other
+    while (result < 0) {
+        result += 12
+    }
+    result %= 12
+    return result
 }

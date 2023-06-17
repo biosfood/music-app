@@ -53,6 +53,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.lukas.music'
 }
 
 dependencies {

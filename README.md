@@ -89,3 +89,92 @@ All of the degrees can be modified flat or sharp and will influence the notated 
 
 Sometimes, the function of a note can change when pitched up or down. For example, a flat 7th degree
 will become the added 6th of the chord.
+
+### The Instruments view
+
+![](images/instruments/overview.png)
+
+In the instruments tab, you can configure the instruments that play.
+
+Use the button in the bottom-right corner of your screen to add a new instrument.
+
+Mono instruments can only play one note, while poly instruments can play up to five notes
+at a time.
+
+You can remove an instrument from the list using the trash icon.
+
+The (M) button will mute an instrument. If it is red, the instrument will no longer be playing any
+more music.
+
+The (S) button will solo an instrument. If it is blue, only sound from this instrument will be played.
+This mode can be used to inspect and "debug" just one voice at a time.
+
+#### The instrument editor
+
+![](images/instruments/name.png)
+
+Use the pencil icon on a instrument to open its settings window.
+
+Near the top, there is a text field where a name can be given to an instrument to easily distinguish
+it amongst all other instruments.
+
+![](images/instruments/waveform.png)
+
+You can select between 4 different base oscillator waveforms: sine, sawtooth, square and triangle.
+
+![](images/instruments/volume.png)
+
+The volume slider changes the volume of just this instrument and is applied after all effects.
+
+##### Instrument voicing
+
+![](images/instruments/voicing-type.png)
+
+There are 5 different voicing types:
+
+- Chord root note: play the root note of the chord
+- Chord notes: play notes from the current chord
+- Scale notes: play notes from a major scale relative to the current chord's root note
+- Root note: only play the song's key note
+- Song root relative: play chromatic notes always relative to the song's key
+
+Pressing the pencil button will show you the instrument voicing window:
+
+![](images/instruments/voicing.png)
+
+You can select the octave of the voice to transpose it by up to 4 octaves up or down.
+
+If restriking is enabled (the restrike button is green), notes will be played again when a new (sub)-
+beat is reached (The envelope is triggered again). If it is off, a note will be held for longer if 
+multiple active notes connect on the grid.
+
+One button in the grid represents one note. The vertical axis is the tone pitch and selects from
+the notes provided by the voicing type. On the horizontal axis is time. The main beats are 
+colored differently to allow for easy navigation.
+
+#### Envelope settings
+
+![](images/instruments/envelope.png)
+
+The envelope settings allow you to select an attack time, delay time, sustain level and release time.
+
+Times are configurable between 5ms and 200ms.
+
+Tip: Use a sustain level of 0% to emulate a plucked or struck instrument.
+
+#### Effects settings
+
+There are currently 3 effects implemented:
+
+- Low pass filter: remove high frequencies. This filter tracks along with the played note to provide a consistent timbre through all notes.
+- Noise: This filter mixes the input signal with white noise.
+- Distortion: Scale up and clip the signal back to a valid range.
+
+![](images/instruments/effects.png)
+
+Each effect can be turned on or off. By default, all effects are turned off.
+
+There is also an "influence" setting for each effect. After calculating the signal after the effect,
+The resulting signal is interpolated with the input signal using the influence setting. This allows effects to be partially faded out.
+
+By holding on and dragging an effect, the order of the effects can be manipulated to suit the user's needs.

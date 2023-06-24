@@ -93,9 +93,9 @@ class Chord {
         }
         accidentals[3]?.let {
             result += when (it) {
-                Accidental.Sharp -> " maj9"
+                Accidental.Sharp -> " ♯9"
                 Accidental.None -> " 9"
-                Accidental.Flat -> " b9"
+                Accidental.Flat -> " ♭9"
             }
         }
         return result

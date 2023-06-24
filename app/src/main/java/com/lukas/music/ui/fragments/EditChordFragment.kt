@@ -33,7 +33,7 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditChordBinding.inflate(inflater)
         Array(Accidental.VALUES.size) {
             val button = MaterialButton(binding.root.context)
@@ -76,15 +76,15 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
 
     private fun setupEditor() {
         binding.editorGrid.removeAllViews()
-        val row = TableRow(binding.root.context)
+        val tableRow = TableRow(binding.root.context)
         for (description in descriptions) {
             val text = TextView(binding.root.context)
             text.text = description
             text.layoutParams = UIUtil.cardLayout
             text.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-            row.addView(text)
+            tableRow.addView(text)
         }
-        binding.editorGrid.addView(row)
+        binding.editorGrid.addView(tableRow)
         for (accidental in Accidental.VALUES) {
             val row = TableRow(binding.root.context)
             for (position in 0 until Chord.NOTE_COUNT - 1) {
@@ -93,7 +93,7 @@ class EditChordFragment(private val chord: Chord, private val songFragment: Song
                 button.layoutParams = UIUtil.cardLayout
                 button.updateToggle(chord.accidentals[position] == accidental, R.color.blue)
                 button.setOnClickListener {
-                    if (chord.accidentals[position] == accidental) {
+                    if (chord.accidentals[position] == accidental && position != 1) {
                         chord.accidentals[position] = null
                     } else {
                         chord.accidentals[position] = accidental
